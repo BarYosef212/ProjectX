@@ -245,7 +245,7 @@ main {
 
 .cta-section {
   position: absolute;
-  top: 80%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -269,3 +269,14 @@ main {
 .cta-form input:focus {
   outline: none;
 }
+
+
+/* MAIN BUTTONS */
+.main-buttons{
+  display: flex;
+  gap:20px;
+  position: absolute;
+  top:60%;
+  left:45%;
+}
+
