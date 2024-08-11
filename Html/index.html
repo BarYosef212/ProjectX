@@ -21,7 +21,9 @@
             <button class=" btn btn-store">Store</button>
           </ul>
           <div class="nav-right">
-            <a href="#" class="nav-link login">
+            <a href="#" class="nav-link login" >
+          </div>
+             
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -29,6 +31,7 @@
                 stroke-width="1.5"
                 stroke="currentColor"
                 class="icon login-icon"
+                onclick="openDialog()"
               >
                 <path
                   stroke-linecap="round"
@@ -36,6 +39,23 @@
                   d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                 />
               </svg>
+              <div id="dialog" class="dialog">
+                <div class="dialog-content">
+                    <div id="close-dialog" onclick="closeDialog()">
+                        <span class="close">x</span>
+                    </div>
+                    <h2>Log In</h2>
+                    <form id="user-form">
+                        <label for="user-name">Username:</label>
+                        <input type="text" id="user-name" name="user-name" placeholder="Enter your username" required>
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        
+                        <button type="submit">Log-in</button>
+                    </form>
+                </div>
+              </div>
             </a>
             <a href="#" class="nav-link cart">
               <svg
@@ -58,6 +78,7 @@
       </header>
       <main></main>
       <script src="/Scripts/script.js"></script>
+      <script src="/Scripts/log-in.js"></script>
     </div>
   </body>
 </html>
