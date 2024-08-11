@@ -31,7 +31,6 @@
                 class="icon login-icon"
                 onclick="openDialog()"
               >
-              
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -40,19 +39,31 @@
               </svg>
               <div id="dialog" class="dialog">
                 <div class="dialog-content">
-                    <div id="close-dialog" onclick="closeDialog()">
-                        <span class="close">x</span>
-                    </div>
-                    <h2>Log In</h2>
-                    <form id="user-form">
-                        <label for="user-name">Email:</label>
-                        <input type="text" id="user-name" name="user-name" placeholder="Enter your Email" required>
-                        
-                        <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        
-                        <button type="submit">Log-in</button>
-                    </form>
+                  <div id="close-dialog" onclick="closeDialog()">
+                    <span class="close">x</span>
+                  </div>
+                  <h2>Log In</h2>
+                  <form class="user-form"i d="user-form">
+                    <label for="user-name">Email:</label>
+                    <input
+                      type="text"
+                      id="user-name"
+                      name="user-name"
+                      placeholder="Enter your Email"
+                      required
+                    />
+
+                    <label for="password">Password:</label>
+                    <input
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Enter your password"
+                      required
+                    />
+
+                    <button class="btn btn-login" type="submit">Log-in</button>
+                  </form>
                 </div>
               </div>
             </a>
@@ -75,7 +86,21 @@
           </div>
         </nav>
       </header>
-      <main></main>
+      <main>
+        <div class="main-text">
+          <h1 class="main-header">Step into Style, Comfort, and Performance</h1>
+          <h4 class="sub-header">
+            Discover our latest collection of shoes designed to elevate every
+            step you take
+          </h4>
+        </div>
+        <div class="cta-section">
+          <form class="cta-form">
+            <input type="email" placeholder="Enter Email" required />
+            <button class="btn btn--join" type="submit">Join our Newsletter</button>
+          </form>
+        </div>
+      </main>
       <script src="/Scripts/log-in.js"></script>
       <script src="/Scripts/script.js"></script>
     </div>
