@@ -1,4 +1,8 @@
 /* Dialog Container */
+.login-title{
+    margin-bottom: 16px;
+}
+
 .dialog {
     display: none;
     position: fixed;
@@ -11,7 +15,6 @@
     padding: 20px;
     box-sizing: border-box;
     overflow: auto;
-    cursor:auto;
 }
 
 /* Dialog Content */
@@ -66,11 +69,12 @@
 .user-form label {
     font-size: 16px;
     color: #333; /* Darker text color for better readability */
-    align-self: flex-start; /* Align labels to the left */
+    align-self:start;
+    font-weight: 600;
 }
 
-.user-form input[type="text"],
-.user-form input[type="password"] {
+.log-input-box input[type="text"],
+.log-input-box input[type="password"] {
     width: 100%; /* Full width for better usability */
     padding: 10px;
     font-size: 16px;
@@ -80,8 +84,8 @@
     transition: border-color 0.3s;
 }
 
-.user-form input[type="text"]:focus,
-.user-form input[type="password"]:focus {
+.log-input-box input[type="text"]:focus,
+.log-input-box input[type="password"]:focus {
     border-color: #007BFF; /* Blue border on focus */
 }
 
