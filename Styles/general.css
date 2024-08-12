@@ -1,24 +1,25 @@
 .btn {
-  background-color: #007BFF; /* Blue background for a professional look */
+  background-color: #007bff; /* Blue background for a professional look */
   color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
   padding: 12px 20px;
   font-size: 18px;
-  cursor: pointer;
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 .btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
+  cursor: pointer;
 }
 
-.close{
+.close {
   display: hidden;
   visibility: hidden;
 }
 
-.open{
+.open {
   display: block;
   visibility: visible;
 }
