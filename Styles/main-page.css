@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+.container{
+  width: 100vw;
+}
 body {
   font-family: "Arial", sans-serif;
   background-color: var(--background-color);
@@ -27,6 +30,8 @@ body {
     margin-right: auto;
     margin-left: auto;
 }
+
+
 
 header {
   background-color: var(--background-color);
@@ -109,7 +114,11 @@ header {
   }
 }
 
+.cart{
+  position: relative;
+}
 /* main */
+
 
 main {
   width: 100%;
@@ -125,7 +134,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap:42px;
+  gap: 42px;
+  padding-bottom: 72px;
 }
 
 .main-text {
@@ -277,6 +287,7 @@ main {
   font-size: 22px;
 }
 
+
 /* carousel */
 .carousel-item img {
   height: 60vh; 
@@ -303,3 +314,4 @@ main {
   transform: translateX(0);
 }
 }
+
