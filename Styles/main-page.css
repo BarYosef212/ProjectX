@@ -112,7 +112,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap:42px;
+  gap: 42px;
+  padding-bottom: 72px;
 }
 
 .main-text {
@@ -263,4 +264,3 @@ main {
   color: #ccc;
   font-size: 22px;
 }
-
