@@ -12,9 +12,6 @@ body {
   line-height: 1.6;
 }
 
-.container {
-  width: 100vw;
-}
 
 header {
   background-color: var(--background-color);
