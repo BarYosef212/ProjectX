@@ -1,8 +1,18 @@
-document.querySelector('.cart').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent the default link behavior
-  const cartWindow = document.querySelector('.cart-window');
-  cartWindow.style.display = cartWindow.style.display === 'block' ? 'none' : 'block';
+const cartIcon = document.querySelector('.cart');
+const cartWindow = document.querySelector('.cart-window');
+
+// Toggle on click
+cartIcon.addEventListener('click', function(event) {
+    event.preventDefault();
+    cartWindow.classList.toggle('show');
 });
 
-const cart_el = document.querySelector('.cart-items');
+// Show on hover
+cartIcon.addEventListener('mouseenter', function() {
+    cartWindow.classList.add('show');
+});
 
+// Hide when the mouse leaves the cart window
+cartWindow.addEventListener('mouseleave', function() {
+    cartWindow.classList.remove('show');
+});
