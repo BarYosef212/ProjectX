@@ -109,13 +109,16 @@ main {
     /* Shadow Gradient */ url(/img/background-img.avif);
   background-size: cover;
   background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:42px;
 }
 
 .main-text {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  transform: translate(-50%, -50%);
   text-align: center;
 }
 
@@ -130,9 +133,9 @@ main {
 }
 
 .cta-section {
-  transform: translate(-50%, -50%);
   display: flex;
   gap: 20px;
+  justify-content: center;
 }
 
 .cta-form {
@@ -152,10 +155,6 @@ main {
 .cta-form input:focus {
   outline: none;
 }
-
-
-
-
 
 /* Footer*/
 .footer {
@@ -251,10 +250,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
   text-align: center;
 }
 
