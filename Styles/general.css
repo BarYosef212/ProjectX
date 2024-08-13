@@ -3,7 +3,7 @@
   color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
-  padding: 12px 20px;
+  padding: 12px 24px;
   font-size: 18px;
   transition: background-color 0.3s;
   cursor: pointer;
@@ -12,6 +12,35 @@
 .btn:hover {
   background-color: #0056b3; /* Darker blue on hover */
   cursor: pointer;
+}
+
+.btn:link,.btn:visited {
+  background-color: #007bff; /* Blue background for a professional look */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  font-size: 18px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover,.btn:active {
+  background-color: #0056b3; /* Darker blue on hover */
+  cursor: pointer;
+}
+
+.main-link:link,.main-link:visited {
+  text-decoration: none;
+  color: #111;; /* Blue color for the link */
+  font-weight: 400;
+  transition: color 0.3s;
+}
+
+.main-link:hover,.main-link:active {
+  color: #444;
+  text-decoration: underline;
 }
 
 .close {
