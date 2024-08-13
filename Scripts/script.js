@@ -17,6 +17,8 @@ cartWindow.addEventListener('mouseleave', function() {
     cartWindow.classList.remove('show');
 });
 
+
+
 $('.carousel').carousel({
     interval: 5000, //5 sec
     ride: 'carousel',
