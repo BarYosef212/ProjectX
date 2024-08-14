@@ -1,0 +1,35 @@
+.cart-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-link {
+  font-size: 18px;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.cart-window {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 200px;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  
+  /* Initially hidden */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px); /* Move slightly upwards */
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.cart-window.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Reset to original position */
+}
