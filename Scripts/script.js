@@ -18,7 +18,7 @@ cartWindow.addEventListener('mouseleave', function() {
 });
 
 $('.carousel').carousel({
-    interval: 5000, //5 sec
+    interval: 4000, //5 sec
     ride: 'carousel',
 });
 
