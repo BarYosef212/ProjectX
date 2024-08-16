@@ -1,0 +1,19 @@
+.content textarea[type="message"],
+.content select {
+  width: 100%;
+  padding: 20px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.content button {
+  margin: 32px 0;
+}
+
+.contact-container{
+  display: flex;
+  margin: auto auto;
+  align-items: center;
+  justify-content: center;
+  gap:96px;
+}
