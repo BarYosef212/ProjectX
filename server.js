@@ -5,12 +5,14 @@ const mongoose = require ('mongoose'); // Import library mongoose (connect to Mo
 const app = express(); // Create an express application
 const PORT = 3000; // Port number
 
+const indexRoutes = require('./routes/indexRoutes'); // Import indexRoutes
+
 app.set('view engine', 'ejs'); // Set view engine to ejs  (npm install ejs)
 app.set('views', path.join(__dirname, 'Pages')); // Set Pages to the Pages folder
 
 async function connectDB(){ // Connect to MongoDB
   try{
-    await mongoose.connect('mongodb://localhost:27017/shoesDB');
+    await mongoose.connect('mongodb+srv://shoes:1234Sagi@projectx.r2mox.mongodb.net/');
     console.log('Connected to MongoDB'); // If connected to MongoDB, print this message
   }
   catch(error){
@@ -21,10 +23,10 @@ async function connectDB(){ // Connect to MongoDB
 connectDB(); // Call the function connectDB
 
 app.use(express.static(path.join(__dirname, 'public'))); // Use the public folder
-// app.use(homeRoute);
-app.get('/', (req, res) => { // Get the orders
-  res.render('Sign-up'); // Render the home page // cahnge here///
-});
+app.use(indexRoutes);
+// app.get('/', (req, res) => { // Get the orders
+//   res.render('contact'); // Render the home page // cahnge here///
+// });
 // app.use(shoesRoutes)// Use the shoesRoutes
 
 app.listen(PORT, () => { // Listen to the port
