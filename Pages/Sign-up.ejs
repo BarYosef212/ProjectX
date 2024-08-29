@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/Styles/main.css" />
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <main>
+      <div class="content">
+        <h2>Sign Up</h2>
+        <form>
+          <div class="h7">Welcome, Please Fill The Following</div>
+
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            placeholder="First Name"
+            required
+          />
+
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            placeholder="Last Name"
+            required
+          />
+
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email Address"
+            required
+          />
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="Confirm Password"
+            required
+          />
+
+          <br /><br />
+
+          <div class="checkbox-container">
+            <input type="checkbox" id="marketing" name="marketing" />
+            <label for="marketing">I want to receive marketing content</label>
+          </div>
+
+          <!-- Terms of Use Approval -->
+          <div class="checkbox-container">
+            <input type="checkbox" id="terms" name="terms" required />
+            <label for="terms"
+              >I agree to the <a class="terms" href="#">Terms Of Use</a></label
+            >
+          </div>
+
+          <button class="btn" type="submit">Sign Up</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+ <!-- HEADER -->
+ <header class="header-home">
+  <a class="logo-box" href="/">
+    <img src="/img/logo.png" alt="Logo" class="logo-img" />
+  </a>
+  <nav class="nav-home">
+    <ul class="nav-left">
+      <li><a href="/" class="nav-link-home">Home</a></li>
+      <li><a href="#" class="nav-link-home">About</a></li>
+      <li><a href="/contact" class="nav-link-home">Contact</a></li>
+      <li><a href="/Html/store.html" class="nav-link-home">FAQ</a></li>
+      <li><a href="/store" class="btn btn-store">Store</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" class="nav-link-home login">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="icon login-icon"
+          onclick="openDialog()"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          />
+        </svg>
+      </a>
+
+      <!-- LOGIN FORM -->
+      <div id="dialog" class="dialog">
+        <div class="dialog-content">
+          <div id="close-dialog" onclick="closeDialog()">
+            <span class="close-x">x</span>
+          </div>
+          <h2 class="login-title">Log In</h2>
+          <form class="user-form" id="user-form">
+            <div class="log-input-box">
+              <label for="user-name">Email:</label>
+              <input
+                type="text"
+                id="user-name"
+                name="user-name"
+                placeholder="Enter your Email"
+                required
+              />
+            </div>
+            <div class="log-input-box">
+              <label for="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button class="btn btn-login" type="submit">Log in</button>
+            <p class="sign-option">
+              Don't have an account?
+              <a class="main-link" href="Sign-up.html">Sign up</a>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div class="cart-box">
+        <a href="#" class="nav-link-home cart">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="icon cart-icon"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+            />
+          </svg>
+        </a>
+        <div class="cart-container">
+          <div class="cart-window">
+            <h3>Your Cart</h3>
+            <ul id="cart-items">
+              <p class="empty-cart">Your cart is empty</p>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <script src="/Scripts/log-in.js"></script>
+</header>
