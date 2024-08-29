@@ -1,12 +1,9 @@
 const express = require ('express'); // Import library express (npm install express)
 const path = require ('path'); // Import library path (access to file system)
-<<<<<<< HEAD
-=======
 
 const homePage = require ('./routes/indexRoutes'); // Import file indexRoutes.js
 const storeRoutes = require ('./routes/storeRoutes'); // Import file shoesStore.js
 const contactRoutes = require ('./routes/contactRoutes'); // Import file contactRoutes.js
->>>>>>> server
 
 const mongoose = require ('mongoose'); // Import library mongoose (connect to MongoDB) (npm install mongoose)
 const app = express(); // Create an express application
@@ -30,18 +27,10 @@ async function connectDB(){ // Connect to MongoDB
 connectDB(); // Call the function connectDB
 
 app.use(express.static(path.join(__dirname, 'public'))); // Use the public folder
-<<<<<<< HEAD
-app.use(indexRoutes);
-// app.get('/', (req, res) => { // Get the orders
-//   res.render('contact'); // Render the home page // cahnge here///
-// });
-// app.use(shoesRoutes)// Use the shoesRoutes
-=======
 
 app.use(homePage)// Use the shoesRoutes
 app.use(contactRoutes)// Use the contactRoutes
 app.use(storeRoutes)// Use the shoesRoutes
->>>>>>> server
 
 app.listen(PORT, () => { // Listen to the port
   console.log(`Server is running on http://localhost:${PORT}`); // If the server is running, print this message
