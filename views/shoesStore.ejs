@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="Styles/main.css" />
+    <!-- Assuming you have some styles -->
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <main>
+      <div class="shoes-container">
+        <% shoes.forEach(shoe => { %>
+        <div class="shoe">
+          <img src="<%= shoe.primaryImage %>" alt="<%= shoe.name %>" />
+          <h3><%= shoe.name %></h3>
+          <p><b>Category:</b> <%= shoe.title %></p>
+          <p><b>Price: </b>$<%= shoe.price %></p>
+          <button class="btn">Add to Cart</button>
+        </div>
+        <% }); %>
+      </div>
+    </main>
+
+    <%- include ('partials/footer') %>
+
+    <script src="/Scripts/script.js"></script>
+  </body>
+</html>

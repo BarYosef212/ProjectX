@@ -1,0 +1,79 @@
+.shoes-container {
+  margin: 248px 0 124px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.shoe {
+  border: 1px solid transparent; /* Subtle border effect */
+  padding: 0; /* No padding inside the card */
+  margin: 15px; /* Spacing between cards */
+  width: 280px; /* Fixed width for each card */
+  height: 400px; /* Fixed height to ensure proper division */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  border-radius: 12px; /* Larger border radius for a smoother look */
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #f0f0f0
+  ); /* Subtle gradient background */
+  display: flex;
+  flex-direction: column; /* Arranges children (image and content) vertically */
+  overflow: hidden; /* Hides any overflow, important for maintaining rounded corners */
+}
+
+.shoe img {
+  height: 50%; /* Makes the image take half the height of the card */
+  width: 100%; /* Image takes the full width */
+  object-fit: cover; /* Ensures the image covers the area without distorting */
+  border-top-left-radius: 12px; /* Maintains the border radius on the top */
+  border-top-right-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.shoe h3 {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 0 10px; /* Padding for text content */
+  text-align: center;
+  white-space: nowrap; /* Prevents the text from wrapping */
+  overflow: hidden; /* Hides text that overflows the container's width */
+  text-overflow: ellipsis; /* Adds an ellipsis to truncated text */
+  width: 100%;
+}
+
+.shoe p {
+  color: #555;
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 0 10px; /* Padding for text content */
+  text-align: center;
+}
+
+.shoe .btn {
+  padding: 10px 20px;
+  background-color: var(--main-color); /* Uses the main brand color */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px; /* Adds space at the bottom */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  width: auto; /* Auto width for button, centered by text-align of parent */
+  align-self: center; /* Centers button in the available space */
+}
+
+.shoe .btn:hover {
+  background-color: var(--darker-main); /* Darker brand color on hover */
+}
+
+/* Ensures text and button are centered and use the remaining space after the image */
+.shoe div {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
