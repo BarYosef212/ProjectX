@@ -49,4 +49,3 @@ cartWindow.addEventListener('mouseleave', function() {
 
 // Event listeners
 document.getElementById('user-form').addEventListener('submit', submitForm);
-document.querySelector('.close').addEventListener('click', closeDialog);
