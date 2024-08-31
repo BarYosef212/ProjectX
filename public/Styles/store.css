@@ -5,6 +5,7 @@
 }
 
 .shoe {
+  position: relative; /* Establishes a positioning context for absolutely positioned children */
   border: 1px solid transparent; /* Subtle border effect */
   padding: 0; /* No padding inside the card */
   margin: 15px; /* Spacing between cards */
@@ -12,14 +13,18 @@
   height: 400px; /* Fixed height to ensure proper division */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
   border-radius: 12px; /* Larger border radius for a smoother look */
-  background: linear-gradient(
-    145deg,
-    #ffffff,
-    #f0f0f0
-  ); /* Subtle gradient background */
+  background: linear-gradient(145deg, #ffffff, #f0f0f0); /* Subtle gradient background */
   display: flex;
   flex-direction: column; /* Arranges children (image and content) vertically */
   overflow: hidden; /* Hides any overflow, important for maintaining rounded corners */
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+}
+
+.shoe:hover {
+  transform: translateY(-10px); /* Moves the card up by 10px when hovered */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Optionally enhance the shadow for better 3D effect */
 }
 
 .shoe img {
@@ -28,7 +33,6 @@
   object-fit: cover; /* Ensures the image covers the area without distorting */
   border-top-left-radius: 12px; /* Maintains the border radius on the top */
   border-top-right-radius: 12px;
-  margin-bottom: 12px;
 }
 
 .shoe h3 {
@@ -53,27 +57,23 @@
 }
 
 .shoe .btn {
-  padding: 10px 20px;
+  position: absolute; /* Position the button absolutely within .shoe */
+  bottom: 0px; /* Position the button 10px from the bottom */
+  left: 50%; /* Center the button horizontally */
+  transform: translateX(-50%); /* Offset by half its width to truly center it */
+  padding: 20px 130px 20px 130px;
   background-color: var(--main-color); /* Uses the main brand color */
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 10px; /* Adds space at the bottom */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
-  width: auto; /* Auto width for button, centered by text-align of parent */
-  align-self: center; /* Centers button in the available space */
+  transition: background-color 0.3s;
+  white-space: nowrap; /* Prevents the text from wrapping */
+  
+
 }
 
 .shoe .btn:hover {
   background-color: var(--darker-main); /* Darker brand color on hover */
 }
 
-/* Ensures text and button are centered and use the remaining space after the image */
-.shoe div {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
