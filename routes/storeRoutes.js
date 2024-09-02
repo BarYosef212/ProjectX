@@ -5,13 +5,21 @@ const Shoe = require("../models/Shoe");
 // Route to display shoes (store page)
 router.get("/store", async (req, res) => {
   try {
-    const shoes = await Shoe.find().exec(); // Fetch all shoes from the database
+    const page = parseInt(req.query.page) || 1;
+    const limit = 12;
+    const skip = (page - 1) * limit;
 
-    res.render("shoesStore", { shoes }); // Render 'shoesStore.ejs' with shoes data
-    console.log(shoes);
+    const shoes = await Shoe.find().skip(skip).limit(limit);
+    const totalShoes = await Shoe.countDocuments();
+    const totalPages = Math.ceil(totalShoes / limit);
+
+    res.render('shoesStore', {
+        shoes,
+        totalPages,
+        currentPage: page
+    });
   } catch (error) {
-    console.error("Error fetching shoes:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).render('error', { message: 'Server Error' });
   }
 });
 
