@@ -47,4 +47,5 @@ const shoeSchema = new Schema({
 // Compile the model from the schema
 // const Shoe = mongoose.model('shoes_new', shoeSchema, 'shoes_new');
 
-module.exports = mongoose.model('shoes_new', shoeSchema, 'shoes_new');; // Export the model for use in other parts of your application
+module.exports = mongoose.model('Shoe', shoeSchema, 'shoes'); // Use 'shoes' as the collection name
+ // Export the model for use in other parts of your application

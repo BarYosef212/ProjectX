@@ -3,8 +3,9 @@ const router = express.Router();
 
 // Define the route for the index page
 router.get('/', (req, res) => {
-    // Render the index.ejs template located in the Pages folder
-    res.render('index', { title: 'Home' });
-});
+    const message = req.query.message || '';  // Get message from query parameter or set to empty string
+    res.render('index', { message });  // Pass message to the template
+  });
+  
 
 module.exports = router;

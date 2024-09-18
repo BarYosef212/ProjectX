@@ -1,10 +1,14 @@
 const express = require("express"); // Import library express (npm install express)
 const mongoose = require("mongoose"); // Import library mongoose (connect to MongoDB) (npm install mongoose)
 
+const bodyParser = require('body-parser'); 
 const path = require("path"); // Import library path (access to file system)
 const homePage = require("./routes/indexRoutes"); // Import file indexRoutes.js
 const storeRoutes = require("./routes/storeRoutes"); // Import file shoesStore.js
 const contactRoutes = require("./routes/contactRoutes"); // Import file contactRoutes.js
+const SignUpRoutes = require("./routes/SignUpRoutes");
+const authRoutes = require("./routes/authRoutes");
+const { Sign } = require("crypto");
 
 // const { get } = require("http");
 const app = express(); // Create an express application
@@ -27,14 +31,19 @@ async function connectDB() {
 
 connectDB(); // Call the function connectDB
 
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded form data
+app.use(bodyParser.json()); // Parse JSON data
 app.use(express.static(path.join(__dirname, "public"))); // Use the public folder
 
 app.use(homePage); // Use the shoesRoutes
 app.use(contactRoutes); // Use the contactRoutes
 // server.js
 app.use(storeRoutes); // Use the storeRoutes for the /store path
+app.use(authRoutes);
+app.use(SignUpRoutes);
 
-// app.use(storeRoutes)// Use the shoesRoutes
+
 
 app.listen(PORT, () => {
   // Listen to the port
