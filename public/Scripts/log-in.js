@@ -14,19 +14,19 @@ function closeDialog() {
     }
 }
 
-function submitForm(event) {
-    event.preventDefault(); // Prevent form submission
-    const userName = document.getElementById('user-name').value;
-    const userPassword = document.getElementById('password').value;
+// function submitForm(event) {
+//     event.preventDefault(); // Prevent form submission
+//     const userName = document.getElementById('user-name').value;
+//     const userPassword = document.getElementById('password').value;
 
-    if (userName && userPassword) {
-        localStorage.setItem('UserName', userName);
-        localStorage.setItem('Password', userPassword);
-        // You can redirect or perform another action here
-    } else {
-        alert('Please fill in both the username and password.');
-    }
-}
+//     if (userName && userPassword) {
+//         localStorage.setItem('UserName', userName);
+//         localStorage.setItem('Password', userPassword);
+//         // You can redirect or perform another action here
+//     } else {
+//         alert('Please fill in both the username and password.');
+//     }
+// }
 
 const cartIcon = document.querySelector('.cart');
 const cartWindow = document.querySelector('.cart-window');

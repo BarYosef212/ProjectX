@@ -1,5 +1,5 @@
- <!-- HEADER -->
- <header class="header-home">
+<!-- HEADER -->
+<header class="header-home">
   <a class="logo-box" href="/">
     <img src="/img/logo.png" alt="Logo" class="logo-img" />
   </a>
@@ -37,13 +37,21 @@
             <span class="close-x">x</span>
           </div>
           <h2 class="login-title">Log In</h2>
-          <form class="user-form" id="user-form">
+          <% if (typeof loginError !== 'undefined') { %>
+            <p id="loginError" style="color: red"><%= loginError %></p>
+          <% } %>
+          <form
+            class="user-form"
+            id="user-form"
+            action="/"
+            method="GET"
+          >
             <div class="log-input-box">
               <label for="user-name">Email:</label>
               <input
-                type="text"
-                id="user-name"
-                name="user-name"
+                type="email"
+                id="email"
+                name="email"
                 placeholder="Enter your Email"
                 required
               />

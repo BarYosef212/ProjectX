@@ -87,7 +87,7 @@
     margin-bottom: 12px;
 }
 
-.log-input-box input[type="text"],
+.log-input-box input[type="email"],
 .log-input-box input[type="password"] {
     width: 100%; /* Full width for better usability */
     padding: 10px;
@@ -98,7 +98,7 @@
     transition: border-color 0.3s;
 }
 
-.log-input-box input[type="text"]:focus,
+.log-input-box input[type="email"]:focus,
 .log-input-box input[type="password"]:focus {
     border-color: #007BFF; /* Blue border on focus */
 }
