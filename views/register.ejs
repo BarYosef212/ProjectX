@@ -11,14 +11,10 @@
     <main>
       <div class="content">
         <h2>Sign Up</h2>
-
-        
-
         <form
           id="signup-form"
           action="/register"
           method="POST"
-          onsubmit="return validatePasswords()"
         >
           <div class="h7">Welcome, Please Fill The Following</div>
 
@@ -47,9 +43,7 @@
           />
 
           <!-- Display error message if it exists -->
-        <% if (typeof error !== 'undefined') { %>
-          <p style="color: red; text-align: left"><%= error %></p>
-          <% } %>
+          
 
           <input
             type="password"
@@ -62,17 +56,14 @@
           <input
             type="password"
             id="confirm-password"
-            name="confirm-password"
+            name="passwordCompare"
             placeholder="Confirm Password"
             required
           />
           <!-- Display password error message -->
-          <p
-            id="password-error"
-            style="color: red; display: none; text-align: left"
-          >
-            Passwords do not match
-          </p>
+          <% if (typeof error !== 'undefined') { %>
+            <p style="color: red; text-align: left"><%= error %></p>
+            <% } %>
 
           <br /><br />
 
@@ -93,42 +84,5 @@
         </form>
       </div>
     </main>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const signupForm = document.getElementById("signup-form");
-        const passwordField = document.getElementById("signPassword");
-        const confirmPasswordField =
-          document.getElementById("confirm-password");
-        const passwordError = document.getElementById("password-error");
-
-        function validatePasswords() {
-          const password = passwordField.value;
-          const confirmPassword = confirmPasswordField.value;
-
-          if (password !== confirmPassword) {
-            // Show error message
-            passwordError.style.display = "block";
-            return false; // Prevent form submission
-          } else {
-            // Hide error message if passwords match
-            passwordError.style.display = "none";
-            return true; // Allow form submission
-          }
-        }
-
-        // Reset the error message when typing into the password or confirm-password fields
-        passwordField.addEventListener("input", function () {
-          passwordError.style.display = "none";
-        });
-
-        confirmPasswordField.addEventListener("input", function () {
-          passwordError.style.display = "none";
-        });
-
-        // Attach the validatePasswords function to the form's submit event
-        signupForm.onsubmit = validatePasswords;
-      });
-    </script>
   </body>
 </html>

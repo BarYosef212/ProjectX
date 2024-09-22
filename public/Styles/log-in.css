@@ -72,6 +72,13 @@
     font-weight: 600;
 
 }
+.log-input-box label{
+    margin-bottom: 0;
+}
+
+.log-input-box:first-child{
+    margin-bottom: 24px;
+}
 
 .log-input-box{
     display: flex;
