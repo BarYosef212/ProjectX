@@ -18,14 +18,20 @@ exports.renderShoePage = async(req,res,next)=>{
   }
 }
 
-exports.getShoes = async ({ priceFilter, skip, limit }) => {
+exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
   try {
+    let query = {};
+    // Gender filtering
+    if (genderFilter && genderFilter !== "all") {
+      query.gender = genderFilter;
+    }
+
     let shoes;
     if (priceFilter === "Best Offer") {
-      shoes = await Shoe.find().skip(skip).limit(limit); 
+      shoes = await Shoe.find(query).skip(skip).limit(limit); 
     } else {
       const sortOrder = priceFilter === 'highLow' ? -1 : 1;
-      shoes = await Shoe.find().sort({ price: sortOrder }).skip(skip).limit(limit); 
+      shoes = await Shoe.find(query).sort({ price: sortOrder }).skip(skip).limit(limit); 
     }
     return shoes; 
   } catch (error) {
@@ -33,5 +39,3 @@ exports.getShoes = async ({ priceFilter, skip, limit }) => {
     throw new Error("Error fetching shoes");
   }
 };
-
-
