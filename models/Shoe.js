@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
 // Define the Shoe schema
-const shoeSchema = new Schema({
-  _id: mongoose.Schema.Types.ObjectId, // Use MongoDB's default ID
+const shoeSchema = new mongoose.Schema({
   brand: {
     type: String,
     required: true
@@ -45,4 +43,4 @@ const shoeSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Shoe', shoeSchema, 'shoes'); 
+module.exports = mongoose.model("shoes",shoeSchema); 

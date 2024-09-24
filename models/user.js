@@ -18,7 +18,9 @@ const user = new mongoose.Schema({
   admin:{
    type:Boolean,
    required:true,
-  }
-});
+  },
+},
+{versionKey: false});
+
 
 module.exports = mongoose.model("users", user);

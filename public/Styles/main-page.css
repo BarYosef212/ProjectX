@@ -57,13 +57,45 @@ body {
 .nav-home {
   display: flex;
   align-items: center;
+  gap:24px;
 }
 
+.nav-right{
+  gap:18px;
+}
+.logout-btn {
+  background-color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between text and icon */
+  transition: background-color 0.3s ease;
+}
+
+
+.logout-icon {
+  width: 20px; /* Adjust size if needed */
+  height: 20px;
+  stroke: #000; /* Matches the text color */
+}
 .nav-left,
 .nav-right {
   display: flex;
   align-items: center;
   margin-bottom: 0;
+}
+.connected-dot {
+  height: 10px;
+  width: 10px;
+  background-color: #28a745; /* Professional green */
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
 }
 
 .nav-left li {
