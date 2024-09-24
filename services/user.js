@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const { getShoes } = require('../controllers/shoes');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 
 //register function that saves the new user to the db with password hashed
