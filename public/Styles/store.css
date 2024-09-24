@@ -1,5 +1,5 @@
 .shoes-container {
-  margin: 248px 0 124px 0;
+  margin: 30px 0 124px 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
@@ -117,4 +117,45 @@
 .shoe .btn:hover {
   background-color: var(--darker-main); /* Darker brand color on hover */
 }
+
+/* Style for the filter container */
+.filter-container {
+  
+  margin: 20px 10px; /* Add margin for spacing */
+  text-align: center; /* Center the dropdown within the container */
+}
+
+.filter-container {
+  margin-bottom: 20px; /* Space below the dropdown */
+  text-align: left; /* Align dropdown to the left */
+}
+
+/* Style for the filter dropdown */
+#filter {
+  font-size: 16px; /* Set font size */
+  color: #333; /* Dark gray color for text */
+  padding: 10px; /* Padding inside the dropdown */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Slightly rounded corners */
+  background-color: #ffffff; /* White background for a clean look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+  width: 200px; /* Fixed width for consistency */
+}
+
+/* Hover effect for the filter dropdown */
+#filter:hover {
+  border-color: #888; /* Darker border color on hover */
+}
+
+/* Focus effect for accessibility */
+#filter:focus {
+  outline: none; /* Remove default outline */
+  border-color: #555; /* Highlight border color when focused */
+  box-shadow: 0 0 5px rgba(85, 85, 85, 0.5); /* Add shadow on focus for emphasis */
+}
+
+
+
+
 

@@ -1,6 +1,7 @@
 const shoesService = require('../services/shoe');
 const Shoe = require('../models/Shoe');
 
+
 exports.renderShoePage = async(req,res,next)=>{
   try{
     const shoeName = req.params.shoeName;
@@ -17,13 +18,20 @@ exports.renderShoePage = async(req,res,next)=>{
   }
 }
 
+exports.getShoes = async ({ priceFilter, skip, limit }) => {
+  try {
+    let shoes;
+    if (priceFilter === "Best Offer") {
+      shoes = await Shoe.find().skip(skip).limit(limit); 
+    } else {
+      const sortOrder = priceFilter === 'highLow' ? -1 : 1;
+      shoes = await Shoe.find().sort({ price: sortOrder }).skip(skip).limit(limit); 
+    }
+    return shoes; 
+  } catch (error) {
+    console.log("Error in getShoes:", error);
+    throw new Error("Error fetching shoes");
+  }
+};
 
-exports.getShoes = async(req,res)=>{
-  try{
-    const shoes = await Shoe.find();
-    return shoes;
-  }
-  catch(error){
-    return new Error("Please render the page")
-  }
-}
+
