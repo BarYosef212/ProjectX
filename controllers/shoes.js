@@ -1,9 +1,6 @@
 const shoesService = require('../services/shoe');
 const Shoe = require('../models/Shoe');
 
-
-
-
 exports.renderShoePage = async(req,res,next)=>{
   try{
     const shoeName = req.params.shoeName;
@@ -27,6 +24,6 @@ exports.getShoes = async(req,res)=>{
     return shoes;
   }
   catch(error){
-    console.log(error)
+    return new Error("Please render the page")
   }
 }

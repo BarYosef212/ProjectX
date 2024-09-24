@@ -23,7 +23,6 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await userService.login(email, password);
-    console.log("the user:", user);
     if (user) {
       res.redirect("/");
     }

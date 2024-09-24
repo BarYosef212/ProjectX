@@ -5,10 +5,6 @@ const userController = require('../controllers/user');
 router.get('/',userController.renderHomePage)
 router.get('/home',userController.renderHomePage)
 
-router.get('/',(req,res)=>{
-  res.render('index')
-})
-
 router.get('/register',(req,res) =>{
   res.render('register');
 })

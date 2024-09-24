@@ -1,4 +1,3 @@
-const userService = require('../services/user');
 const User = require('../models/user');
 const { getShoes } = require('../controllers/shoes');
 const bcrypt = require('bcrypt');
@@ -41,7 +40,7 @@ async function register(firstName, lastName, email, password,passwordCompare){
 }
 // login function that find the user ing the db and validate the given password with the password stored in the db
 async function login(email,password){
-  const user = await User.findOne({email});
+  const user = await User.findOne({email:email});
   if(user && await bcrypt.compare(password,user.password)){
     return user;
   }
