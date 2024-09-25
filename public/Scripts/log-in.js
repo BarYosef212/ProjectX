@@ -47,5 +47,3 @@ cartWindow.addEventListener('mouseleave', function() {
     cartWindow.classList.remove('show');
 });
 
-// Event listeners
-document.getElementById('user-form').addEventListener('submit', submitForm);

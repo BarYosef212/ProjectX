@@ -1,12 +1,12 @@
 const userService = require("../services/user");
 const User = require("../models/user");
-const bcrypt = require("bcryptjs");
+const bcrypta = require("bcryptjs");
 
 exports.register = async (req, res) => {
   try {
     const { firstName, lastName, email, password, passwordCompare } = req.body;
     await userService.register(
-      firstName,
+      firstName,       
       lastName,
       email,
       password,
