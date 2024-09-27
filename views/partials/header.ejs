@@ -104,13 +104,19 @@
             <p style="margin-bottom: 0;">Connected   <span class="connected-dot "></span>
             </p>
           </div>
-        <form action="/logout" method="POST" style="display: inline">
+          <% if(admin) {%>
+          <a href="/admin" class="nav-link-home" style="margin-left:16px;">
+            <svg style="width:24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+            </svg>
+          </a>
+          <%}%>
+         <form action="/logout" method="POST" style="display: inline">
           <!-- <button type="submit">Logout</button> -->
-          <button class="logout-btn">
+          <button  class="logout-btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="logout-icon" stroke="currentColor" class="size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-            </svg>
-            
+            </svg>    
         </form>
         <% } %>
     </div>

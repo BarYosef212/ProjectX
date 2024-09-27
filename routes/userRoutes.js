@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/user');
-const { isLoggedIn } = require('../middleware/auth');
+const { isLoggedIn, isAdmin } = require('../middleware/auth');
 
 router.get('/',userController.renderHomePage)
 router.get('/home',isLoggedIn,userController.renderHomePage)
+
+router.get('/admin',isAdmin,(req,res)=>{
+  res.render('adminDashboard');
+})
 
 router.get('/register',(req,res) =>{
   res.render('register');

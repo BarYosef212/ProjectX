@@ -1,6 +1,4 @@
 const userService = require("../services/user");
-const User = require("../models/user");
-const bcrypt = require("bcryptjs");
 
 exports.register = async (req, res) => {
   try {
@@ -16,6 +14,7 @@ exports.register = async (req, res) => {
     const user =  await userService.login(email,password)
     req.session.userId = user._id;
     req.session.fullName = `${user.firstName} ${user.lastName}`;
+    req.session.admin = user.admin;
     res.render('register', { message: 'User registered successfully!' }); 
   } catch (error) {
     console.log("error");
@@ -30,8 +29,10 @@ exports.login = async (req, res) => {
     if (user) {
       req.session.userId = user._id;
       req.session.fullName = `${user.firstName} ${user.lastName}`;
+      req.session.admin = user.admin;
+
     }
-    res.render('login', { message: 'Login successful!' });
+    res.render('login', { message: 'Login Successful' });
     
   } catch (error) {
     console.log("errorLogin",error);
