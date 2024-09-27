@@ -11,11 +11,7 @@
     <main>
       <div class="content">
         <h2>Sign Up</h2>
-        <form
-          id="signup-form"
-          action="/register"
-          method="POST"
-        >
+        <form id="signup-form" action="/register" method="POST">
           <div class="h7">Welcome, Please Fill The Following</div>
 
           <input
@@ -43,7 +39,6 @@
           />
 
           <!-- Display error message if it exists -->
-          
 
           <input
             type="password"
@@ -60,10 +55,20 @@
             placeholder="Confirm Password"
             required
           />
+
           <!-- Display password error message -->
           <% if (typeof error !== 'undefined') { %>
-            <p style="color: red; text-align: left"><%= error %></p>
-            <% } %>
+          <p style="color: red; text-align: left"><%= error %></p>
+          <% } %>
+          <% if (typeof message !== 'undefined') { %>
+            <p class="success-message" style="color: green; text-align: left"><%= message %></p>
+            <script>
+              // Redirect to the homepage after 4 seconds
+              setTimeout(function() {
+                window.location.href = '/';
+              }, 1300);
+            </script>
+          <% } %>
 
           <br /><br />
 
@@ -75,9 +80,7 @@
           <!-- Terms of Use Approval -->
           <div class="checkbox-container">
             <input type="checkbox" id="terms" name="terms" required />
-            <label for="terms"
-              >I agree to the <a class="terms" href="#">Terms Of Use</a></label
-            >
+            <label for="terms">I agree to the <a class="terms" href="#">Terms Of Use</a></label>
           </div>
 
           <button class="btn" type="submit">Sign Up</button>

@@ -41,6 +41,15 @@
         <% if (typeof error !== 'undefined') { %>
           <p style="color: red; text-align: left"><%= error %></p>
           <% } %>
+          <% if (typeof message !== 'undefined') { %>
+            <p class="success-message" style="color: green; text-align: left"><%= message %></p>
+            <script>
+              // Redirect to the homepage after 4 seconds
+              setTimeout(function() {
+                window.location.href = '/';
+              }, 1300);
+            </script>
+          <% } %>
         <button class="btn btn-login" type="submit">Log in</button>
         <p class="sign-option">
           Don't have an account?

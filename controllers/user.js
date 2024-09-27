@@ -16,7 +16,7 @@ exports.register = async (req, res) => {
     const user =  await userService.login(email,password)
     req.session.userId = user._id;
     req.session.fullName = `${user.firstName} ${user.lastName}`;
-    res.redirect("/");
+    res.render('register', { message: 'User registered successfully!' }); 
   } catch (error) {
     console.log("error");
     res.render("register", { error: error.message });
@@ -31,8 +31,7 @@ exports.login = async (req, res) => {
       req.session.userId = user._id;
       req.session.fullName = `${user.firstName} ${user.lastName}`;
     }
-      res.redirect("/home");
-      res.render('index')
+    res.render('login', { message: 'Login successful!' });
     
   } catch (error) {
     console.log("errorLogin",error);

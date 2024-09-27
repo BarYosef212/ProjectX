@@ -11,7 +11,6 @@ router.get('/register',(req,res) =>{
 })
 router.post('/register',userController.register);
 
-
 router.get('/login',(req,res)=>{
   res.render('login')
 })
