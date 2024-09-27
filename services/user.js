@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 
 //register function that saves the new user to the db with password hashed
-async function register(firstName, lastName, email, password,passwordCompare){
+async function register(firstName, lastName, email, password,passwordCompare,marketing){
   const saltRounds = 6;
   const hashedPassword = await bcrypt.hash(password,saltRounds);
 
@@ -26,12 +26,14 @@ async function register(firstName, lastName, email, password,passwordCompare){
   if(!regex.test(password)){
     throw new Error(`Password must contain !@#$%^&*(),.?":{}|<>`)
   }
+  marketing = (marketing=="on")? true:false
   const admin = false;
   const user = new User({
     firstName,
     lastName,
     email,
     password: hashedPassword,
+    marketing,
     admin
   });
   console.log("User registerd")
