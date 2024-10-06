@@ -97,7 +97,11 @@ body {
   gap:24px;
 }
 
-
+.user-section{
+  display: flex; 
+  gap:18px;
+  align-items: center;
+}
 
 .connected-dot {
   height: 10px;
