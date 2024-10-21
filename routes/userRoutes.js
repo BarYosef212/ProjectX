@@ -24,9 +24,21 @@ router.get('/contact',(req,res)=>{
   res.render('contact');
 })
 
+router.get('/users',isAdmin,userController.renderUsersPage)
+router.post('/users',userController.findUser)
+router.post('/delete-user',userController.deleteUser)
+router.post('/toggle-admin',userController.toggleAdmin)
+router.post('/toggle-marketing',userController.toggleMarketing)
+
+
+
+
+
 router.get('/logout',(req,res)=>{
   res.render('index')
 })
+
+
 
 router.post('/logout', (req, res) => {
   // Destroy the session
@@ -40,5 +52,6 @@ router.post('/logout', (req, res) => {
     res.redirect('/login');
   });
 });
+
 
 module.exports = router

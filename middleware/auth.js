@@ -25,7 +25,7 @@ function isLoggedIn(req, res, next) {
 
 function isAdmin(req, res, next) {
   if(req.session.admin){
-    console.log("admin")
+    console.log("admin connected!")
     next();    
   }
   else {
