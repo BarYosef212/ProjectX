@@ -1,7 +1,3 @@
-const { Template } = require("ejs");
-
-
-
 $('.carousel').carousel({
     interval: 3000, //5 sec
     ride: 'carousel',

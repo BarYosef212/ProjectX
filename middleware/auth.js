@@ -10,7 +10,7 @@ const sessionMiddleware = session({
     mongoUrl: process.env.DB_CONNECTION_STRING,  // MongoDB connection string
   }),
   cookie: {
-    maxAge: 1000 * 60 * 15,   // Session expires in 30 minutes
+    maxAge: 1000 * 60 * 400,   // Session expires in 30 minutes
   },
 });
 

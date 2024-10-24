@@ -1,57 +1,65 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const userController = require('../controllers/user');
-const { isLoggedIn, isAdmin } = require('../middleware/auth');
+const userController = require("../controllers/user");
+const { isLoggedIn, isAdmin } = require("../middleware/auth");
 
-router.get('/',userController.renderHomePage)
-router.get('/home',isLoggedIn,userController.renderHomePage)
+// Home page
+router.get("/", (req, res) => {
+  res.render("index");
+});
+router.get("/home", isLoggedIn, (req, res) => {
+  res.render("index");
+});
 
-router.get('/admin',isAdmin,(req,res)=>{
-  res.render('adminDashboard');
-})
+// Admin dashboard
+router.get("/admin", isAdmin, (req, res) => {
+  res.render("adminDashboard");
+});
 
-router.get('/register',(req,res) =>{
-  res.render('register');
-})
-router.post('/register',userController.register);
+// Register page
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+router.post("/register", userController.register);
 
-router.get('/login',(req,res)=>{
-  res.render('login')
-})
-router.post('/login',userController.login);
+// Login page
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+router.post("/login", userController.login);
 
-router.get('/contact',(req,res)=>{
-  res.render('contact');
-})
+// Contact page
+router.get("/contact", (req, res) => {
+  res.render("contact");
+});
 
-router.get('/users',isAdmin,userController.renderUsersPage)
-router.post('/users',userController.findUser)
-router.post('/delete-user',userController.deleteUser)
-router.post('/toggle-admin',userController.toggleAdmin)
-router.post('/toggle-marketing',userController.toggleMarketing)
+// Users Admin page
+router.get("/usersAdmin",isAdmin, (req, res) => {
+  res.render("usersAdmin");
+});
+router.get("/getUsers", isAdmin, userController.getAllUsers);
+router.post("/usersAdmin", userController.findUser);
+
+// Manage users
+router.post("/delete-user", userController.deleteUser);
+router.post("/toggle-admin", userController.toggleAdmin);
+router.post("/toggle-marketing", userController.toggleMarketing);
+router.post("/find-user", userController.findUser);
 
 
+// Logout (GET and POST)
 
-
-
-router.get('/logout',(req,res)=>{
-  res.render('index')
-})
-
-
-
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
   // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.log("Error destroying session: ", err);
-      return res.redirect('/');  // Redirect to home even if there's an error
+      return res.redirect("/"); // Redirect to home even if there's an error
     }
 
     // Successfully logged out, redirect to login page
-    res.redirect('/login');
+    res.redirect("/login");
   });
 });
 
-
-module.exports = router
+module.exports = router;

@@ -9,8 +9,14 @@
 8. "Error in delete user" = 108
 9. "Problem with permissions" = 109
 10. "Problem with change marketing value" = 110
+11. "Error with loading shoes" = 201
+12. "No shoes found" = 202
+13. "Problem with delete shoe" = 203
+14. "No shoes found" = 204
 
 // Messages codes:
 1. "User deleted successfully" = 1
 2. "Permissions changed successfully" = 2
 3. "Preferences changed successfully!" = 3
+4. "Shoe deleted successfully!" = 11
+5. "${shoes.length} shoes found" = 12
