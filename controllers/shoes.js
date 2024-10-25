@@ -48,6 +48,7 @@ exports.updateShoe = async (req, res) => {
   }
 };
 
+
 exports.getAllShoes = async (req, res) => {
   try {
     const shoes = await shoesService.getAllShoes();

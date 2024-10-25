@@ -26,7 +26,7 @@ exports.updateShoe = async (updatedData, shoeId) => {
 };
 
 exports.getAllShoes = async (req, res) => {
-  const shoes = await Shoe.find({});
+  const shoes = await Shoe.find({}).sort({ _id: -1 });
   if (shoes) {
     return shoes;
   } else {

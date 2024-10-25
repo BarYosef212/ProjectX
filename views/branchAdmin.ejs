@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Branch Management</title>
+    <link rel="stylesheet" href="/Styles/main.css" />
+    <style>
+      /* Global Styles */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f7f7fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 2.5rem; /* Reduced font size */
+        font-weight: 700;
+      }
+
+      /* Form Styles */
+      #branch-form {
+        text-align: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+
+      /* Branches Container */
+      .branches-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 60px auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      /* Branch Card */
+      .branch {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .branch:hover {
+        transform: scale(1.02);
+      }
+
+      .branch h3 {
+        font-size: 1.3rem;
+        color: #444;
+        margin-bottom: 12px;
+        border-bottom: 1px solid black;
+      }
+
+      .branch p {
+        font-size: 0.9rem; /* Reduced font size */
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .btn-box {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+      }
+
+      .btnBranchAdmin {
+        width: 48%;
+        padding: 10px;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 0.9rem;
+      }
+
+      .btnUpdateBranch {
+        display: block;
+        margin: 0 auto;
+      }
+      .btnDelete {
+        background-color: #dc3545;
+      }
+
+      .btnDelete:hover {
+        background-color: #c82333;
+      }
+
+      .btnUpdate {
+        background-color: #fd7e14;
+      }
+
+      .btnUpdate:hover {
+        background-color: #e06b12;
+      }
+
+      /* Success/Error Message */
+      .message {
+        text-align: center;
+        font-size: 1rem; /* Reduced font size */
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      .error-message {
+        background-color: #ffeded;
+        color: #e74c3c;
+      }
+
+      .success-message {
+        background-color: #eaffea;
+        color: #2ecc71;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        margin: auto;
+        margin: 5% auto;
+      }
+
+      .close-button {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #555;
+        float: right;
+        cursor: pointer;
+        margin-top: -10px;
+      }
+
+      .close-button:hover {
+        color: #e74c3c;
+      }
+
+      /* Input and Label Styling for Modal */
+      .modal-content label {
+        display: block;
+        margin: 8px 0 5px;
+        font-weight: bold;
+      }
+
+      .modal-content input[type="text"],
+      .modal-content input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+
+      #modalTitle {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* Add Branch Button */
+      .btnAddBranch {
+        position: absolute;
+        top: 190px;
+        right: 380px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <form id="branch-form">
+      <h1>Branch Management</h1>
+      <input
+        class="findInput"
+        name="stringReq"
+        type="text"
+        placeholder="Enter branch name"
+      />
+      <button class="btn btn-find" onclick="findBranches()" type="button">
+        Find
+      </button>
+    </form>
+    <button
+      class="btn btnAddBranch"
+      style="font-size: 18px"
+      onclick="openModal(0)"
+    >
+      Add Branch &plus;
+    </button>
+    <div class="message"></div>
+
+    <div id="updateModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div class="title" style="text-align: center">
+          <h2 style="text-decoration: underline">Update Branch</h2>
+        </div>
+        <p id="modalTitle"></p>
+
+        <form id="update-form">
+          <input type="hidden" id="branchId" />
+
+          <label for="branchName">Name:</label>
+          <input type="text" id="branchName" /><br /><br />
+
+          <label for="bussinessHour">Business Hours: </label>
+          <input type="text" id="bussinessHour" /><br /><br />
+
+          <label for="phoneNumber">Phone: </label>
+          <input type="number" id="phoneNumber" /><br /><br />
+
+          <label for="storeAddress">Store Address: </label>
+          <input type="text" id="storeAddress" /><br /><br />
+
+          <label for="coordinate_x">Coordinate X: </label>
+          <input type="number" id="coordinate_x" /><br /><br />
+
+          <label for="coordinate_y">Coordinate Y:</label>
+          <input type="number" id="coordinate_y" /><br /><br />
+          <div class="errorModal" style="display: none"></div>
+          <button
+            class="btn btnUpdateBranch"
+            type="button"
+            style="text-align: center"
+          >
+            Update Branch
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="branches-container"></div>
+
+    <%- include('partials/footer') %>
+  </body>
+</html>
+
+<script>
+  async function updateBranch() {
+    try {
+      const branchId = document.querySelector("#branchId").value;
+      const branchName = document.querySelector("#branchName").value;
+      const bussinessHours = document.querySelector("#bussinessHour").value;
+      const branchPhone = document.querySelector("#phoneNumber").value;
+      const branchAddress = document.querySelector("#storeAddress").value;
+      const coordinate_x = document.querySelector("#coordinate_x").value;
+      const coordinate_y = document.querySelector("#coordinate_y").value;
+      const data = {
+        branchId,
+        branchName,
+        bussinessHours,
+        branchAddress,
+        branchPhone,
+        coordinate_x,
+        coordinate_y,
+      };
+
+      const updatedData = {};
+
+      if (branchName) updatedData.branchName = branchName;
+      if (bussinessHours) updatedData.bussinessHours = bussinessHours;
+      if (branchAddress) updatedData.branchAddress = branchAddress;
+      if (branchPhone) updatedData.branchPhone = branchPhone;
+      if (coordinate_x || coordinate_y) {
+        updatedData.location = {}; 
+        if (coordinate_x) updatedData.location.coordinate_x = coordinate_x;
+        if (coordinate_y) updatedData.location.coordinate_y = coordinate_y;
+      }
+
+      const response = await fetch("/updateBranch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ updatedData: updatedData, branchId: branchId }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        createMessage(result.message, false);
+        closeModal();
+        const branchEl = document.querySelector(`[data-id="${branchId}"]`);
+        getAllBranches();
+      } else {
+        createMessage(result.message, true);
+      }
+    } catch (error) {
+      console.log(error);
+      createMessage(result.message, true);
+    }
+  }
+
+  async function checkModalUpdateBranch() {
+    const branchName = document.querySelector("#branchName");
+    const bussinessHours = document.querySelector("#bussinessHour");
+    const branchPhone = document.querySelector("#phoneNumber");
+    const branchAddress = document.querySelector("#storeAddress");
+    const coordinate_x = document.querySelector("#coordinate_x");
+    const coordinate_y = document.querySelector("#coordinate_y");
+    const errorMessageEl = document.querySelector(".errorModal");
+
+    if (branchPhone.value <= 0 && branchPhone.value !== "") {
+      errorMessageEl.textContent = "Phone number cannot be negative";
+      errorMessageEl.style.color = "red";
+      errorMessageEl.style.display = "block";
+      errorMessageEl.style.textAlign = "left";
+    } else if (branchPhone.value.length < 9 && branchPhone.value !== "") {
+      errorMessageEl.textContent = "Phone number too short";
+      errorMessageEl.style.color = "red";
+      errorMessageEl.style.display = "block";
+      errorMessageEl.style.textAlign = "left";
+    } else if (
+      branchName.value === "" &&
+      bussinessHours.value === "" &&
+      branchPhone.value === "" &&
+      branchAddress.value === "" &&
+      coordinate_x.value === "" &&
+      coordinate_y.value === ""
+    ) {
+      createMessage("No change was made", false);
+      const message = document.querySelector(".message");
+      message.style.color = "orange";
+      closeModal();
+      return;
+    } else {
+      const confirmation = confirm(
+        "Are you sure you want to update this branch?"
+      );
+      if (!confirmation) return;
+      updateBranch();
+    }
+  }
+
+  async function checkModalAddBranch() {
+    const branchName = document.querySelector("#branchName");
+    const bussinessHour = document.querySelector("#bussinessHour");
+    const phoneNumber = document.querySelector("#phoneNumber");
+    const storeAddress = document.querySelector("#storeAddress");
+    const coordinate_x = document.querySelector("#coordinate_x");
+    const coordinate_y = document.querySelector("#coordinate_y");
+    const errorMessageEl = document.querySelector(".errorModal");
+
+    if (
+      branchName.value === "" ||
+      bussinessHour.value === "" ||
+      phoneNumber.value === "" ||
+      storeAddress.value === "" ||
+      coordinate_x.value === "" ||
+      coordinate_y.value === ""
+    ) {
+      errorMessageEl.textContent =
+        "Please fill out all fields before submitting";
+      errorMessageEl.style.color = "red";
+      errorMessageEl.style.display = "block";
+      errorMessageEl.style.textAlign = "left";
+    } else if (phoneNumber.value.length < 9) {
+      errorMessageEl.textContent = "Phone number too short";
+      errorMessageEl.style.color = "red";
+      errorMessageEl.style.display = "block";
+      errorMessageEl.style.textAlign = "left";
+    } else if (phoneNumber.value < 0) {
+      errorMessageEl.textContent = "Phone number cannot be negative";
+      errorMessageEl.style.color = "red";
+      errorMessageEl.style.display = "block";
+      errorMessageEl.style.textAlign = "left";
+    } else if (
+      branchName.value !== "" &&
+      bussinessHour.value !== "" &&
+      phoneNumber.value !== "" &&
+      storeAddress.value !== "" &&
+      coordinate_x.value !== "" &&
+      coordinate_y.value !== ""
+    ) {
+      errorMessageEl.style.display = "none";
+      const confirmation = confirm("Are you sure you want to add this branch?");
+      if (!confirmation) return;
+      await addBranch(
+        branchName.value,
+        bussinessHour.value,
+        storeAddress.value,
+        phoneNumber.value,
+        coordinate_x.value,
+        coordinate_y.value
+      );
+    }
+  }
+
+  function openModal(id) {
+    const modalEl = document.querySelector(".modal");
+    const modelTitleEl = document.querySelector("#modalTitle");
+    const branchId = document.querySelector("#branchId");
+    const modalHeader = modalEl.querySelector(".title h2");
+    const btnEl = document.querySelector(".btnUpdateBranch");
+
+    if (id !== 0) {
+      const branchName = document.querySelector(
+        `[data-id="${id}"] h3`
+      ).textContent;
+      branchId.value = id;
+      modelTitleEl.textContent = branchName;
+      modalHeader.textContent = "Update Branch";
+      btnEl.textContent = "Update Branch";
+
+      btnEl.setAttribute("onclick", "checkModalUpdateBranch()");
+    } else {
+      document.querySelector("#branchName").required = true;
+      document.querySelector("#bussinessHour").required = true;
+      document.querySelector("#phoneNumber").required = true;
+      document.querySelector("#storeAddress").required = true;
+      document.querySelector("#coordinate_x").required = true;
+      document.querySelector("#coordinate_y").required = true;
+      branchId.value = "";
+      modelTitleEl.textContent = "";
+      modalHeader.textContent = "Add Branch";
+      btnEl.textContent = "Add Branch +";
+      btnEl.setAttribute("onclick", "checkModalAddBranch()");
+    }
+    modalEl.style.display = "block";
+  }
+
+  function closeModal() {
+    const modalEl = document.querySelector(".modal");
+    const branchName = document.querySelector("#branchName");
+    const bussinessHour = document.querySelector("#bussinessHour");
+    const phoneNumber = document.querySelector("#phoneNumber");
+    const storeAddress = document.querySelector("#storeAddress");
+    const coordinate_x = document.querySelector("#coordinate_x");
+    const coordinate_y = document.querySelector("#coordinate_y");
+    const errorMessageEl = document.querySelector(".errorModal");
+
+    branchName.value = "";
+    bussinessHour.value = "";
+    phoneNumber.value = "";
+    storeAddress.value = "";
+    coordinate_x.value = "";
+    coordinate_y.value = "";
+
+    errorMessageEl.style.display = "none";
+    modalEl.style.display = "none";
+  }
+
+  function createMessage(message, isError = false) {
+    const messageEl = document.querySelector(".message");
+    messageEl.textContent = message;
+    messageEl.style.color = isError ? "red" : "green";
+    messageEl.style.display = "block";
+  }
+
+  async function addBranch(
+    branchName,
+    branchHours,
+    branchPhone,
+    brachAddress,
+    coordinate_x,
+    coordinate_y
+  ) {
+    try {
+      const response = await fetch("/addBranch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          branchName,
+          branchHours,
+          branchPhone,
+          brachAddress,
+          coordinate_x,
+          coordinate_y,
+        }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        const branches = await getAllBranches();
+        createMessage(result.message, false);
+        closeModal();
+      } else {
+        createMessage(result.message, true);
+        closeModal();
+      }
+    } catch (error) {
+      console.log(error);
+      createMessage(result.message, true);
+      closeModal();
+    }
+  }
+
+  async function updateShoe() {
+    try {
+      const shoeId = document.querySelector("#shoeId").value;
+      const shoeName = document.querySelector("#shoeName").value;
+      const shoeTitle = document.querySelector("#shoeTitle").value;
+      const shoePrice = document.querySelector("#shoePrice").value;
+      const shoeImage = document.querySelector("#shoeImage").value;
+      const data = {
+        shoeId,
+        shoeName,
+        shoeTitle,
+        shoePrice,
+        shoeImage,
+      };
+
+      const updatedData = {};
+
+      if (shoeName) updatedData.name = shoeName;
+      if (shoeTitle) updatedData.title = shoeTitle;
+      if (shoeImage) updatedData.primaryImage = shoeImage;
+      if (shoePrice) updatedData.price = shoePrice;
+      if (shoePrice <= 0 && shoePrice !== "") {
+        createMessage("Price cannot change to non-positive number", true);
+        closeModal();
+        return;
+      }
+
+      const response = await fetch("/updateShoe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ updatedData: updatedData, shoeId: shoeId }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        createMessage(result.message, false);
+        closeModal();
+
+        const shoeEl = document.querySelector(`[data-id="${shoeId}"]`);
+
+        if (updatedData.name) {
+          shoeEl.querySelector("h3").textContent = updatedData.name; // Update shoe name
+        }
+        if (updatedData.title) {
+          shoeEl.querySelector("p:nth-of-type(1)").textContent =
+            updatedData.title; // Update shoe title
+        }
+        if (updatedData.primaryImage) {
+          shoeEl.querySelector("img").src = updatedData.primaryImage; // Update shoe image URL
+        }
+        if (updatedData.price) {
+          shoeEl.querySelector(
+            "p:nth-of-type(2)"
+          ).innerHTML = `<b>Price: </b>$${updatedData.price}`; // Update shoe price
+        }
+      } else {
+        createMessage(result.message, true);
+      }
+    } catch (error) {
+      console.log(error);
+      createMessage(result.message, true);
+    }
+  }
+
+  async function deleteBranch(branchId) {
+    try {
+      const confirmation = confirm(
+        "Are you sure you want to delete this branch?"
+      );
+      if (!confirmation) return;
+      const response = await fetch("/deleteBranch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ branchId: branchId }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const branch = document.querySelector(`[data-id = "${branchId}"]`);
+        if (branch) {
+          branch.remove();
+          createMessage(result.message, false);
+        }
+      } else {
+        createMessage(result.message, true);
+      }
+    } catch (error) {
+      console.log(error);
+      createMessage(result.message, true);
+    }
+  }
+
+  async function getAllBranches() {
+    try {
+      const response = await fetch("/getAllBranches", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        displayBranches(result.branches);
+      } else {
+        createMessage(result.message, true);
+      }
+    } catch (error) {
+      createMessage(result.message, true);
+    }
+  }
+
+  async function findBranches() {
+    try {
+      const search = document.querySelector(".findInput");
+      const response = await fetch("/findBranches", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ search: search.value }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        createMessage(result.message, false);
+        displayBranches(result.branches);
+      } else {
+        createMessage(result.message, true);
+      }
+    } catch (error) {
+      console.log(error);
+      createMessage(result.message, true);
+    }
+  }
+
+  function displayBranches(data) {
+    const container = document.querySelector(".branches-container");
+    container.innerHTML = "";
+
+    data.forEach((branch) => {
+      // Create the main branch div
+      const branchDiv = document.createElement("div");
+      branchDiv.classList.add("branch");
+      branchDiv.setAttribute("data-id", branch._id);
+
+      // Create and append the branch name (h3)
+      const branchName = document.createElement("h3");
+      branchName.innerHTML = `<b>${branch.branchName}</b>`;
+      branchDiv.appendChild(branchName);
+
+      // Create and append the business hours (p)
+      const businessHours = document.createElement("p");
+      businessHours.innerHTML = `<b>Business Hours:</b> ${branch.bussinessHours}`;
+      branchDiv.appendChild(businessHours);
+
+      // Create and append the phone number (p)
+      const phoneNumber = document.createElement("p");
+      phoneNumber.innerHTML = `<b>Phone:</b> ${branch.branchPhone}`;
+      branchDiv.appendChild(phoneNumber);
+
+      // Create and append the store address (p)
+      const storeAddress = document.createElement("p");
+      storeAddress.innerHTML = `<b>Store Address:</b> ${branch.branchAddress}`;
+      branchDiv.appendChild(storeAddress);
+
+      // Create and append the coordinates (p)
+      const coordinates = document.createElement("p");
+      coordinates.innerHTML = `<b>Coordinates:</b> X: ${branch.location.coordinate_x}, Y: ${branch.location.coordinate_y}`;
+      branchDiv.appendChild(coordinates);
+
+      // Create the button container div
+      const btnBox = document.createElement("div");
+      btnBox.classList.add("btn-box");
+
+      // Create delete button
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("btnBranchAdmin", "btnDelete");
+      deleteButton.textContent = "Delete Branch";
+      deleteButton.setAttribute("onclick", `deleteBranch('${branch._id}')`);
+      btnBox.appendChild(deleteButton);
+
+      // Create update button
+      const updateButton = document.createElement("button");
+      updateButton.classList.add("btnBranchAdmin", "btnUpdate");
+      updateButton.textContent = "Update Branch";
+      updateButton.setAttribute("onclick", `openModal('${branch._id}')`);
+      btnBox.appendChild(updateButton);
+
+      // Append the button box to the branch div
+      branchDiv.appendChild(btnBox);
+
+      // Finally, append the branch div to the container
+      container.appendChild(branchDiv);
+    });
+  }
+
+  document.getElementById("branch-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    findBranches();
+  });
+
+  window.onload = function () {
+    getAllBranches();
+  };
+</script>

@@ -156,7 +156,6 @@
         border-radius: 8px;
         width: 90%;
         max-width: 500px;
-        margin: auto;
         margin: 10% auto;
       }
 
@@ -174,7 +173,8 @@
       .btnAddShoe {
         position: absolute;
         top: 210px;
-        right: 22%;
+        right: 380px;
+
       }
     </style>
   </head>
@@ -211,23 +211,23 @@
         <form id="update-form">
           <input type="hidden" id="shoeId" />
 
-          <label for="shoeName">Name:</label>
-          <input type="text" id="shoeName" /><br /><br />
+            <label for="shoeName"><b>Name:</b></label>
+            <input type="text" id="shoeName" /><br /><br />
 
-          <label for="shoeTitle">Title:</label>
-          <input type="text" id="shoeTitle" /><br /><br />
+            <label for="shoeTitle"><b>Title:</b></label>
+            <input type="text" id="shoeTitle" /><br /><br />
 
-          <label for="shoeImage">Image URL:</label>
-          <input type="text" id="shoeImage" /><br /><br />
+            <label for="shoeImage"><b>Image URL:</b></label>
+            <input type="text" id="shoeImage" /><br /><br />
 
-          <label for="shoePrice">Price:</label>
-          <input type="number" id="shoePrice" /><br /><br />
-          <div class="errorModal" style="display: none"></div>
-          <button
+            <label for="shoePrice"><b>Price:</b></label>
+            <input type="number" id="shoePrice" /><br /><br />
+            <div class="errorModal" style="display: none"></div>
+            <button
             class="btn btnUpdateShoe"
             type="button"
             style="text-align: center"
-          >
+            >
             Update Shoe
           </button>
         </form>
@@ -433,24 +433,8 @@
         if (response.ok) {
           createMessage(result.message, false);
           closeModal();
-
-          const shoeEl = document.querySelector(`[data-id="${shoeId}"]`);
-
-          if (updatedData.name) {
-            shoeEl.querySelector("h3").textContent = updatedData.name; // Update shoe name
-          }
-          if (updatedData.title) {
-            shoeEl.querySelector("p:nth-of-type(1)").textContent =
-              updatedData.title; // Update shoe title
-          }
-          if (updatedData.primaryImage) {
-            shoeEl.querySelector("img").src = updatedData.primaryImage; // Update shoe image URL
-          }
-          if (updatedData.price) {
-            shoeEl.querySelector(
-              "p:nth-of-type(2)"
-            ).innerHTML = `<b>Price: </b>$${updatedData.price}`; // Update shoe price
-          }
+          getAllShoes();
+          
         } else {
           createMessage(result.message, true);
         }

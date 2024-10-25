@@ -3,17 +3,18 @@ const express = require("express");
 const router = express.Router();
 const Shoe = require("../models/Shoe");
 const shoesController = require("../controllers/shoes");
+const { isAdmin } = require("../middleware/auth");
 
 router.get("/shoesAdmin", (req, res) => {
   res.render("shoesAdmin");
 });
-router.get("/getAllShoes", shoesController.getAllShoes);
 
-router.post("/deleteShoe", shoesController.deleteShoe);
-router.post("/shoesAdmin", shoesController.searchShoes);
-router.post("/findShoes", shoesController.searchShoes);
-router.post("/updateShoe",shoesController.updateShoe)
-router.post("/addShoe",shoesController.addShoe)
+router.get("/getAllShoes", shoesController.getAllShoes);
+router.post("/deleteShoe",isAdmin, shoesController.deleteShoe);
+router.post("/shoesAdmin",isAdmin, shoesController.searchShoes);
+router.post("/findShoes",isAdmin, shoesController.searchShoes);
+router.post("/updateShoe",isAdmin,shoesController.updateShoe)
+router.post("/addShoe",isAdmin,shoesController.addShoe)
 
 router.get("/store", async (req, res) => {
   try {
@@ -27,6 +28,6 @@ router.get("/store", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+});//need to be handled
 
 module.exports = router;
