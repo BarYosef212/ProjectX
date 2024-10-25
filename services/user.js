@@ -46,7 +46,7 @@ exports.findUser = async (email) => {
 };
 
 exports.getAllUsers = async () => {
-  const users = await User.find();
+  const users = await User.find().sort({ _id: -1 });
   if (users) {
     return users;
   } else {

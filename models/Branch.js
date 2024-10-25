@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 const BranchSchema = new mongoose.Schema({
-    Store_Name: {
+    branchName: {
         type: String,
         required: true,
         unique: true
     },
-    Buissnes_hour: {
+    bussinessHours: {
         type: String,
         required: true
     },
-    Store_Phone_number: {
+    branchAddress: {
         type: String,
         required: true
     },
-    Store_adress: {
+    branchPhone: {
         type: String,
         required: true
     },

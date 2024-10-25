@@ -1,72 +1,87 @@
-const Branch = require('../models/Branch');
+const Branch = require("../models/Branch");
 
-//register function that saves the new branch to the db
-async function AddBranch(Store_Name, Buissnes_hour, Store_adress, Store_Phone_number,coordinate_x,coordinate_y){
-    console.log("addBranch function")
-    const store_name = await Branch.findOne({Store_Name:Store_Name});
-    console.log("log:",store_name)
-    const store_adress = await Branch.findOne({Store_adress:Store_adress})
-    console.log(Store_Name,Buissnes_hour,Store_adress,Store_Phone_number)
-    if(store_name){
-      throw new Error("Branch with this name already registered")
-    }  
-  
-    if(store_adress){
-      throw new Error("Branch with this address already registered");
+exports.AddBranch = async (
+  branchName,
+  bussinessHours,
+  branchAddress,
+  branchPhone,
+  coordinate_x,
+  coordinate_y
+) => {
+  const branch = new Branch({
+    branchName,
+    bussinessHours,
+    branchAddress,
+    branchPhone,
+    location: {
+      coordinate_x,
+      coordinate_y,
+    },
+  });
+  if (branch) {
+    await branch.save();
+    console.log("Branch added");
+    return branch;
+  } else {
+    return null;
+  }
+};
+
+exports.deleteBranch = async (id) => {
+  const result = await Branch.deleteOne({ _id: id });
+  console.log(result);
+  if (result.deletedCount === 1) {
+    console.log("Branch deleted");
+    return result.deletedCount;
+  } else {
+    return null;
+  }
+};
+
+exports.updateBranch = async (updatedData, branchId) => {
+  const branch = await Branch.findById(branchId);
+  if (updatedData.location) {
+    if (
+      updatedData.location.coordinate_x &&
+      !updatedData.location.coordinate_y
+    ) {
+      updatedData.location.coordinate_y = branch.location.coordinate_y;
+    } else if (
+      updatedData.location.coordinate_y &&
+      !updatedData.location.coordinate_x
+    ) {
+      console.log("2");
+
+      updatedData.location.coordinate_x = branch.location.coordinate_x;
     }
-  
-    if (!(/^\d+$/.test(Store_Phone_number))){
-      throw new Error(`Phone number must contain digits only`)
-    }
-    const branch = new Branch({
-      Store_Name,
-      Buissnes_hour,
-      Store_adress,
-      Store_Phone_number,
-      location: {
-        coordinate_x, 
-        coordinate_y  
-      }
-    });
-    console.log("new object branch: ", branch)
-    await branch.save()
-    console.log("Branch added")
   }
+  const updatedBranch = await Branch.findByIdAndUpdate(branchId, updatedData, {
+    new: true,
+  });
 
-  async function deleteBranch(Store_Name){
-    console.log("deleteBranch function", Store_Name)
-    const branch = await Branch.findOne({Store_Name});
-    console.log("log:",branch)
-    
-    if(!branch){
-      throw new Error("Branch with this name does not Exist")
-    }  
-    console.log("delete object branch: ", branch)
-    await branch.deleteOne()
-    console.log("Branch delete")
-  }
-
-  async function updateBranch(Store_Name){
-    console.log("Update Branch function", Store_Name)
-    const branch = await Branch.findOne({Store_Name});
-    console.log("log:",branch)
-    
-    if(!branch){
-      throw new Error("Branch with this name does not Exist")
-    }  
-    console.log("delete object branch: ", branch)
-    await branch.deleteOne()
-    console.log("Branch delete")
-  }
-
+  if (updatedBranch) return updatedBranch;
+  else return null;
+};
 
 // Fetch all branches
-async function getAllBranches() {
-    return await Branch.find();
-}
+exports.getAllBranches = async () => {
+  const branches = await Branch.find().sort({ _id: -1 });
+
+  if (branches) {
+    return branches;
+  } else {
+    return null;
+  }
+};
 
 // Fetch branches by name (case-insensitive search)
-async function getBranchesByName(name) {
-    return await Branch.find({ Store_Name: { $regex: name, $options: 'i' } });
-}
-module.exports = { AddBranch, deleteBranch,updateBranch,getAllBranches, getBranchesByName};
+exports.findBranches = async (name) => {
+  const branches = await Branch.find({
+    branchName: { $regex: name, $options: "i" },
+  });
+  if (branches) {
+    return branches;
+  } else {
+    return null;
+  }
+};

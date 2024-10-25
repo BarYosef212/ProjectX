@@ -46,13 +46,12 @@ exports.login = async (req, res) => {
       req.session.fullName = `${user.firstName} ${user.lastName}`;
       req.session.admin = user.admin;
       res.json({
-        message:"Login successful"
-      })
-    }
-    else{
+        message: "Login successful",
+      });
+    } else {
       res.status(401).json({
-        message:"Invalid email or password"
-      })
+        message: "Invalid email or password",
+      });
     }
   } catch (error) {
     console.log("errorLogin", error);
@@ -196,4 +195,14 @@ exports.renderUsersPage = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+exports.logOut = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log("Error destroying session: ", err);
+      return res.redirect("/"); 
+    }
+    res.redirect("/login");  
+  });
 };
