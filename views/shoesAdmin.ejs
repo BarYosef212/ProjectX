@@ -33,7 +33,7 @@
       }
 
       input[type="number"] {
-        width: 20%;
+        width: 40%;
         padding: 10px;
         margin-bottom: 15px;
         font-size: 1rem;
@@ -174,7 +174,15 @@
         position: absolute;
         top: 210px;
         right: 380px;
-
+      }
+      #shoeGender {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
       }
     </style>
   </head>
@@ -211,23 +219,34 @@
         <form id="update-form">
           <input type="hidden" id="shoeId" />
 
-            <label for="shoeName"><b>Name:</b></label>
-            <input type="text" id="shoeName" /><br /><br />
+          <label for="shoeName"><b>Name:</b></label>
+          <input type="text" id="shoeName" /><br /><br />
 
-            <label for="shoeTitle"><b>Title:</b></label>
-            <input type="text" id="shoeTitle" /><br /><br />
+          <label for="shoeTitle"><b>Title:</b></label>
+          <input type="text" id="shoeTitle" /><br /><br />
 
-            <label for="shoeImage"><b>Image URL:</b></label>
-            <input type="text" id="shoeImage" /><br /><br />
-
-            <label for="shoePrice"><b>Price:</b></label>
-            <input type="number" id="shoePrice" /><br /><br />
-            <div class="errorModal" style="display: none"></div>
-            <button
+          <label for="shoeImage"><b>Image URL:</b></label>
+          <input type="text" id="shoeImage" /><br /><br />
+          <div style="display: flex">
+            <div style="display: flex; flex-direction: column">
+              <label for="shoePrice"><b>Price:</b></label>
+              <input type="number" id="shoePrice" /><br /><br />
+            </div>
+            <div>
+              <label for="shoeGender"><b>Select Gender:</b></label>
+              <select id="shoeGender" name="shoeGender">
+                <option value="" disabled selected>Select Gender</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+              </select>
+            </div>
+          </div>
+          <div class="errorModal" style="display: none"></div>
+          <button
             class="btn btnUpdateShoe"
             type="button"
             style="text-align: center"
-            >
+          >
             Update Shoe
           </button>
         </form>
@@ -252,12 +271,14 @@
       const shoeTitle = document.querySelector("#shoeTitle");
       const shoePrice = document.querySelector("#shoePrice");
       const shoeImage = document.querySelector("#shoeImage");
+      const shoeGender = document.querySelector("#shoeGender");
       const errorMessageEl = document.querySelector(".errorModal");
-
+      checkModalAddShoe;
       shoeName.value = "";
       shoeTitle.value = "";
       shoePrice.value = "";
       shoeImage.value = "";
+      shoeGender.value = "";
 
       errorMessageEl.style.display = "none";
       modalEl.style.display = "none";
@@ -268,13 +289,16 @@
       const shoeTitle = document.querySelector("#shoeTitle");
       const shoePrice = document.querySelector("#shoePrice");
       const shoeImage = document.querySelector("#shoeImage");
+      const shoeGender = document.querySelector("#shoeGender");
+
       const errorMessageEl = document.querySelector(".errorModal");
 
       if (
         shoeName.value === "" ||
         shoeTitle.value === "" ||
         shoePrice.value === "" ||
-        shoeImage.value === ""
+        shoeImage.value === "" ||
+        shoeGender.value === ""
       ) {
         errorMessageEl.textContent =
           "Please fill out all fields before submitting";
@@ -290,7 +314,8 @@
         shoeName.value !== "" &&
         shoeTitle.value !== "" &&
         shoePrice.value !== "" &&
-        shoeImage.value !== ""
+        shoeImage.value !== "" &&
+        shoeGender.value !== ""
       ) {
         const confirmation = confirm("Are you sure you want to add this shoe?");
         if (!confirmation) return;
@@ -298,7 +323,8 @@
           shoeName.value,
           shoeTitle.value,
           shoePrice.value,
-          shoeImage.value
+          shoeImage.value,
+          shoeGender.value
         );
       }
     }
@@ -308,9 +334,11 @@
       const shoeTitle = document.querySelector("#shoeTitle");
       const shoePrice = document.querySelector("#shoePrice");
       const shoeImage = document.querySelector("#shoeImage");
+      const shoeGender = document.querySelector("#shoeGender");
+
       const errorMessageEl = document.querySelector(".errorModal");
 
-      if (shoePrice.value <= 0 && shoePrice.value!=="") {
+      if (shoePrice.value <= 0 && shoePrice.value !== "") {
         errorMessageEl.textContent = "Price cannot be non positive";
         errorMessageEl.style.color = "red";
         errorMessageEl.style.display = "block";
@@ -319,7 +347,8 @@
         shoeName.value === "" &&
         shoeTitle.value === "" &&
         shoePrice.value === "" &&
-        shoeImage.value === ""
+        shoeImage.value === "" &&
+        shoeGender.value === ""
       ) {
         createMessage("No change was made", false);
         const message = document.querySelector(".message");
@@ -327,10 +356,10 @@
         closeModal();
         return;
       } else {
-        const confirmation = confirm(
-          "Are you sure you want to update this shoe?"
-        );
-        if (!confirmation) return;
+        // const confirmation = confirm(
+        //   "Are you sure you want to update this shoe?"
+        // );
+        // if (!confirmation) return;
         updateShoe();
       }
     }
@@ -357,7 +386,7 @@
         document.querySelector("#shoeTitle").required = true;
         document.querySelector("#shoePrice").required = true;
         document.querySelector("#shoeImage").required = true;
-
+        document.querySelector("#shoeGender").required = true;
         shoeId.value = "";
         modelTitleEl.textContent = "";
         modalHeader.textContent = "Add Shoe";
@@ -368,14 +397,26 @@
       modalEl.style.display = "block";
     }
 
-    async function addShoe(shoeName, shoeTitle, shoePrice, shoeImage) {
+    async function addShoe(
+      shoeName,
+      shoeTitle,
+      shoePrice,
+      shoeImage,
+      shoeGender
+    ) {
       try {
         const response = await fetch("/addShoe", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ shoeName, shoeTitle, shoeImage, shoePrice }),
+          body: JSON.stringify({
+            shoeName,
+            shoeTitle,
+            shoeImage,
+            shoePrice,
+            shoeGender,
+          }),
         });
         const result = await response.json();
         if (response.ok) {
@@ -400,12 +441,15 @@
         const shoeTitle = document.querySelector("#shoeTitle").value;
         const shoePrice = document.querySelector("#shoePrice").value;
         const shoeImage = document.querySelector("#shoeImage").value;
+        const shoeGender = document.querySelector("#shoeGender").value;
+
         const data = {
           shoeId,
           shoeName,
           shoeTitle,
           shoePrice,
           shoeImage,
+          shoeGender,
         };
 
         const updatedData = {};
@@ -419,6 +463,7 @@
           closeModal();
           return;
         }
+        if (shoeGender) updatedData.gender = shoeGender;
 
         const response = await fetch("/updateShoe", {
           method: "POST",
@@ -434,7 +479,6 @@
           createMessage(result.message, false);
           closeModal();
           getAllShoes();
-          
         } else {
           createMessage(result.message, true);
         }
@@ -539,7 +583,7 @@
 
         // Create and append the shoe name (h3)
         const shoeName = document.createElement("h3");
-        shoeName.textContent = shoe.name;
+        shoeName.textContent = `${shoe.name} (${shoe.gender})`;
         shoeDiv.appendChild(shoeName);
 
         // Create and append the shoe title (p)

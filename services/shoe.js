@@ -1,11 +1,12 @@
 const Shoe = require("../models/Shoe");
 
-exports.addShoe = async(name,title,url,price)=>{
+exports.addShoe = async(name,title,url,price,shoeGender)=>{
   const shoe = new Shoe({
     name:name,
     title:title,
     primaryImage:url,
     price:price,
+    gender:shoeGender,
   })
   if(shoe){
     await shoe.save();

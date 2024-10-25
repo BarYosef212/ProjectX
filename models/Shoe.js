@@ -18,6 +18,10 @@ const shoeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  gender: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("shoes", shoeSchema);

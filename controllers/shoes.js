@@ -14,8 +14,8 @@ const errorMessage = "An error occured, please try again later";
 
 exports.addShoe = async (req, res) => {
   try {
-    const { shoeName,shoeTitle,shoeImage,shoePrice} = req.body;
-    const result = await shoesService.addShoe(shoeName,shoeTitle,shoeImage,shoePrice);
+    const { shoeName,shoeTitle,shoeImage,shoePrice,shoeGender} = req.body;
+    const result = await shoesService.addShoe(shoeName,shoeTitle,shoeImage,shoePrice,shoeGender);
     console.log(result)
     if(result){
       res.json({
@@ -69,10 +69,10 @@ exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
 
     let shoes;
     if (priceFilter === "Best Offer") {
-      shoes = await Shoe.find(query).skip(skip).limit(limit); 
+      shoes = await Shoe.find(query).skip(skip).limit(limit).sort({ _id: -1 }); 
     } else {
       const sortOrder = priceFilter === 'highLow' ? -1 : 1;
-      shoes = await Shoe.find(query).sort({ price: sortOrder }).skip(skip).limit(limit); 
+      shoes = await Shoe.find(query).sort({ price: sortOrder }).skip(skip).limit(limit).sort({ _id: -1 }); 
     }
     return shoes; 
   } catch (error) {
