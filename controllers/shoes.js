@@ -2,6 +2,16 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
+exports.renderShoePage = async(req,res,next)=>{
+  try{
+    const shoeName = req.params.shoeName;
+    const shoe = await Shoes.findOne({name: shoeName})
+    if(!shoes){
+      const err = new Error('Shoe not found');
+      err.status = 404;
+      return next(err);
+
+
 exports.addShoe = async (req, res) => {
   try {
     const { shoeName,shoeTitle,shoeImage,shoePrice} = req.body;
@@ -49,6 +59,27 @@ exports.updateShoe = async (req, res) => {
 };
 
 
+exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
+  try {
+    let query = {};
+    // Gender filtering
+    if (genderFilter && genderFilter !== "all") {
+      query.gender = genderFilter;
+    }
+
+    let shoes;
+    if (priceFilter === "Best Offer") {
+      shoes = await Shoe.find(query).skip(skip).limit(limit); 
+    } else {
+      const sortOrder = priceFilter === 'highLow' ? -1 : 1;
+      shoes = await Shoe.find(query).sort({ price: sortOrder }).skip(skip).limit(limit); 
+    }
+    return shoes; 
+  } catch (error) {
+    console.log("Error in getShoes:", error);
+    throw new Error("Error fetching shoes");
+  }
+};
 exports.getAllShoes = async (req, res) => {
   try {
     const shoes = await shoesService.getAllShoes();

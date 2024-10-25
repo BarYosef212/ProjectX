@@ -8,6 +8,21 @@
   <body>
     <%- include('partials/header') %>
     <main>
+      <div class="filter-container">
+        <select id="filter" name="priceFilter">
+          <option value="Best Offer" <%= priceFilter === 'Best Offer' ? 'selected' : '' %>>Best Offer</option>
+          <option value="lowHigh" <%= priceFilter === 'lowHigh' ? 'selected' : '' %>>Price: low - High</option>
+          <option value="highLow" <%= priceFilter === 'highLow' ? 'selected' : '' %>>Price: High - Low</option>
+        </select>
+        <select id="genderFilter" name="genderFilter">
+          <option value="all" <%= genderFilter === 'all' ? 'selected' : '' %>>All</option>
+          <option value="men" <%= genderFilter === 'men' ? 'selected' : '' %>>Men</option>
+          <option value="women" <%= genderFilter === 'women' ? 'selected' : '' %>>Women</option>
+        </select>
+      </div>
+        
+
+
       <div class="shoes-container">
         <% shoes.forEach(shoe => { %>
         <div class="shoe">
@@ -22,20 +37,41 @@
     </main>
 
     <div id="pagination">
-      <% if (currentPage > 1) { %>
-          <a href="/store?page=<%= currentPage - 1 %>">Previous</a>
-      <% } %>
-  
-      <% for (let i = 1; i <= totalPages; i++) { %>
-          <a href="/store?page=<%= i %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
-      <% } %>
-  
-      <% if (currentPage < totalPages) { %>
-          <a href="/store?page=<%= currentPage + 1 %>">Next</a>
-      <% } %>
-  </div>
+  <% if (currentPage > 1) { %>
+      <a href="/store?page=<%= currentPage - 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>">Previous</a>
+  <% } %>
 
+  <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="/store?page=<%= i %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+  <% } %>
+
+  <% if (currentPage < totalPages) { %>
+      <a href="/store?page=<%= currentPage + 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>">Next</a>
+  <% } %>
+</div>
     <%- include ('partials/footer') %>
+
+    <script src="/Scripts/script.js"></script>
+    <script src="/controllers/shoes.js"></script>
+
+    <script>
+  
+  document.getElementById('filter').addEventListener('change', function() {
+    const selectedFilter = this.value;
+    const genderFilter = document.getElementById('genderFilter').value;
+    const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+    
+    window.location.href = `/store?page=${currentPage}&priceFilter=${selectedFilter}&genderFilter=${genderFilter}`;
+  });
+
+  document.getElementById('genderFilter').addEventListener('change', function() {
+    const selectedGender = this.value;
+    const priceFilter = document.getElementById('filter').value;
+    const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+    
+    window.location.href = `/store?page=${currentPage}&priceFilter=${priceFilter}&genderFilter=${selectedGender}`;
+  });
+</script>
 
     <script src="/public/Scripts/script.js"></script>
   </body>
