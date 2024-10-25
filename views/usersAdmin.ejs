@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users Management</title>
+    <link rel="stylesheet" href="/Styles/main.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 3rem;
+      }
+
+      #users-form {
+        text-align: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      label {
+        font-size: 1.4rem;
+        color: #555;
+        margin-bottom: 8px;
+      }
+
+      input[type="email"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        padding: 8px 15px;
+        margin-right: 10px;
+        font-size: 0.9rem;
+      }
+
+      .btn-find {
+        padding: 12px 24px;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      .btnMarketing {
+        border: none;
+        background-color: inherit;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .name-box {
+        text-align: center;
+        color: #555;
+        font-weight: 500;
+        border-bottom: 1px solid #555;
+        margin-bottom: 14px;
+      }
+
+      .name-box p {
+        font-size: 22px;
+      }
+
+      .users-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 60px auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .user-box {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        flex: 1 1 calc(33.333% - 40px);
+        min-width: 280px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .user-box:hover {
+        transform: scale(1.02);
+      }
+
+      .user h4 {
+        color: #333;
+        margin: 10px 0;
+        font-size: 1.2rem;
+      }
+
+      .btn-box {
+        text-align: center;
+        margin-top: 25px;
+        display: flex;
+      }
+
+      .btnUpdate {
+        background-color: #28a745;
+      }
+
+      .btnUpdate:hover {
+        background-color: #218838;
+      }
+
+      .btnDelete {
+        background-color: #dc3545;
+      }
+
+      .btnDelete:hover {
+        background-color: #c82333;
+      }
+
+      .btnMarketing {
+        margin-top: 8px;
+        margin: 8px 0 0 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+
+    <form id="users-form">
+      <h1>Users Management</h1>
+
+      <input
+        name="emailUsersForm"
+        type="email"
+        style="width: 200px"
+        placeholder="Enter user email"
+        class="findUserInput"
+      />
+      <button class="btn btn-find" type="submit">Find</button>
+    </form>
+
+    <!-- Success/Error handler -->
+    <div class="message" style="text-align: center"></div>
+
+    <!-- Display all users -->
+    <div class="users-container"></div>
+    <div class="user-search"></div>
+
+    <%- include('partials/footer') %>
+  </body>
+  <script src="/Scripts/usersAdmin.js"></script>
+</html>

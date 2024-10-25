@@ -1,23 +1,53 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const { isLoggedIn, isAdmin } = require("../middleware/auth");
 const userController = require('../controllers/user');
 
-router.get('/',userController.renderHomePage)
-router.get('/home',userController.renderHomePage)
+// Home page
+router.get("/", (req, res) => {
+  res.render("index");
+});
+router.get("/home", isLoggedIn, (req, res) => {
+  res.render("index");
+});
 
-router.get('/register',(req,res) =>{
-  res.render('register');
-})
-router.post('/register',userController.register);
+// Admin dashboard
+router.get("/admin", isAdmin, (req, res) => {
+  res.render("adminDashboard");
+});
+
+// Register page
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+router.post("/register", userController.register);
+
+// Login page
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+router.post("/login", userController.login);
+
+// Contact page
+router.get("/contact", (req, res) => {
+  res.render("contact");
+});
 
 
-router.get('/login',(req,res)=>{
-  res.render('login')
-})
-router.post('/login',userController.login);
+// Users Admin page
+router.get("/usersAdmin", isAdmin, (req, res) => {
+  res.render("usersAdmin");
+});
+router.get("/getUsers", isAdmin, userController.getAllUsers);
+router.post("/usersAdmin", userController.findUser);
 
-router.get('/contact',(req,res)=>{
-  res.render('contact');
-})
+// Manage users
+router.post("/delete-user", userController.deleteUser);
+router.post("/toggle-admin", userController.toggleAdmin);
+router.post("/toggle-marketing", userController.toggleMarketing);
+router.post("/find-user", userController.findUser);
 
-module.exports = router
+// Logout
+router.post("/logout", userController.logOut);
+
+module.exports = router;
