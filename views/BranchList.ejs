@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Branches</title>
+</head>
+<body>
+    <h2>Branches List</h2>
+
+    <!-- Search form -->
+    <form action="/BranchList" method="GET">
+        <input type="text" name="name" placeholder="Search by branch name" required>
+        <button type="submit">Search</button>
+        <button type="button" onclick="window.location.href='/branchList'">Clear Search</button>
+    </form>
+    
+
+    <!-- Check if there are any branches to display -->
+    <% if (branches.length === 0) { %>
+        <p>No branches found.</p>
+    <% } else { %>
+        <ul>
+            <!-- Loop through the branches and display each one -->
+            <% branches.forEach(branch => { %>
+                <li>
+                    <strong>Name:</strong> <%= branch.Store_Name %>, 
+                    <strong>Address:</strong> <%= branch.Store_adress %>, 
+                    <strong>Phone:</strong> <%= branch.Store_Phone_number %>, 
+                    <strong>Business Hours:</strong> <%= branch.Buissnes_hour %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+
+    <!-- Display error message if there is one -->
+    <% if (typeof error !== 'undefined') { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+</body>
+</html>
