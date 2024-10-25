@@ -8,40 +8,35 @@
   </head>
   <body>
     <%- include('partials/header') %>
-    <main>
+    <main style="width: 15%; margin: 150px auto; text-align: center">
       <h2 class="login-title">Log In</h2>
-      <form
-        class="user-form"
-        id="user-form"
-        action="/login"
-        method="POST"
-      >
+      <form class="user-form" id="user-form" action="/login" method="POST" onsubmit="login(event)">
         <div class="log-input-box">
           <label for="user-name">Email:</label>
           <input
             type="email"
-            id="email"
+            id="emailLogin"
             name="email"
             placeholder="Enter your Email"
             required
           />
         </div>
-       
+
         <div class="log-input-box">
           <label for="password">Password:</label>
           <input
             type="password"
-            id="password"
+            id="passwordLogin"
             name="password"
             placeholder="Enter your password"
             required
           />
         </div>
-
-        <% if (typeof error !== 'undefined') { %>
-          <p style="color: red; text-align: left"><%= error %></p>
-          <% } %>
-        <button class="btn btn-login" type="submit">Log in</button>
+        <div
+          class="loginMessage"
+          style="display: none; color: red; text-align: left"
+        ></div>
+        <button class="btn btn-login" type="submit" >Log in</button>
         <p class="sign-option">
           Don't have an account?
           <a class="main-link" href="/register">Sign up</a>
@@ -49,4 +44,47 @@
       </form>
     </main>
   </body>
+
+  <script>
+    async function login() {
+      event.preventDefault(); // Prevent form from submitting the traditional way
+      try {
+
+        const email = document.querySelector("#emailLogin").value;
+        const password = document.querySelector("#passwordLogin").value;
+
+        const data = {
+          email,
+          password,
+        };
+
+        const message = document.querySelector(".loginMessage");
+        const response = await fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        console.log(result)
+        if (response.ok) {
+          message.style.display = "block";
+          message.textContent = result.message;
+          message.style.color = "green";
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 1000);
+        } else {
+          message.style.display = "block";
+          message.textContent = result.message;
+          message.style.color = "red";
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  </script>
 </html>

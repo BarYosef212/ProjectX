@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shoes Management</title>
+    <link rel="stylesheet" href="/Styles/main.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 3rem;
+      }
+
+      /* Form Styles */
+      #shoes-form {
+        text-align: center;
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      input[type="number"] {
+        width: 20%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+
+      .btn:hover {
+        background-color: #0056b3;
+      }
+
+      /* Shoe Container */
+      .shoes-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 40px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .btn-box {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .btnShoesAdmin {
+        background-color: var(--main-color);
+        color: white;
+        border: none;
+        border-radius: 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        white-space: nowrap;
+        font-size: 16px;
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .btnDelete {
+        background-color: #dc3545;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .btnDelete:hover {
+        background-color: #c82333;
+      }
+
+      .btnUpdate {
+        background-color: #fd7e14;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .btnUpdate:hover {
+        background-color: #e06b12;
+      }
+
+      /* Success/Error Message */
+      .message {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 10px 0;
+      }
+
+      .error-message {
+        color: red;
+      }
+
+      .success-message {
+        color: green;
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        margin: auto;
+        margin: 10% auto;
+      }
+
+      .close-button {
+        float: right;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .btnUpdateShoe {
+        display: block;
+        margin: 0 auto;
+      }
+
+      .btnAddShoe {
+        position: absolute;
+        top: 210px;
+        right: 22%;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <form id="shoes-form">
+      <h1>Store Management</h1>
+      <input
+        class="findInput"
+        name="stringReq"
+        type="text"
+        placeholder="Enter shoe name"
+      />
+      <button class="btn btn-find" onclick="findShoes()" type="button">
+        Find
+      </button>
+    </form>
+    <button
+      class="btn btnAddShoe"
+      style="font-size: 18px"
+      onclick="openModal(0)"
+    >
+      Add Shoe &plus;
+    </button>
+    <div class="message"></div>
+
+    <div id="updateModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div class="title" style="text-align: center">
+          <h2 style="text-decoration: underline">Update Shoe</h2>
+          <p id="modalTitle"></p>
+        </div>
+        <form id="update-form">
+          <input type="hidden" id="shoeId" />
+
+          <label for="shoeName">Name:</label>
+          <input type="text" id="shoeName" /><br /><br />
+
+          <label for="shoeTitle">Title:</label>
+          <input type="text" id="shoeTitle" /><br /><br />
+
+          <label for="shoeImage">Image URL:</label>
+          <input type="text" id="shoeImage" /><br /><br />
+
+          <label for="shoePrice">Price:</label>
+          <input type="number" id="shoePrice" /><br /><br />
+          <div class="errorModal" style="display: none"></div>
+          <button
+            class="btn btnUpdateShoe"
+            type="button"
+            style="text-align: center"
+          >
+            Update Shoe
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="shoes-container"></div>
+
+    <%- include('partials/footer') %>
+  </body>
+
+  <script>
+    function createMessage(message, isError = false) {
+      const messageEl = document.querySelector(".message");
+      messageEl.textContent = message;
+      messageEl.style.color = isError ? "red" : "green";
+      messageEl.style.display = "block";
+    }
+
+    function closeModal() {
+      const modalEl = document.querySelector(".modal");
+      const shoeName = document.querySelector("#shoeName");
+      const shoeTitle = document.querySelector("#shoeTitle");
+      const shoePrice = document.querySelector("#shoePrice");
+      const shoeImage = document.querySelector("#shoeImage");
+      const errorMessageEl = document.querySelector(".errorModal");
+
+      shoeName.value = "";
+      shoeTitle.value = "";
+      shoePrice.value = "";
+      shoeImage.value = "";
+
+      errorMessageEl.style.display = "none";
+      modalEl.style.display = "none";
+    }
+
+    async function checkModalAddShoe() {
+      const shoeName = document.querySelector("#shoeName");
+      const shoeTitle = document.querySelector("#shoeTitle");
+      const shoePrice = document.querySelector("#shoePrice");
+      const shoeImage = document.querySelector("#shoeImage");
+      const errorMessageEl = document.querySelector(".errorModal");
+
+      if (
+        shoeName.value === "" ||
+        shoeTitle.value === "" ||
+        shoePrice.value === "" ||
+        shoeImage.value === ""
+      ) {
+        errorMessageEl.textContent =
+          "Please fill out all fields before submitting";
+        errorMessageEl.style.color = "red";
+        errorMessageEl.style.display = "block";
+        errorMessageEl.style.textAlign = "left";
+      } else if (shoePrice.value <= 0) {
+        errorMessageEl.textContent = "Price cannot be non positive";
+        errorMessageEl.style.color = "red";
+        errorMessageEl.style.display = "block";
+        errorMessageEl.style.textAlign = "left";
+      } else if (
+        shoeName.value !== "" &&
+        shoeTitle.value !== "" &&
+        shoePrice.value !== "" &&
+        shoeImage.value !== ""
+      ) {
+        const confirmation = confirm("Are you sure you want to add this shoe?");
+        if (!confirmation) return;
+        await addShoe(
+          shoeName.value,
+          shoeTitle.value,
+          shoePrice.value,
+          shoeImage.value
+        );
+      }
+    }
+
+    async function checkModalUpdateShoe() {
+      const shoeName = document.querySelector("#shoeName");
+      const shoeTitle = document.querySelector("#shoeTitle");
+      const shoePrice = document.querySelector("#shoePrice");
+      const shoeImage = document.querySelector("#shoeImage");
+      const errorMessageEl = document.querySelector(".errorModal");
+
+      if (shoePrice.value <= 0 && shoePrice.value!=="") {
+        errorMessageEl.textContent = "Price cannot be non positive";
+        errorMessageEl.style.color = "red";
+        errorMessageEl.style.display = "block";
+        errorMessageEl.style.textAlign = "left";
+      } else if (
+        shoeName.value === "" &&
+        shoeTitle.value === "" &&
+        shoePrice.value === "" &&
+        shoeImage.value === ""
+      ) {
+        createMessage("No change was made", false);
+        const message = document.querySelector(".message");
+        message.style.color = "orange";
+        closeModal();
+        return;
+      } else {
+        const confirmation = confirm(
+          "Are you sure you want to update this shoe?"
+        );
+        if (!confirmation) return;
+        updateShoe();
+      }
+    }
+
+    function openModal(id) {
+      const modalEl = document.querySelector(".modal");
+      const modelTitleEl = document.querySelector("#modalTitle");
+      const shoeId = document.querySelector("#shoeId");
+      const modalHeader = modalEl.querySelector(".title h2");
+      const btnEl = document.querySelector(".btnUpdateShoe");
+
+      if (id !== 0) {
+        const shoeName = document.querySelector(
+          `[data-id="${id}"] h3`
+        ).textContent;
+        shoeId.value = id;
+        modelTitleEl.textContent = shoeName;
+        modalHeader.textContent = "Update Shoe";
+        btnEl.textContent = "Update Shoe";
+
+        btnEl.setAttribute("onclick", "checkModalUpdateShoe()");
+      } else {
+        document.querySelector("#shoeName").required = true;
+        document.querySelector("#shoeTitle").required = true;
+        document.querySelector("#shoePrice").required = true;
+        document.querySelector("#shoeImage").required = true;
+
+        shoeId.value = "";
+        modelTitleEl.textContent = "";
+        modalHeader.textContent = "Add Shoe";
+        btnEl.textContent = "Add Shoe +";
+        btnEl.setAttribute("onclick", "checkModalAddShoe()");
+      }
+
+      modalEl.style.display = "block";
+    }
+
+    async function addShoe(shoeName, shoeTitle, shoePrice, shoeImage) {
+      try {
+        const response = await fetch("/addShoe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ shoeName, shoeTitle, shoeImage, shoePrice }),
+        });
+        const result = await response.json();
+        if (response.ok) {
+          createMessage(result.message, false);
+          closeModal();
+          getAllShoes();
+        } else {
+          createMessage(result.message, true);
+          closeModal();
+        }
+      } catch (error) {
+        console.log(error);
+        createMessage(result.message, true);
+        closeModal();
+      }
+    }
+
+    async function updateShoe() {
+      try {
+        const shoeId = document.querySelector("#shoeId").value;
+        const shoeName = document.querySelector("#shoeName").value;
+        const shoeTitle = document.querySelector("#shoeTitle").value;
+        const shoePrice = document.querySelector("#shoePrice").value;
+        const shoeImage = document.querySelector("#shoeImage").value;
+        const data = {
+          shoeId,
+          shoeName,
+          shoeTitle,
+          shoePrice,
+          shoeImage,
+        };
+
+        const updatedData = {};
+
+        if (shoeName) updatedData.name = shoeName;
+        if (shoeTitle) updatedData.title = shoeTitle;
+        if (shoeImage) updatedData.primaryImage = shoeImage;
+        if (shoePrice) updatedData.price = shoePrice;
+        if (shoePrice <= 0 && shoePrice !== "") {
+          createMessage("Price cannot change to non-positive number", true);
+          closeModal();
+          return;
+        }
+
+        const response = await fetch("/updateShoe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ updatedData: updatedData, shoeId: shoeId }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          createMessage(result.message, false);
+          closeModal();
+
+          const shoeEl = document.querySelector(`[data-id="${shoeId}"]`);
+
+          if (updatedData.name) {
+            shoeEl.querySelector("h3").textContent = updatedData.name; // Update shoe name
+          }
+          if (updatedData.title) {
+            shoeEl.querySelector("p:nth-of-type(1)").textContent =
+              updatedData.title; // Update shoe title
+          }
+          if (updatedData.primaryImage) {
+            shoeEl.querySelector("img").src = updatedData.primaryImage; // Update shoe image URL
+          }
+          if (updatedData.price) {
+            shoeEl.querySelector(
+              "p:nth-of-type(2)"
+            ).innerHTML = `<b>Price: </b>$${updatedData.price}`; // Update shoe price
+          }
+        } else {
+          createMessage(result.message, true);
+        }
+      } catch (error) {
+        console.log(error);
+        createMessage(result.message, true);
+      }
+    }
+
+    async function deleteShoe(shoeId) {
+      try {
+        const confirmation = confirm(
+          "Are you sure you want to delete this shoe?"
+        );
+        if (!confirmation) return;
+        const response = await fetch("/deleteShoe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ shoeId: shoeId }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          const shoe = document.querySelector(`[data-id = "${shoeId}"]`);
+          if (shoe) {
+            shoe.remove();
+            createMessage(result.message, false);
+          }
+        } else {
+          createMessage(result.message, true);
+        }
+      } catch (error) {
+        console.log(error);
+        createMessage(result.message, true);
+      }
+    }
+
+    async function getAllShoes() {
+      try {
+        const response = await fetch("/getAllShoes", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          displayShoes(result.shoes);
+        } else {
+          createMessage(result.message, true);
+        }
+      } catch (error) {
+        createMessage(result.message, true);
+      }
+    }
+
+    async function findShoes() {
+      try {
+        const search = document.querySelector(".findInput").value;
+        const response = await fetch("/findShoes", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search: search }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          createMessage(result.message, false);
+          displayShoes(result.shoes);
+        } else {
+          createMessage(result.message, true);
+        }
+      } catch (error) {
+        console.log(error);
+        createMessage(result.message, true);
+      }
+    }
+
+    function displayShoes(data) {
+      const container = document.querySelector(".shoes-container");
+      container.innerHTML = "";
+
+      data.forEach((shoe) => {
+        // Create the main shoe div
+        const shoeDiv = document.createElement("div");
+        shoeDiv.classList.add("shoe");
+        shoeDiv.setAttribute("data-id", shoe._id);
+
+        // Create and append the shoe image
+        const shoeImage = document.createElement("img");
+        shoeImage.src = shoe.primaryImage;
+        shoeImage.alt = shoe.name;
+        shoeDiv.appendChild(shoeImage);
+
+        // Create and append the shoe name (h3)
+        const shoeName = document.createElement("h3");
+        shoeName.textContent = shoe.name;
+        shoeDiv.appendChild(shoeName);
+
+        // Create and append the shoe title (p)
+        const shoeTitle = document.createElement("p");
+        shoeTitle.textContent = shoe.title;
+        shoeDiv.appendChild(shoeTitle);
+
+        // Create and append the price (p)
+        const shoePrice = document.createElement("p");
+        shoePrice.innerHTML = `<b>Price: </b>$${shoe.price}`;
+        shoeDiv.appendChild(shoePrice);
+
+        // Create the button container div
+        const btnBox = document.createElement("div");
+        btnBox.classList.add("btn-box");
+
+        // Create delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("btnShoesAdmin", "btnDelete");
+        deleteButton.textContent = "Delete Shoe";
+
+        // Add event listener to delete button
+        deleteButton.addEventListener("click", () => {
+          deleteShoe(shoe._id);
+        });
+
+        btnBox.appendChild(deleteButton);
+
+        // Create update button
+        const updateButton = document.createElement("button");
+        updateButton.classList.add("btnShoesAdmin", "btnUpdate");
+        updateButton.textContent = "Update Shoe";
+
+        // Set the onclick attribute to openModal with shoeId
+        updateButton.setAttribute("onclick", `openModal('${shoe._id}')`);
+
+        btnBox.appendChild(updateButton);
+
+        // Append the button box to the shoe div
+        shoeDiv.appendChild(btnBox);
+
+        // Finally, append the shoe div to the container
+        container.appendChild(shoeDiv);
+      });
+    }
+
+    document
+      .getElementById("shoes-form")
+      .addEventListener("submit", (event) => {
+        event.preventDefault(); // Prevent default form submission
+        findShoes(); // Call the findShoes function
+      });
+
+    window.onload = function () {
+      getAllShoes();
+    };
+  </script>
+</html>
