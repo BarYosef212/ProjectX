@@ -109,6 +109,12 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         flex: 1 1 calc(33.333% - 40px);
         min-width: 280px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .user-box:hover {
+        transform: scale(1.02);
       }
 
       .user h4 {
@@ -162,7 +168,7 @@
     </form>
 
     <!-- Success/Error handler -->
-    <div class="message" style="text-align: center;"></div>
+    <div class="message" style="text-align: center"></div>
 
     <!-- Display all users -->
     <div class="users-container"></div>

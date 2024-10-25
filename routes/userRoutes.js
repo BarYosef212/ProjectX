@@ -48,14 +48,6 @@ router.post("/toggle-marketing", userController.toggleMarketing);
 router.post("/find-user", userController.findUser);
 
 // Logout
-router.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log("Error destroying session: ", err);
-      return res.redirect("/"); // Redirect to home even if there's an error
-    }
-    res.redirect("/login"); // Successfully logged out, redirect to login page
-  });
-});
+router.post("/logout", userController.logOut);
 
 module.exports = router;
