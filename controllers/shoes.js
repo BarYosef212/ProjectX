@@ -2,14 +2,14 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
-exports.renderShoePage = async(req,res,next)=>{
-  try{
-    const shoeName = req.params.shoeName;
-    const shoe = await Shoes.findOne({name: shoeName})
-    if(!shoes){
-      const err = new Error('Shoe not found');
-      err.status = 404;
-      return next(err);
+// exports.renderShoePage = async(req,res,next)=>{
+//   try{
+//     const shoeName = req.params.shoeName;
+//     const shoe = await Shoes.findOne({name: shoeName})
+//     if(!shoes){
+//       const err = new Error('Shoe not found');
+//       err.status = 404;
+//       return next(err);
 
 
 exports.addShoe = async (req, res) => {
