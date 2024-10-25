@@ -15,10 +15,16 @@ const user = new mongoose.Schema({
     type: String,
     required: true,
   },
+  marketing: {
+    type: Boolean,
+    required: true,
+  },
   admin:{
    type:Boolean,
    required:true,
-  }
-});
+  },
+},
+{versionKey: false});
+
 
 module.exports = mongoose.model("users", user);
