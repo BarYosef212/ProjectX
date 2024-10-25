@@ -3,13 +3,14 @@ const branchServices = require('../services/branch')
 
 exports.AddBranch = async (req, res) => {
   try {
-    const {Store_Name, Buissnes_hour, Store_adress, Store_Phone_number} = req.body;
-    console.log(Store_Name,Buissnes_hour,Store_adress,Store_Phone_number)
+    const {Store_Name, Buissnes_hour, Store_adress, Store_Phone_number,coordinate_x,coordinate_y} = req.body;
     await branchServices.AddBranch(
       Store_Name,
       Buissnes_hour,
       Store_adress,
-      Store_Phone_number
+      Store_Phone_number,
+      coordinate_x,
+      coordinate_y,
     );
     res.redirect("/");
 

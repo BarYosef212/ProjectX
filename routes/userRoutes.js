@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { isLoggedIn, isAdmin } = require("../middleware/auth");
 const userController = require('../controllers/user');
-const Branch = require('../models/Branch');
-const branchController = require('../controllers/branch'); // Controller for branch logic
-const branchServices = require('../services/branch'); // Service layer for branch logic
 
 // Home page
 router.get("/", (req, res) => {
@@ -36,26 +33,9 @@ router.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-router.get('/AddBranch',(req,res)=>{
-  res.render('AddBranch')
-})
-router.post('/AddBranch',branchController.AddBranch)
 
-router.get('/DeleteBranch', (req,res)=>{
-  res.render('DeleteBranch')
-})
-router.post('/DeleteBranch', branchController.deleteBranch);
-
-router.get('/UpdateBranch', (req,res)=>{
-  res.render('UpdateBranch')
-})
-router.post('/UpdateBranch', branchController.updateBranch);
-
-router.get('/BranchList', branchController.getBranchList);
-
-=======
 // Users Admin page
-router.get("/usersAdmin",isAdmin, (req, res) => {
+router.get("/usersAdmin", isAdmin, (req, res) => {
   res.render("usersAdmin");
 });
 router.get("/getUsers", isAdmin, userController.getAllUsers);
@@ -67,19 +47,14 @@ router.post("/toggle-admin", userController.toggleAdmin);
 router.post("/toggle-marketing", userController.toggleMarketing);
 router.post("/find-user", userController.findUser);
 
-
-// Logout (GET and POST)
-
+// Logout
 router.post("/logout", (req, res) => {
-  // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.log("Error destroying session: ", err);
       return res.redirect("/"); // Redirect to home even if there's an error
     }
-
-    // Successfully logged out, redirect to login page
-    res.redirect("/login");
+    res.redirect("/login"); // Successfully logged out, redirect to login page
   });
 });
 

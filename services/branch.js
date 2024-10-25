@@ -1,7 +1,7 @@
 const Branch = require('../models/Branch');
 
 //register function that saves the new branch to the db
-async function AddBranch(Store_Name, Buissnes_hour, Store_adress, Store_Phone_number){
+async function AddBranch(Store_Name, Buissnes_hour, Store_adress, Store_Phone_number,coordinate_x,coordinate_y){
     console.log("addBranch function")
     const store_name = await Branch.findOne({Store_Name:Store_Name});
     console.log("log:",store_name)
@@ -22,7 +22,11 @@ async function AddBranch(Store_Name, Buissnes_hour, Store_adress, Store_Phone_nu
       Store_Name,
       Buissnes_hour,
       Store_adress,
-      Store_Phone_number
+      Store_Phone_number,
+      location: {
+        coordinate_x, 
+        coordinate_y  
+      }
     });
     console.log("new object branch: ", branch)
     await branch.save()
