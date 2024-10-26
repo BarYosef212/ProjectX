@@ -3,69 +3,143 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/Styles/main.css" />
     <title>Project X</title>
   </head>
+  <!-- 235px -->
+
   <body>
     <div class="container-home">
       <%- include('partials/header') %>
-      <!-- MAIN -->
-      <main class="main-page">
-        <div class="main-text">
-          <h1 class="main-header">
-            Step into Style,<br />
-            Comfort, and Performance
-          </h1>
-          <h4 class="sub-header">
-            Discover our latest collection of shoes designed to elevate every
-            step you take
-          </h4>
-        </div>
+      <style>
+        .header-home {
+          background-color: transparent;
+          border-bottom: none;
+        }
+        #background-video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          object-fit: cover;
+          z-index: -1;
+        }
+      </style>
 
-        <!-- NEWSLETTER CTA -->
-        <div class="cta-section">
-          <form class="cta-form">
-            <input type="email" placeholder="Enter Email" required />
-            <button class="btn btn--join" type="submit">
-              Join our Newsletter
-            </button>
-          </form>
+      <!-- MAIN -->
+
+      <main class="main-page">
+        <video autoplay muted loop id="background-video">
+          <source
+            src="/img/Gen-3 Alpha 1271808576, u2436219793_A_white_, M 5.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+        <div class="text" style="margin-bottom: 190px;">
+          <div class="main-text">
+            <h1 class="main-header">
+              Step into Style,<br />
+              Comfort, and Performance
+            </h1>
+            <h4 class="sub-header">
+              Discover our latest collection of shoes designed to elevate every
+              step you take
+            </h4>
+          </div>
+
+          <!-- NEWSLETTER CTA -->
+          <div class="cta-section">
+            <form class="cta-form">
+              <input
+                id="ctaInput"
+                type="email"
+                placeholder="Enter Email"
+                required
+              />
+              <button class="btn btn--join" type="submit">
+                Join our Newsletter
+              </button>
+            </form>
+          </div>
         </div>
       </main>
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+      <!-- CAROUSEL -->
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-ride="carousel"
+      >
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li
+            data-target="#carouselExampleIndicators"
+            data-slide-to="0"
+            class="active"
+          ></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="/img/homepage-img1.avif" alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/homepage-img2.avif" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="/img/homepage-img3.avif" alt="Third slide">
-            </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="/img/img1.png" alt="First slide" />
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="/img/img2.png" alt="Second slide" />
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="/img/img3.png" alt="Third slide" />
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="/img/img4.png" alt="fourth slide" />
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="/img/img5.png" alt="fifth slide" />
+          </div>
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="/img/img6.png" alt="sixth slide" />
+          </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
+        <a
+          class="carousel-control-prev"
+          href="#carouselExampleIndicators"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
+        <a
+          class="carousel-control-next"
+          href="#carouselExampleIndicators"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
         </a>
+      </div>
+
+      <%- include('partials/footer') %>
     </div>
-    <%- include('partials/footer') %>
-     
+
     <script src="/Scripts/script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>

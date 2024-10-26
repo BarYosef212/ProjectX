@@ -1,0 +1,213 @@
+ /* Global Styles */
+ *,
+ *::before,
+ *::after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+ }
+
+ .bodyBranchAdmin {
+   font-family: "Arial", sans-serif;
+   background-color: #f7f7fa;
+   color: #333;
+   margin: 0;
+   padding: 0;
+   line-height: 1.6;
+ }
+
+ h1 {
+   text-align: center;
+   color: #333;
+   margin-bottom: 20px;
+   font-size: 2.5rem; /* Reduced font size */
+   font-weight: 700;
+ }
+
+ /* Form Styles */
+ #branch-form {
+   text-align: center;
+   width: 100%;
+   max-width: 600px;
+   margin: 20px auto;
+   background-color: #fff;
+   padding: 20px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   border-radius: 8px;
+ }
+
+ input[type="text"],
+ input[type="number"] {
+   width: calc(100% - 20px);
+   padding: 10px;
+   margin-bottom: 10px;
+   font-size: 1rem;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   box-sizing: border-box;
+ }
+
+ /* Branches Container */
+ .branches-container {
+   width: 100%;
+   max-width: 900px;
+   margin: 60px auto;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   flex-wrap: wrap;
+   gap: 20px;
+ }
+
+ /* Branch Card */
+ .branch {
+   background: #ffffff;
+   border-radius: 10px;
+   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+   padding: 15px;
+   transition: transform 0.3s ease;
+   cursor: pointer;
+ }
+
+ .branch:hover {
+   transform: scale(1.02);
+ }
+
+ .branch h3 {
+   font-size: 1.3rem;
+   color: #444;
+   margin-bottom: 12px;
+   border-bottom: 1px solid black;
+ }
+
+ .branch p {
+   font-size: 0.9rem; /* Reduced font size */
+   color: #666;
+   margin-bottom: 5px;
+ }
+
+ .btnBoxBranchAdmin {
+   display: flex;
+   justify-content: space-between;
+   margin-top: 12px;
+ }
+
+
+.btnAddBranch {
+  position: absolute;
+  top: 190px;
+  right: 380px;
+  padding:12px 24px;
+}
+ .btnBranchAdmin {
+   width: 48%;
+   padding: 10px;
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s;
+   font-size: 0.9rem;
+ 
+ }
+
+ .btnUpdateBranch {
+   display: block;
+   margin: 0 auto;
+   padding:12px 24px;
+ }
+ .btnBranchAdminDelete {
+   background-color: #dc3545;
+ }
+
+ .btnBranchAdminDelete:hover {
+   background-color: #c82333;
+ }
+
+ .btnBranchAdminUpdate {
+   background-color: #fd7e14;
+ }
+
+ .btnBranchAdminUpdate:hover {
+   background-color: #e06b12;
+ }
+
+ /* Success/Error Message */
+ .message {
+   text-align: center;
+   font-size: 1rem; /* Reduced font size */
+   padding: 10px;
+   border-radius: 8px;
+ }
+
+ .error-message {
+   background-color: #ffeded;
+   color: #e74c3c;
+ }
+
+ .success-message {
+   background-color: #eaffea;
+   color: #2ecc71;
+ }
+
+ /* Modal */
+ .modal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: rgba(0, 0, 0, 0.7);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1;
+ }
+
+ .modalContentBranchAdmin {
+   background: #fff;
+   padding: 20px;
+   border-radius: 8px;
+   width: 90%;
+   max-width: 500px;
+   margin: auto;
+   margin: 5% auto;
+ }
+
+ .close-button {
+   font-size: 1.2rem;
+   font-weight: bold;
+   color: #555;
+   float: right;
+   cursor: pointer;
+   margin-top: -10px;
+ }
+
+ .close-button:hover {
+   color: #e74c3c;
+ }
+
+ /* Input and Label Styling for Modal */
+ .modalContentBranchAdminlabel {
+   display: block;
+   margin: 8px 0 5px;
+   font-weight: bold;
+ }
+
+ .modalContentBranchAdmin input[type="text"],
+ .modalContentBranchAdmin input[type="number"] {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 12px;
+   font-size: 1rem;
+   border: 1px solid #ddd;
+   border-radius: 6px;
+   box-sizing: border-box;
+ }
+
+ #modalTitle {
+   text-align: center;
+   font-size: 18px;
+   font-weight: 600;
+ }
+
+ 

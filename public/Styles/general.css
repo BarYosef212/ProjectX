@@ -1,9 +1,58 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  margin: 10% auto;
+}
+
+.close-button {
+  float: right;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal input[type="number"] {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.modal input[type="text"],
+.modal input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+
 .btn {
   background-color: #007bff; /* Blue background for a professional look */
   color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
-  padding: 12px 24px;
   font-size: 18px;
   transition: background-color 0.3s;
   cursor: pointer;
@@ -14,11 +63,12 @@
   cursor: pointer;
 }
 
-.btn:link,.btn:visited {
+.btn:link,
+.btn:visited {
   background-color: #007bff; /* Blue background for a professional look */
   color: #fff; /* White text color */
   border: none;
-  border-radius: 5px ;
+  border-radius: 5px;
   padding: 12px 20px;
   font-size: 18px;
   transition: background-color 0.3s;
@@ -26,19 +76,41 @@
   text-decoration: none;
 }
 
-.btn:hover,.btn:active {
+.btn:hover,
+.btn:active {
   background-color: #0056b3; /* Darker blue on hover */
   cursor: pointer;
 }
 
-.main-link:link,.main-link:visited {
+
+
+
+.lastElModals {
+  display: flex;
+  margin-bottom: 8px;
+  gap: 18px;
+}
+
+.dropList {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.main-link:link,
+.main-link:visited {
   text-decoration: none;
-  color: #111;; /* Blue color for the link */
+  color: #111; /* Blue color for the link */
   font-weight: 400;
   transition: color 0.3s;
 }
 
-.main-link:hover,.main-link:active {
+.main-link:hover,
+.main-link:active {
   color: #444;
   text-decoration: underline;
 }

@@ -153,3 +153,21 @@
   box-shadow: 0 0 5px rgba(85, 85, 85, 0.5); /* Add shadow on focus for emphasis */
 }
 
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  }
+
+  .filter-container select {
+  margin: 90px 10px 0 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  }
+
+  .filter-container select:focus {
+  border-color: #007bff;
+  outline: none;
+  }

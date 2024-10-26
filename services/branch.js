@@ -78,7 +78,7 @@ exports.getAllBranches = async () => {
 exports.findBranches = async (name) => {
   const branches = await Branch.find({
     branchName: { $regex: name, $options: "i" },
-  });
+  }).sort({ _id: -1 });
   if (branches) {
     return branches;
   } else {
