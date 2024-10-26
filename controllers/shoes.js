@@ -2,36 +2,70 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
-// exports.renderShoePage = async(req,res,next)=>{
-//   try{
-//     const shoeName = req.params.shoeName;
-//     const shoe = await Shoes.findOne({name: shoeName})
-//     if(!shoes){
-//       const err = new Error('Shoe not found');
-//       err.status = 404;
-//       return next(err);
 
+exports.sortShoes = async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // Get current page
+  const limit = 12; // Number of shoes per page
+  const skip = (page - 1) * limit; // Number of shoes to skip
+  const priceFilter = req.query.priceFilter || "Best Offer"; // Get the price filter from query
+  const genderFilter = req.query.genderFilter || "all";
+
+  // Get the total number of shoes based on the price filter
+  let totalShoes;
+  if (genderFilter === "men") {
+    totalShoes = await Shoe.countDocuments({ gender: "men" });
+  } else if (genderFilter === "women") {
+    totalShoes = await Shoe.countDocuments({ gender: "women" });
+  } else {
+    const sortOrder = priceFilter === "highLow" ? -1 : 1;
+    totalShoes = await Shoe.countDocuments().sort({ price: sortOrder });
+  }
+
+  // Fetch the filtered and paginated shoes
+  let shoes = await exports.getShoes({
+    priceFilter,
+    genderFilter,
+    skip,
+    limit,
+  });
+
+  const totalPages = Math.ceil(totalShoes / limit); // Calculate total pages
+
+  // Render the shoe store with the current filter and pagination
+  res.render("shoesStore", {
+    shoes,
+    currentPage: page,
+    totalPages,
+    priceFilter,
+    genderFilter,
+  });
+};
 
 exports.addShoe = async (req, res) => {
   try {
-    const { shoeName,shoeTitle,shoeImage,shoePrice,shoeGender} = req.body;
-    const result = await shoesService.addShoe(shoeName,shoeTitle,shoeImage,shoePrice,shoeGender);
-    console.log(result)
-    if(result){
+    const { shoeName, shoeTitle, shoeImage, shoePrice, shoeGender } = req.body;
+    const result = await shoesService.addShoe(
+      shoeName,
+      shoeTitle,
+      shoeImage,
+      shoePrice,
+      shoeGender
+    );
+    console.log(result);
+    if (result) {
       res.json({
-        message:"Shoe added successfully",
-        shoe:result,
-      })
-    }
-    else{
+        message: "Shoe added successfully",
+        shoe: result,
+      });
+    } else {
       res.status(403).json({
-        message:"Couldn't add shoe",
-      })
+        message: "Couldn't add shoe",
+      });
     }
   } catch (error) {
     res.status(500).json({
-      message:errorMessage,
-    })
+      message: errorMessage,
+    });
   }
 };
 
@@ -58,7 +92,6 @@ exports.updateShoe = async (req, res) => {
   }
 };
 
-
 exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
   try {
     let query = {};
@@ -69,21 +102,26 @@ exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
 
     let shoes;
     if (priceFilter === "Best Offer") {
-      shoes = await Shoe.find(query).skip(skip).limit(limit).sort({ _id: -1 }); 
+      shoes = await Shoe.find(query).skip(skip).limit(limit).sort({ _id: -1 });
     } else {
-      const sortOrder = priceFilter === 'highLow' ? -1 : 1;
-      shoes = await Shoe.find(query).sort({ price: sortOrder }).skip(skip).limit(limit).sort({ _id: -1 }); 
+      const sortOrder = priceFilter === "highLow" ? -1 : 1;
+      shoes = await Shoe.find(query)
+        .sort({ price: sortOrder })
+        .skip(skip)
+        .limit(limit)
+        .sort({ _id: -1 });
     }
-    return shoes; 
+    return shoes;
   } catch (error) {
     console.log("Error in getShoes:", error);
     throw new Error("Error fetching shoes");
   }
 };
+
 exports.getAllShoes = async (req, res) => {
   try {
     const shoes = await shoesService.getAllShoes();
-    if (shoes.length>0) {
+    if (shoes.length > 0) {
       res.json({
         shoes: shoes,
       });
@@ -124,7 +162,7 @@ exports.deleteShoe = async (req, res) => {
 exports.searchShoes = async (req, res) => {
   try {
     const { search } = req.body;
-    const shoes = await shoesService.searchShoes(search); 
+    const shoes = await shoesService.searchShoes(search);
     if (shoes) {
       res.json({
         message: `${shoes.length} Shoes found`,

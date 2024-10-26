@@ -73,53 +73,15 @@ exports.countAdmins = async (req, res) => {
   return adminsCount;
 };
 
-exports.toggleAdmin = async (email) => {
-  let user = await User.findOne({ email: email });
-  const countAdmins = await exports.countAdmins();
-  if (countAdmins == 1 && user.admin === true) return 1;
-  const result = await User.updateOne(
-    { email: email }, // Find the user by email
-    [
-      {
-        $set: {
-          admin: {
-            $cond: { if: { $eq: ["$admin", true] }, then: false, else: true },
-          },
-        },
-      },
-    ]
-  );
-  user = await User.findOne({ email: email });
-
-  if (result.modifiedCount !== 0) {
-    return user;
-  } else {
-    throw new Error("Problem with permissions");
+exports.updateUser = async (email,updatedData) =>{
+  if(updatedData.password){
+    const saltRounds = 6;
+    updatedData.password = await bcrypt.hash(updatedData.password, saltRounds);
   }
-};
 
-exports.toggleMarketing = async (email) => {
-  const result = await User.updateOne(
-    { email: email }, // Find the user by email
-    [
-      {
-        $set: {
-          marketing: {
-            $cond: {
-              if: { $eq: ["$marketing", true] },
-              then: false,
-              else: true,
-            },
-          },
-        },
-      },
-    ]
-  );
-  const user = await User.findOne({ email: email });
-
-  if (result.modifiedCount !== 0) {
-    return user;
-  } else {
-    throw new Error("Problem with preferences");
-  }
-};
+  const updatedUser = await User.findOneAndUpdate({ email: email }, updatedData, {
+    new: true,
+  });
+  if (updatedUser) return updatedUser;
+  else return null;
+}

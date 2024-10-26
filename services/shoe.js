@@ -48,7 +48,7 @@ exports.searchShoes = async (search) => {
   const shoes = await Shoe.find({
     name: { $regex: search, $options: "i" },
     //
-  });
+  }).sort({ _id: -1 });
   if (shoes) {
     return shoes;
   } else {

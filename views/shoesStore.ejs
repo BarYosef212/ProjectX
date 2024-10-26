@@ -4,23 +4,34 @@
     <title>Shoe Store</title>
     <link rel="stylesheet" href="Styles/main.css" />
     <!-- Assuming you have some styles -->
-  </head>
-  <body>
+    
+    </head>
+    <body>
     <%- include('partials/header') %>
     <main>
+      <!-- <div class="ad" ">
+        <img src="/img/u2436219793_A_stylish_ad_showing_7_colorful_pairs_of_Dunk_Low_362412e6-ea94-440d-82f9-91c93050023b_3.png" alt="img" style="height: 330px;margin-left: 240px; margin-top: 120px;">
+      </div> -->
+      
       <div class="filter-container">
-        <select id="filter" name="priceFilter">
-          <option value="Best Offer" <%= priceFilter === 'Best Offer' ? 'selected' : '' %>>Best Offer</option>
-          <option value="lowHigh" <%= priceFilter === 'lowHigh' ? 'selected' : '' %>>Price: low - High</option>
-          <option value="highLow" <%= priceFilter === 'highLow' ? 'selected' : '' %>>Price: High - Low</option>
-        </select>
-        <select id="genderFilter" name="genderFilter">
-          <option value="all" <%= genderFilter === 'all' ? 'selected' : '' %>>All</option>
-          <option value="men" <%= genderFilter === 'men' ? 'selected' : '' %>>Men</option>
-          <option value="women" <%= genderFilter === 'women' ? 'selected' : '' %>>Women</option>
-        </select>
+      <select id="filter" name="priceFilter">
+        <option value="Best Offer" <%= priceFilter === 'Best Offer' ? 'selected' : '' %>>Best Offer</option>
+        <option value="lowHigh" <%= priceFilter === 'lowHigh' ? 'selected' : '' %>>Price: low - High</option>
+        <option value="highLow" <%= priceFilter === 'highLow' ? 'selected' : '' %>>Price: High - Low</option>
+      </select>
+      <select id="genderFilter" name="genderFilter">
+        <option value="all" <%= genderFilter === 'all' ? 'selected' : '' %>>All</option>
+        <option value="men" <%= genderFilter === 'men' ? 'selected' : '' %>>Men</option>
+        <option value="women" <%= genderFilter === 'women' ? 'selected' : '' %>>Women</option>
+      </select>
       </div>
-        
+        <div class="ad" style="margin-left: 560px;">
+        <video autoplay loop muted style="width: 600px;
+        z-index: 1; margin: 0 auto;">
+          <source src="/img/Gen-3 Alpha 1188168779, Dynamic tracking sho, u2436219793_A_perfec, M 5.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
 
 
       <div class="shoes-container">
@@ -51,28 +62,6 @@
 </div>
     <%- include ('partials/footer') %>
 
-    <script src="/Scripts/script.js"></script>
-    <script src="/controllers/shoes.js"></script>
-
-    <script>
-  
-  document.getElementById('filter').addEventListener('change', function() {
-    const selectedFilter = this.value;
-    const genderFilter = document.getElementById('genderFilter').value;
-    const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
-    
-    window.location.href = `/store?page=${currentPage}&priceFilter=${selectedFilter}&genderFilter=${genderFilter}`;
-  });
-
-  document.getElementById('genderFilter').addEventListener('change', function() {
-    const selectedGender = this.value;
-    const priceFilter = document.getElementById('filter').value;
-    const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
-    
-    window.location.href = `/store?page=${currentPage}&priceFilter=${priceFilter}&genderFilter=${selectedGender}`;
-  });
-</script>
-
-    <script src="/public/Scripts/script.js"></script>
+    <script src="Scripts/shoesStore.js"></script>
   </body>
 </html>

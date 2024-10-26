@@ -6,6 +6,163 @@ function createMessage(message, isError = false) {
   messageEl.style.display = "block";
 }
 
+function openModal(email) {
+  const modalEl = document.querySelector(".modal");
+  const modelTitleEl = document.querySelector("#modalTitle");
+  const modalHeader = modalEl.querySelector(".title h2");
+  const btnEl = document.querySelector(".btnUpdateUser");
+
+  if (email) {
+    document.querySelector("#emailModal").value = email;
+    const userName = document.querySelector(`[data-email="${email}"]`);
+    modelTitleEl.textContent =
+      userName.children[0].children[0].children[0].textContent +
+      " " +
+      userName.children[0].children[0].children[1].textContent;
+    modalHeader.textContent = "Update User";
+    btnEl.textContent = "Update User";
+
+    btnEl.setAttribute("onclick", "checkModalUpdateUser()");
+  } else {
+    document.querySelector("#userName").required = true;
+    document.querySelector("#userLastName").required = true;
+    document.querySelector("#userEmail").required = true;
+    document.querySelector("#userAdmin").required = true;
+    document.querySelector("#marketing").required = true;
+    modelTitleEl.textContent = "";
+    modalHeader.textContent = "Add User";
+    btnEl.textContent = "Add User +";
+    btnEl.setAttribute("onclick", "checkModalAddUser()");
+  }
+
+  modalEl.style.display = "block";
+}
+
+function closeModal() {
+  const modalEl = document.querySelector(".modal");
+  const userName = document.querySelector("#userName");
+  const userLastName = document.querySelector("#userLastName");
+  const userEmail = document.querySelector("#userEmail");
+  const userAdmin = document.querySelector("#userAdmin");
+  const marketing = document.querySelector("#marketing");
+  const errorMessageEl = document.querySelector(".errorModal");
+
+  userName.value = "";
+  userLastName.value = "";
+  userEmail.value = "";
+  userAdmin.value = "";
+  marketing.value = "";
+  userPassword.value = "";
+
+  errorMessageEl.style.display = "none";
+  modalEl.style.display = "none";
+}
+
+async function checkModalUpdateUser() {
+  console.log("enter");
+
+  const userName = document.querySelector("#userName");
+  const userLastName = document.querySelector("#userLastName");
+  const userEmail = document.querySelector("#userEmail");
+  const userAdmin = document.querySelector("#userAdmin");
+  const userPassword = document.querySelector("#userPassword");
+  const marketing = document.querySelector("#marketing");
+  const errorMessageEl = document.querySelector(".errorModal");
+  const regex = /[!@#$%^&*(),.?":{}|<>]/;
+
+  if (
+    userName.value === "" &&
+    userLastName.value === "" &&
+    userEmail.value === "" &&
+    userAdmin.value === "" &&
+    userPassword.value === "" &&
+    marketing.value === ""
+  ) {
+    createMessage("No change was made", false);
+    const message = document.querySelector(".message");
+    message.style.color = "orange";
+    closeModal();
+    return;
+  } else if (userPassword.value !== "" && (userPassword.value.length < 6 || !regex.test(userPassword.value))) {
+    console.log("2");
+    errorMessageEl.textContent =
+      "Password must be at least 6 characters long and contain one special character.";
+    errorMessageEl.style.color = "red";
+    errorMessageEl.style.display = "block";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value) && userEmail.value !== ""
+  ) {
+    console.log("3");
+    errorMessageEl.textContent = "Please enter a valid email address.";
+    errorMessageEl.style.color = "red";
+    errorMessageEl.style.display = "block";
+    return;
+  } else {
+    console.log("4");
+    const confirmation = confirm("Are you sure you want to update this user?");
+    if (!confirmation) return;
+    updateUser();
+  }
+}
+async function updateUser(req,res) {
+  try {
+    const userUpdateEmail = document.querySelector("#emailModal").value;
+    const userName = document.querySelector("#userName").value;
+    const userLastName = document.querySelector("#userLastName").value;
+    const userEmail = document.querySelector("#userEmail").value;
+
+    const userPassword = document.querySelector("#userPassword").value;
+    let userAdmin = document.querySelector("#userAdmin").value;
+    if(userAdmin === "admin" || userAdmin=== "notAdmin"){
+      userAdmin = (document.querySelector("#userAdmin").value === "admin")? true:false;
+    }
+    let marketing = document.querySelector("#marketing").value;
+    if(marketing === "Yes" || marketing=== "No"){
+      marketing = (document.querySelector("#marketing").value === "Yes")? true:false;
+    }
+    const message = document.querySelector(".errorModal");
+    const submitButton = document.querySelector(".btnUpdateUser");
+
+    const updatedData = {};
+
+    if (userName) updatedData.firstName = userName;
+    if (userLastName) updatedData.lastName = userLastName;
+    if (userEmail) updatedData.email = userEmail;
+    if (userPassword) updatedData.password = userPassword;
+    if (userAdmin!=="") updatedData.admin = userAdmin;
+    if (marketing!=="") updatedData.marketing = marketing;
+    console.log("the data:",updatedData)
+
+    const response = await fetch("/updateUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        updatedData: updatedData,
+        email: userUpdateEmail,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      createMessage(result.message, false);
+      closeModal();
+      getAllUsers(true);
+     
+      
+    } else {
+      message.textContent = result.message;
+      message.style.color = "red";
+      message.style.display = "block";
+    }
+  } catch (error) {
+    console.log(error);
+    createMessage("An error occurred while updating the user.", true);
+    closeModal();
+  }
+}
+
 async function findUser() {
   try {
     const email = document.querySelector(".findUserInput");
@@ -59,85 +216,6 @@ async function deleteUser(email) {
   }
 }
 
-async function toggleAdmin(email) {
-  const confirmation = confirm(
-    "Are you sure you want to change the user's permissions?"
-  );
-  if (!confirmation) return;
-
-  try {
-    const response = await fetch("/toggle-admin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userEmail: email }),
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      createMessage(result.message, false);
-      const userEl = document.querySelector(`[data-email="${email}"]`);
-      const adminBox = userEl.children[2].children[1];
-      if (result.admin) {
-        userEl.children[0].children[0].style.fontWeight = 600;
-        adminBox.textContent = "Yes";
-      } else {
-        userEl.children[0].children[0].style.fontWeight = 500;
-
-        adminBox.textContent = "No";
-      }
-    } else {
-      createMessage(
-        result.message || "Failed to change user's permissions",
-        true
-      );
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    createMessage(
-      "Failed to change user's permissions, please try again later",
-      true
-    );
-  }
-}
-
-async function toggleMarketing(email) {
-  const confirmation = confirm(
-    "Are you sure you want to change the user's preferences?"
-  );
-  if (!confirmation) return;
-  try {
-    const response = await fetch("/toggle-marketing", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userEmail: email }),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      createMessage(result.message, false);
-      const userEl = document.querySelector(`[data-email="${email}"]`);
-      const marketing = userEl.children[3].children[0].children[1];
-      if (result.marketing) marketing.textContent = "Yes";
-      else marketing.textContent = "No";
-    } else {
-      createMessage(
-        result.message || "Failed to change user's preferences",
-        true
-      );
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    createMessage(
-      "Failed to change user's preferences, please try again later",
-      true
-    );
-  }
-}
 async function getAllUsers(isFirst = false) {
   try {
     const response = await fetch("/getUsers", {
@@ -149,7 +227,6 @@ async function getAllUsers(isFirst = false) {
     const result = await response.json();
     if (response.ok) {
       displayUsers(result.users);
-      if (!isFirst) createMessage(result.message, false);
     } else {
       createMessage(result.message || "Failed to fetch all users", true);
     }
@@ -193,19 +270,14 @@ function displayUsers(users) {
       marketingField.style.alignItems = "center";
       marketingField.innerHTML = `
         <p><b>Marketing:</b> <span>${user.marketing ? "Yes" : "No"}</span></p>
-        <button class="btnMarketing" onclick="toggleMarketing('${user.email}')">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="height: 18px; width: 18px; cursor: pointer">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
-          </svg>
-        </button>
       `;
 
       // Create buttons for delete and toggle admin
       const btnBox = document.createElement("div");
-      btnBox.classList.add("btn-box");
+      btnBox.classList.add("btnUserAdminBox");
       btnBox.innerHTML = `
-        <button class="btn btnDelete" onclick="deleteUser('${user.email}')">Delete User</button>
-        <button class="btn btnUpdate" onclick="toggleAdmin('${user.email}')">Toggle Admin</button>
+          <button class="btn btnUserAdminDelete" onclick="deleteUser('${user.email}')">Delete User</button>
+          <button class="btn btnUserAdminUpdate" onclick="openModal('${user.email}')">Update User</button>
       `;
 
       // Append all elements to userBox
@@ -220,10 +292,13 @@ function displayUsers(users) {
     });
   }
 }
-document.getElementById("users-form").addEventListener("submit", function (event) {
-  event.preventDefault(); // Prevent the default form submission
-  findUser(); // Call the function to find the user
-});
+
+document
+  .getElementById("users-form")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    findUser(); // Call the function to find the user
+  });
 window.onload = function () {
   getAllUsers(true);
 };

@@ -43,9 +43,8 @@ router.post("/usersAdmin", userController.findUser);
 
 // Manage users
 router.post("/delete-user", userController.deleteUser);
-router.post("/toggle-admin", userController.toggleAdmin);
-router.post("/toggle-marketing", userController.toggleMarketing);
 router.post("/find-user", userController.findUser);
+router.post("/updateUser",userController.updateUser);
 
 // Logout
 router.post("/logout", userController.logOut);

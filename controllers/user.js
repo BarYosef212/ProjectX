@@ -1,6 +1,7 @@
 const userService = require("../services/user");
 const User = require("../models/user");
 const errorMessage = "An error occured, please try again later";
+const mongoose = require('mongoose');
 
 exports.register = async (req, res) => {
   try {
@@ -95,7 +96,6 @@ exports.getAllUsers = async (req, res) => {
     if (users.length > 0) {
       res.json({
         users: users,
-        message: `${users.length} users found`,
       });
     } else {
       return res.status(404).json({
@@ -136,73 +136,45 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.toggleAdmin = async (req, res) => {
-  try {
-    const { userEmail } = req.body;
-    const result = await userService.toggleAdmin(userEmail);
-    if (result && result !== 1) {
-      res.json({
-        message: "Permissions changed successfully",
-        admin: result.admin,
-      });
-    } else if (result === 1) {
-      res.status(403).json({
-        message: "1 Admin left, cannot change permmissions",
-      });
-    } else {
-      return res.status(404).json({
-        message: "An error occurred while updating user's permissions",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: errorMessage,
-    });
-  }
-};
-
-exports.toggleMarketing = async (req, res) => {
-  try {
-    const { userEmail } = req.body;
-    const result = await userService.toggleMarketing(userEmail);
-    if (result) {
-      res.json({
-        message: "Preferences changed successfully",
-        marketing: result.marketing,
-      });
-    } else {
-      res.status(404).json({
-        message: "An error occured, please try again later",
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: errorMessage,
-    });
-  }
-};
-
-exports.renderUsersPage = async (req, res) => {
-  const users = await userService.getAllUsers();
-  if (users.length > 0) {
-    res.render("usersAdmin", { users });
-  } else {
-    const error = new Error("No users found");
-    res.render("usersAdmin", {
-      users,
-      error: error.message,
-    });
-  }
-};
-
 exports.logOut = async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.log("Error destroying session: ", err);
-      return res.redirect("/"); 
+      return res.redirect("/");
     }
-    res.redirect("/login");  
+    res.redirect("/login");
   });
+};
+
+exports.updateUser = async (req, res) => {
+  const { email, updatedData } = req.body;
+  if (updatedData.email) {
+    const userToCheck = await User.findOne({ email: updatedData.email });
+    if (userToCheck) {
+      return res.status(409).json({
+        message: "User with this email already exist",
+      });
+    }
+  }
+
+  if(updatedData.admin === false){
+    const adminsCount = await userService.countAdmins();
+    if(adminsCount===1){
+      return res.status(403).json({
+        message: "1 Admin left, cannot change role"
+      });
+    }
+  }
+
+  const user = await userService.updateUser(email, updatedData);
+  if (user) {
+    return res.json({
+      message: "User updated successfully",
+      user: user,
+    });
+  } else {
+    return res.status(403).json({
+      message: errorMessage,
+    });
+  }
 };
