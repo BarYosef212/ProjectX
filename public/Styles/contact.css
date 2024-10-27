@@ -2,19 +2,22 @@
 .contact-container {
   display: flex;
   margin: auto;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 96px;
-  margin-top: 96px;
-  margin-bottom: 96px;
   max-width: 1200px;
   padding: 0 16px;
+  height: 85vh;
 }
 
 /* Form container */
 .content {
   flex: 1;
   max-width: 500px;
+}
+
+.content h2{
+  margin-bottom:12px;
 }
 
 /* Form inputs and textarea */
@@ -26,7 +29,6 @@
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
 }
 
 /* Button styling */

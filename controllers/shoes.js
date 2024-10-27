@@ -181,6 +181,9 @@ exports.searchShoes = async (req, res) => {
   }
 };
 
+
+
+
 // exports.renderShoePage = async (req, res, next) => {
 //   try {
 //     const shoeName = req.params.shoeName;

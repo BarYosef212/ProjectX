@@ -365,7 +365,7 @@
 
       // Create delete button
       const deleteButton = document.createElement("button");
-      deleteButton.classList.add("btnBranchAdminDelete","btnBranchAdmin");
+      deleteButton.classList.add("btnBranchAdminDelete", "btnBranchAdmin");
       deleteButton.textContent = "Delete Branch";
       deleteButton.setAttribute("onclick", `deleteBranch('${branch._id}')`);
       btnBox.appendChild(deleteButton);
@@ -379,6 +379,11 @@
 
       // Append the button box to the branch div
       branchDiv.appendChild(btnBox);
+
+      // Ensure the button box is at the bottom of the card
+      branchDiv.style.display = "flex";
+      branchDiv.style.flexDirection = "column";
+      branchDiv.style.justifyContent = "space-between";
 
       // Finally, append the branch div to the container
       container.appendChild(branchDiv);

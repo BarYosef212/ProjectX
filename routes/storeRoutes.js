@@ -9,7 +9,7 @@ router.get("/shoesAdmin", (req, res) => {
   res.render("shoesAdmin");
 });
 
-router.get("/getAllShoes", shoesController.getAllShoes);
+router.get("/getAllShoes", isAdmin,shoesController.getAllShoes);
 router.post("/deleteShoe",isAdmin, shoesController.deleteShoe);
 router.post("/shoesAdmin",isAdmin, shoesController.searchShoes);
 router.post("/findShoes",isAdmin, shoesController.searchShoes);

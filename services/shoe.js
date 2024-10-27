@@ -1,22 +1,21 @@
 const Shoe = require("../models/Shoe");
 
-exports.addShoe = async(name,title,url,price,shoeGender)=>{
+exports.addShoe = async (name, title, url, price, shoeGender) => {
   const shoe = new Shoe({
-    name:name,
-    title:title,
-    primaryImage:url,
-    price:price,
-    gender:shoeGender,
-  })
-  if(shoe){
+    name: name,
+    title: title,
+    primaryImage: url,
+    price: price,
+    gender: shoeGender,
+  });
+  if (shoe) {
     await shoe.save();
-    console.log("shoe added")
+    console.log("shoe added");
     return shoe;
+  } else {
+    return null;
   }
-  else{
-    return null
-  }
-}
+};
 
 exports.updateShoe = async (updatedData, shoeId) => {
   const updatedShoe = await Shoe.findByIdAndUpdate(shoeId, updatedData, {
@@ -55,3 +54,4 @@ exports.searchShoes = async (search) => {
     return null;
   }
 };
+

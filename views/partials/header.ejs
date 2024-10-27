@@ -5,10 +5,10 @@
   </a>
   <nav class="nav-home">
     <ul class="nav-left">
-      <li><a href="/" class="nav-link-home">Home</a></li>
-      <li><a href="/" class="nav-link-home">About</a></li>
-      <li><a href="/contact" class="nav-link-home">Contact</a></li>
-      <li><a href="/" class="nav-link-home">FAQ</a></li>
+      <!-- <li><a href="/" class="nav-link-home">Home</a></li>
+      <li><a href="/contact" class="nav-link-home">Contact</a></li> -->
+      <li><a href="/store?page=1&priceFilter=Best%20Offer&genderFilter=men" class="nav-link-home">Men</a></li>
+      <li><a href="/store?page=1&priceFilter=Best%20Offer&genderFilter=women" class="nav-link-home">Women</a></li>
       <li><a href="/store" class="btn btn-store">Store</a></li>
     </ul>
 
@@ -59,7 +59,11 @@
         </div>
       </div>
 
-      <!-- Cart Box -->
+     
+
+      <!-- User Info and Logout (If logged in) -->
+      <% if (fullName) { %>
+         <!-- Cart Box -->
       <div class="cart-box">
         <a href="#" class="nav-link-home cart">
           <svg
@@ -87,14 +91,11 @@
           </div>
         </div>
       </div>
-
-      <!-- User Info and Logout (If logged in) -->
-      <% if (fullName) { %>
       <div class="user-section">
         <div class="login-line"></div>
         <div class="user-info">
           <a href="#" class="nav-link-home login"><%= fullName %></a>
-          <p style="margin:0;">Connected <span class="connected-dot"></span></p>
+          <p style="margin:3px;">Connected <span class="connected-dot"></span></p>
         </div>
 
         <!-- Admin Access -->

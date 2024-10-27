@@ -23,6 +23,14 @@ function isLoggedIn(req, res, next) {
   }
 }
 
+function isLoggedOut(req, res, next) {
+  if (!req.session.userId) {
+    next();  // User is logged in, proceed to the next middleware
+  } else {
+    res.redirect('/login');  // If not logged in, redirect to login
+  }
+}
+
 function isAdmin(req, res, next) {
   if(req.session.admin){
     next();    
@@ -45,4 +53,5 @@ module.exports = {
   isLoggedIn,
   setUserInView,
   isAdmin,
+  isLoggedOut
 };
