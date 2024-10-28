@@ -10,13 +10,23 @@ const sessionMiddleware = session({
     mongoUrl: process.env.DB_CONNECTION_STRING,  // MongoDB connection string
   }),
   cookie: {
-    maxAge: 1000 * 60 * 400,   // Session expires in 30 minutes
+    maxAge: null,   // Remove maxAge to make it a session cookie
+    expires: false, // Make sure it doesn't set an explicit expiration time
   },
 });
+
 
 // Middleware to check if user is logged in
 function isLoggedIn(req, res, next) {
   if (req.session.userId) {
+    next();  // User is logged in, proceed to the next middleware
+  } else {
+    res.redirect('/login');  // If not logged in, redirect to login
+  }
+}
+
+function isLoggedOut(req, res, next) {
+  if (!req.session.userId) {
     next();  // User is logged in, proceed to the next middleware
   } else {
     res.redirect('/login');  // If not logged in, redirect to login
@@ -45,4 +55,5 @@ module.exports = {
   isLoggedIn,
   setUserInView,
   isAdmin,
+  isLoggedOut
 };

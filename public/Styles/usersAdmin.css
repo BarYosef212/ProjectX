@@ -34,7 +34,6 @@ input[type="email"] {
   width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 15px;
-  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
@@ -131,11 +130,11 @@ p {
 }
 
 .btnUserAdminUpdate {
-  background-color: #28a745;
+  background-color: #fd7e14;
 }
 
 .btnUserAdminUpdate:hover {
-  background-color: #218838;
+  background-color: #e06b12;
 }
 
 .btnUserAdminDelete {

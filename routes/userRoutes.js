@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn, isAdmin } = require("../middleware/auth");
+const { isLoggedIn, isAdmin,isLoggedOut } = require("../middleware/auth");
 const userController = require('../controllers/user');
 
 // Home page
@@ -17,13 +17,13 @@ router.get("/admin", isAdmin, (req, res) => {
 });
 
 // Register page
-router.get("/register", (req, res) => {
+router.get("/register", isLoggedOut,(req, res) => {
   res.render("register");
 });
 router.post("/register", userController.register);
 
 // Login page
-router.get("/login", (req, res) => {
+router.get("/login", isLoggedOut,(req, res) => {
   res.render("login");
 });
 router.post("/login", userController.login);
@@ -42,9 +42,9 @@ router.get("/getUsers", isAdmin, userController.getAllUsers);
 router.post("/usersAdmin", userController.findUser);
 
 // Manage users
-router.post("/delete-user", userController.deleteUser);
-router.post("/find-user", userController.findUser);
-router.post("/updateUser",userController.updateUser);
+router.post("/delete-user", isAdmin,userController.deleteUser);
+router.post("/find-user", isAdmin,userController.findUser);
+router.post("/updateUser",isAdmin,userController.updateUser);
 
 // Logout
 router.post("/logout", userController.logOut);

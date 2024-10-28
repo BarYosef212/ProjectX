@@ -92,7 +92,7 @@
 .shoe p {
   color: #555;
   font-size: 14px;
-  margin: 5px 0;
+  margin: 10px 0;
   padding: 0 10px;
   text-align: center;
 }
@@ -118,7 +118,6 @@
 
 /* Style for the filter container */
 .filter-container {
-  
   margin: 20px 10px; /* Add margin for spacing */
   text-align: center; /* Center the dropdown within the container */
 }
@@ -157,17 +156,74 @@
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  }
 
-  .filter-container select {
+  position: absolute;
+  top: 320px;
+  right: 245px;
+}
+
+.filter-container select {
   margin: 90px 10px 0 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
-  }
+}
 
-  .filter-container select:focus {
+.filter-container select:focus {
   border-color: #007bff;
   outline: none;
-  }
+}
+
+.switchContainer {
+  width: 60px;
+  height: 34px;
+  display: inline-block;
+  cursor: pointer;
+
+  display: flex;
+  position: absolute;
+  top: 442px;
+  left: 332px;
+}
+
+.coinSymbol {
+  position: absolute;
+  top: 5px;
+  right: 70px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.switch .slider {
+  position: absolute;
+  inset: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  transition: all 400ms ease;
+  cursor: pointer;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch .slider::before {
+  content: "";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  left: 4px;
+  bottom: 4px;
+  background-color: #fff;
+  transition: all 400ms ease;
+}
+
+.switch input:checked + .slider {
+  background-color: #34c759;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
