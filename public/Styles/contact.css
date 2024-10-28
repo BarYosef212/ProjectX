@@ -89,3 +89,46 @@
     padding: 14px;
   }
 }
+
+/* Hide the close button in InfoWindow */
+.gm-ui-hover-effect {
+  display: none !important;
+}
+
+/* Custom styling for the InfoWindow */
+.info-window {
+  font-family: Arial, sans-serif;
+  color: #333;
+  padding: 8px;
+  max-width: 220px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.info-window h5 {
+  font-size: 16px;
+  margin: 0;
+  color: #4285f4; /* Google's blue color */
+}
+
+.info-window p {
+  font-size: 13px;
+  margin: 5px 0 0;
+  color: #555;
+}
+
+.info-window p strong {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Remove inner borders and padding inside the InfoWindow */
+.gm-style-iw {
+  padding: 0 !important; /* Remove padding around content */
+}
+
+.gm-style-iw > div {
+  overflow: hidden !important; /* Remove any inner border overflow */
+  box-shadow: none !important; /* Remove inner box shadow */
+}
