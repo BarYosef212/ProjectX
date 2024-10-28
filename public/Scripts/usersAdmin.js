@@ -59,7 +59,6 @@ function closeModal() {
 }
 
 async function checkModalUpdateUser() {
-  console.log("enter");
 
   const userName = document.querySelector("#userName");
   const userLastName = document.querySelector("#userLastName");
@@ -91,13 +90,11 @@ async function checkModalUpdateUser() {
     errorMessageEl.style.display = "block";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value) && userEmail.value !== ""
   ) {
-    console.log("3");
     errorMessageEl.textContent = "Please enter a valid email address.";
     errorMessageEl.style.color = "red";
     errorMessageEl.style.display = "block";
     return;
   } else {
-    console.log("4");
     const confirmation = confirm("Are you sure you want to update this user?");
     if (!confirmation) return;
     updateUser();
@@ -130,7 +127,6 @@ async function updateUser(req,res) {
     if (userPassword) updatedData.password = userPassword;
     if (userAdmin!=="") updatedData.admin = userAdmin;
     if (marketing!=="") updatedData.marketing = marketing;
-    console.log("the data:",updatedData)
 
     const response = await fetch("/updateUser", {
       method: "POST",

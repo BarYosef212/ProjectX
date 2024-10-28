@@ -3,8 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Branch Management</title>
     <link rel="stylesheet" href="/Styles/main.css" />
+    <link rel="icon" href="/img/favicon.png">
+
   </head>
   <body class="bodyBranchAdmin">
     <%- include('partials/header') %>
@@ -40,24 +48,24 @@
         <form id="update-form">
           <input type="hidden" id="branchId" />
 
-          <label for="branchName">Name:</label>
+          <label for="branchName"><b>Name:</b></label>
           <input type="text" id="branchName" /><br /><br />
 
-          <label for="bussinessHour">Business Hours: </label>
+          <label for="bussinessHour"><b>Business Hours:</b></label>
           <input type="text" id="bussinessHour" /><br /><br />
 
-          <label for="phoneNumber">Phone: </label>
+          <label for="phoneNumber"><b>Phone:</b></label>
           <input type="number" id="phoneNumber" /><br /><br />
 
-          <label for="storeAddress">Store Address: </label>
+          <label for="storeAddress"><b>Store Address:</b></label>
           <input type="text" id="storeAddress" /><br /><br />
           <div class="lastElModals">
             <div>
-              <label for="coordinate_x">Coordinate X: </label>
+              <label for="coordinate_x"><b>Coordinate X:</b></label>
               <input type="number" id="coordinate_x" style="width:50%"/><br /><br />
             </div>
             <div>
-              <label for="coordinate_y">Coordinate Y:</label>
+              <label for="coordinate_y"><b>Coordinate Y:</b></label>
               <input type="number" id="coordinate_y" style="width:50%" /><br /><br />
             </div>
           </div>

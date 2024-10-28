@@ -17,9 +17,9 @@
 }
 
 body {
-  font-family: "Rubik", sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  font-family: 'Rubik',sans-serif;
 }
 
 /* Containers */
@@ -49,7 +49,7 @@ body {
 
 /* Header */
 .header-home {
-  background-color: var(--background-color);
+  background-color: transparent;
   padding: 20px 30px;
   border-bottom: 1px solid #ddd;
   display: flex;
@@ -58,7 +58,18 @@ body {
   text-align: center;
   width: 100%;
   position: relative;
+  backdrop-filter: blur(10px);
 
+}
+
+#background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
 }
 
 .logo-box {
@@ -76,6 +87,9 @@ body {
   display: flex;
   align-items: center;
   gap: 405px;
+
+  position: absolute;
+  left: 45%;
 }
 
 .nav-left,
@@ -84,11 +98,6 @@ body {
   align-items: center;
   margin-bottom: 0;
   gap: 24px;
-}
-
-.nav-left{
-  position: absolute;
-  left: 45%;
 }
 
 .nav-right {
@@ -281,6 +290,7 @@ body {
 
 #ctaInput {
   width: 120%;
+  z-index: -1;
 }
 
 /* Footer */

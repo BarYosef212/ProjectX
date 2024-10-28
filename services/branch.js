@@ -29,7 +29,6 @@ exports.AddBranch = async (
 
 exports.deleteBranch = async (id) => {
   const result = await Branch.deleteOne({ _id: id });
-  console.log(result);
   if (result.deletedCount === 1) {
     console.log("Branch deleted");
     return result.deletedCount;
@@ -50,7 +49,6 @@ exports.updateBranch = async (updatedData, branchId) => {
       updatedData.location.coordinate_y &&
       !updatedData.location.coordinate_x
     ) {
-      console.log("2");
 
       updatedData.location.coordinate_x = branch.location.coordinate_x;
     }

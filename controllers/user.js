@@ -1,29 +1,6 @@
 const userService = require("../services/user");
 const User = require("../models/user");
 const errorMessage = "An error occured, please try again later";
-const mongoose = require('mongoose');
-
-
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(`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`);
-
-// function sendWelcomeEmail(toEmail, userName) {
-//     const msg = {
-//         to: toEmail,
-//         from: "BARTAYAR123456789@GMAIL.COM", // Your SendGrid verified sender
-//         subject: 'Welcome to Our Website!',
-//         text: `Hello ${userName},\n\nThank you for registering!\n\n `,
-//     };
-
-//     sgMail.send(msg).then(() => {
-//         console.log('Email sent');
-//     }).catch((error) => {
-//         console.error('Error sending email:', error);
-//     });
-// }
-
-
-
 
 exports.register = async (req, res) => {
   try {

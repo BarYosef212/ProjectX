@@ -30,7 +30,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 app.use(express.static(path.join(__dirname, "public"))); 
 
-// Use session middleware and setUserInView before defining any routes
 app.use(sessionMiddleware);  // Middleware for sessions
 app.use(setUserInView);      // Middleware to set fullName in views
 
