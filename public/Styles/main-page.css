@@ -88,7 +88,7 @@ body {
 
 .nav-left{
   position: absolute;
-  left: 800px;
+  left: 45%;
 }
 
 .nav-right {
@@ -214,7 +214,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 42px;
-  height: 90.6vh;
+  height: 93vh;
   /* background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.3),

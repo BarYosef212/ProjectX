@@ -9,9 +9,7 @@ exports.addShoe = async (name, title, url, price, shoeGender) => {
     gender: shoeGender,
   });
   if (shoe) {
-    await shoe.save();
-    console.log("shoe added");
-    return shoe;
+    return await shoe.save();
   } else {
     return null;
   }
