@@ -10,9 +10,11 @@ const sessionMiddleware = session({
     mongoUrl: process.env.DB_CONNECTION_STRING,  // MongoDB connection string
   }),
   cookie: {
-    maxAge: 1000 * 60 * 400,   // Session expires in 30 minutes
+    maxAge: null,   // Remove maxAge to make it a session cookie
+    expires: false, // Make sure it doesn't set an explicit expiration time
   },
 });
+
 
 // Middleware to check if user is logged in
 function isLoggedIn(req, res, next) {
