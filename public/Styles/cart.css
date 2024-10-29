@@ -1,4 +1,4 @@
- .cart-container {
+.cart-container {
   position: relative;
   display: inline-block;
 }
@@ -22,7 +22,6 @@
   z-index: 1000;
   
   /* Initially hidden */
-  
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px); /* Move slightly upwards */
