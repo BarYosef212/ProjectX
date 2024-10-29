@@ -37,8 +37,11 @@ app.use(setUserInView);      // Middleware to set fullName in views
 app.use(userRoutes);
 app.use(storeRoutes);
 app.use(branchRoutes);
-
-
+// Catch 404 and render the error page
+app.use((req, res, next) => {
+  res.status(404).render("errorHandler", { message: "Page not found", errorCode:404}); // Renders the error view
+});
+// Middleware to add head assets
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/`); 

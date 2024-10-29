@@ -5,7 +5,7 @@ const { isAdmin } = require("../middleware/auth");
 
 router.get('/store', shoesController.sortShoes)
 
-router.get("/shoesAdmin", (req, res) => {
+router.get("/shoesAdmin",isAdmin, (req, res) => {
   res.render("shoesAdmin");
 });
 

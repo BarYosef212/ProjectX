@@ -8,8 +8,6 @@ exports.register = async (firstName, lastName, email, password, marketing) => {
   marketing = marketing == "on" ? true : false;
   let admin = false;
   //middleware
-  if (email === "bartayar123456789@gmail.com") admin = true;
-
   const user = new User({
     firstName,
     lastName,

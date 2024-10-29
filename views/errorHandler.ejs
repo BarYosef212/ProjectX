@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/img/favicon.png" />
+    <% if(typeof errorCode!=='undefined'){%>
+      <title>Error <%=errorCode%></title>
+      <%} else {%>
+      <title>Error</title>
+      <%}%> 
+    <link rel="stylesheet" href="Styles/main.css" />
+    <style>
+    
+    </style>
+  </head>
+  <body class="errorBody">
+    <div class="error-container">
+      <div class="logoBox">
+        <img
+          src="/img/logo-removebg-preview.png"
+          style="height: 48px; margin-bottom: 12px"
+        />
+      </div>
+      <% if(typeof errorCode!=='undefined'){%>
+      <h1><%=errorCode%></h1>
+      <%} else {%>
+      <h1>Oops! Something Went Wrong</h1>
+      <%}%> <% if (typeof message !== 'undefined') { %>
+      <p>
+        <b><%= message %></b>
+      </p>
+      <% } else {%>
+
+      <p>
+        We couldn't process your request. Please try again later or go back to
+        the <a href="/">homepage</a>.
+      </p>
+      <%}%>
+      <button onclick="goBack()">Go Back</button>
+    </div>
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+  </body>
+</html>

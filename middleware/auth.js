@@ -6,9 +6,6 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,  // Use a secure key from your .env file
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.DB_CONNECTION_STRING,  // MongoDB connection string
-  }),
   cookie: {
     maxAge: null,   // Remove maxAge to make it a session cookie
     expires: false, // Make sure it doesn't set an explicit expiration time
@@ -21,7 +18,7 @@ function isLoggedIn(req, res, next) {
   if (req.session.userId) {
     next();  // User is logged in, proceed to the next middleware
   } else {
-    res.redirect('/login');  // If not logged in, redirect to login
+    res.render('errorHandler');
   }
 }
 
@@ -29,7 +26,7 @@ function isLoggedOut(req, res, next) {
   if (!req.session.userId) {
     next();  // User is logged in, proceed to the next middleware
   } else {
-    res.redirect('/login');  // If not logged in, redirect to login
+    res.render('errorHandler');
   }
 }
 
@@ -38,7 +35,7 @@ function isAdmin(req, res, next) {
     next();    
   }
   else {
-    return false;
+    res.render('errorHandler', { message: "This area is restricted to admins only!" });
   }
 }
 
@@ -57,3 +54,5 @@ module.exports = {
   isAdmin,
   isLoggedOut
 };
+
+

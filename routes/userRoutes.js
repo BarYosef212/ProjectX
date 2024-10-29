@@ -49,4 +49,9 @@ router.post("/updateUser",isAdmin,userController.updateUser);
 // Logout
 router.post("/logout", userController.logOut);
 
+//errorHandler
+router.get("/error",(req,res)=>{
+  res.render("errorHandler")
+})
+
 module.exports = router;

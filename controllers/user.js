@@ -155,17 +155,22 @@ exports.updateUser = async (req, res) => {
     }
   }
 
-  if(updatedData.admin === false){
+  if (updatedData.admin === false) {
     const adminsCount = await userService.countAdmins();
-    if(adminsCount===1){
+    if (adminsCount === 1) {
       return res.status(403).json({
-        message: "1 Admin left, cannot change role"
+        message: "1 Admin left, cannot change role",
       });
     }
   }
 
   const user = await userService.updateUser(email, updatedData);
+
   if (user) {
+    if (user._id == req.session.userId) {
+      req.session.fullName = `${user.firstName} ${user.lastName}`;
+      req.session.admin = user.admin;
+    }
     return res.json({
       message: "User updated successfully",
       user: user,
