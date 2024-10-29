@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment</title>
+</head>
+<body>
+  <h2>Enter Payment Details</h2>
+  <form action="/checkout" method="POST">
+    <label for="cardNumber">Card Number:</label>
+    <input type="text" name="cardNumber" maxlength="16" required>
+
+    <label for="expiryDate">Expiration Date:</label>
+    <select name="expiryMonth" required>
+      <option value="" disabled selected>Month</option>
+      <% for (let month = 1; month <= 12; month++) { %>
+        <option value="<%= month %>"><%= month %></option>
+      <% } %>
+    </select>
+    <select name="expiryYear" required>
+      <option value="" disabled selected>Year</option>
+      <% for (let year = new Date().getFullYear(); year <= new Date().getFullYear() + 10; year++) { %>
+        <option value="<%= year %>"><%= year %></option>
+      <% } %>
+    </select>
+
+    <label for="cvv">CVV:</label>
+    <input type="text" name="cvv" maxlength="3" required>
+
+    <label for="cardHolderName">Card Holder Name:</label>
+    <input type="text" name="cardHolderName" required>
+
+    <button type="submit">Pay</button>
+  </form>
+</body>
+</html>

@@ -64,33 +64,57 @@
       <!-- User Info and Logout (If logged in) -->
       <% if (fullName) { %>
          <!-- Cart Box -->
-      <div class="cart-box">
-        <a href="#" class="nav-link-home cart">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="icon cart-icon"
-            style="vertical-align: middle;"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-            />
-          </svg>
-        </a>
-        <div class="cart-container">
-          <div class="cart-window">
-            <h3>Your Cart</h3>
-            <ul id="cart-items">
-              <p class="empty-cart">Your cart is empty</p>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <!-- Cart Box -->
+<div class="cart-box">
+  <a href="#" class="nav-link-home cart" onclick="toggleCart()">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="icon cart-icon"
+      style="vertical-align: middle;"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+      />
+    </svg>
+  </a>
+  <div id="cart-panel" class="cart-container">
+    <div class="cart-window">
+      <h3>Your Cart</h3>
+      <ul id="cart-items">
+        <p class="empty-cart">Your cart is empty</p>
+      </ul>
+      <button onclick="location.href='/Payment'">Proceed to Payment</button>
+    </div>
+  </div>
+</div>
+<script>
+  function toggleCart() {
+    const cartBox = document.querySelector('.cart-box');
+    cartBox.classList.toggle('open');
+  }
+
+  // Populate the cart items (example items here; replace with your dynamic items)
+  const cartItems = [
+    { name: 'Item 1', price: 50 },
+    { name: 'Item 2', price: 30 },
+  ];
+
+  function loadCartItems() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = cartItems.length
+      ? cartItems.map(item => `<li>${item.name}: $${item.price}</li>`).join('')
+      : '<p class="empty-cart">Your cart is empty</p>';
+  }
+
+  document.addEventListener('DOMContentLoaded', loadCartItems);
+</script>
+
       <div class="user-section">
         <div class="login-line"></div>
         <div class="user-info">
