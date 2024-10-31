@@ -71,6 +71,8 @@ async function comfirmOrder() {
     data.totalPrice = document
       .getElementById("totalPriceDisplay")
       .textContent.replace("$", "");
+
+      console.log(data)
     const response = await fetch("/confirmOrder", {
       method: "POST",
       headers: {
@@ -144,5 +146,5 @@ const displayShoesFromLocalStorage = () => {
     "totalPriceDisplay"
   ).textContent = `$${totalPrice.toFixed(2)}`;
 };
-document.getElementById("userIdConfirm").value = "<%= userId %>";
+
 window.onload = displayShoesFromLocalStorage;
