@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.cart-box{
+  margin-bottom:7px;
+}
+
 .cart-window {
   position: fixed;
   top: 70px;
