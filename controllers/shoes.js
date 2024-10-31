@@ -2,10 +2,7 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
-
-
-
-async function postToFacebook(id){
+async function postToFacebook(id) {
   const pageAccessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const pageId = process.env.FACEBOOK_PAGE_ID;
   const shoe = await Shoe.findOne({ _id: id });
@@ -28,10 +25,9 @@ async function postToFacebook(id){
       }
     );
 
-    if(response.ok){
+    if (response.ok) {
       console.log("Post uploaded successfully to Facebook");
-    }
-    else{
+    } else {
       console.log("Error while posting to Facebook:", response.statusText);
     }
   } catch (error) {
@@ -90,7 +86,7 @@ exports.addShoe = async (req, res) => {
     if (result) {
       postToFacebook(result._id.toString());
       res.json({
-        message: "Shoe added successfully, post uploaded to Facebook",
+        message: "Shoe added successfully",
         shoe: result,
       });
     } else {

@@ -7,6 +7,8 @@ const { sessionMiddleware, setUserInView } = require('./middleware/auth');  // I
 const userRoutes = require("./routes/userRoutes");
 const storeRoutes = require("./routes/storeRoutes");
 const branchRoutes = require("./routes/branchRoutes");
+const ordersRoutes = require("./routes/ordersRoutes");
+
 
 const app = express(); // Create an express application
 const PORT = process.env.PORT; // Port number
@@ -37,6 +39,7 @@ app.use(setUserInView);      // Middleware to set fullName in views
 app.use(userRoutes);
 app.use(storeRoutes);
 app.use(branchRoutes);
+app.use(ordersRoutes)
 // Catch 404 and render the error page
 app.use((req, res, next) => {
   res.status(404).render("errorHandler", { message: "Page not found", errorCode:404}); // Renders the error view

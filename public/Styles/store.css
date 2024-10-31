@@ -12,7 +12,7 @@
   padding: 0;
   margin: 15px;
   width: 280px;
-  height: 400px;
+  height: 430px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   background: linear-gradient(145deg, #ffffff, #f0f0f0);
@@ -89,12 +89,17 @@
   width: 100%;
 }
 
-.shoe p {
+.shoe p,.shoe label {
   color: #555;
   font-size: 14px;
   margin: 10px 0;
   padding: 0 10px;
   text-align: center;
+}
+
+select[name="shoeSize"]{
+  border:none;
+  cursor:pointer;
 }
 
 .shoe .btn {
@@ -157,9 +162,6 @@
   justify-content: center;
   margin-bottom: 20px;
 
-  position: absolute;
-  top: 320px;
-  right: 245px;
 }
 
 .filter-container select {
@@ -176,15 +178,17 @@
 }
 
 .switchContainer {
+  display: flex;
+  position: absolute;
+  top: 230px;
+  left: 332px;
+
   width: 60px;
   height: 34px;
   display: inline-block;
   cursor: pointer;
 
   display: flex;
-  position: absolute;
-  top: 442px;
-  left: 332px;
 }
 
 .coinSymbol {
@@ -226,4 +230,44 @@
 
 .switch input:checked + .slider::before {
   transform: translateX(26px);
+}
+
+.shoeSizeWindow {
+  display: none;
+  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.shoeSizeWindowContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btnShoeSize {
+  padding: 6px 12px;
+}
+
+.shoeSizeWindow label,
+.shoeSizeWindow input,
+.shoeSizeWindow button {
+  display: block;
+  margin: 10px 0;
+}
+
+.overlay {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Below the shoeSizeWindow */
 }

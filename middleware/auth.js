@@ -7,7 +7,7 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: null,   // Remove maxAge to make it a session cookie
+    maxAge: 24 * 60 * 60 * 1000,   // Remove maxAge to make it a session cookie
     expires: false, // Make sure it doesn't set an explicit expiration time
   },
 });
@@ -43,6 +43,7 @@ function isAdmin(req, res, next) {
 function setUserInView(req, res, next) {
   res.locals.fullName = req.session.fullName || null;
   res.locals.admin = req.session.admin || null;
+  res.locals.userId = req.session.userId || null
   next();
 }
 

@@ -59,7 +59,7 @@ body {
   width: 100%;
   position: relative;
   backdrop-filter: blur(10px);
-
+  z-index:9999;
 }
 
 #background-video {
@@ -186,15 +186,6 @@ body {
 
 
 /* Icons */
-.icon {
-  width: 24px;
-  height: 24px;
-  transition: stroke 0.3s;
-}
-
-.icon:hover {
-  stroke: var(--main-color);
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -211,10 +202,6 @@ body {
   }
 }
 
-/* Cart */
-.cart {
-  position: relative;
-}
 
 /* Main Page */
 .main-page {
@@ -296,9 +283,10 @@ body {
 /* Footer */
 .footer {
   background-color: #eeeeee5a;
-  padding: 20px;
   color: #333;
-  width: 100vw;
+  margin-top: auto; /* Push footer to bottom */
+  padding: 20px 0;
+  width: 100%;
 }
 
 .footer-container {
