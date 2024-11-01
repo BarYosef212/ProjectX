@@ -379,8 +379,10 @@ async function updateOrder(id) {
   }
 
   const updatedOrder = {
-    orderId: id,
-    orderFullName: document.getElementById("orderFullName").value,
+    user: {
+      userId: userIdStorage,
+      orderFullName: document.getElementById("orderFullName").value,
+    },
     shippingAddress: {
       street: document.getElementById("street").value,
       city: document.getElementById("city").value,

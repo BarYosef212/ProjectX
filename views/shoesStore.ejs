@@ -52,8 +52,14 @@
         <% shoes.forEach(shoe => { %>
         <div class="shoe" data-id="<%= shoe.id %>" data-usdPrice="<%=shoe.price%>">
           <img src="<%= shoe.primaryImage %>" alt="<%= shoe.name %>" />
-          <h3><%= shoe.name %></h3>
-          <p><%= shoe.title %></p>
+          <h3 style="max-width: 300px;         /* Set the desired width */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;"><%= shoe.name %></h3>
+          <p style="max-width: 300px;         /* Set the desired width */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;"><%= shoe.title %></p>
           <p><b>Price: </b><span>$</span><span><%= shoe.price %></span></></p>
 
           <label for="shoeSizeDropdown"><b>Size:</b></label>

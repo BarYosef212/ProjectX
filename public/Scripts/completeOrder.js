@@ -72,7 +72,6 @@ async function comfirmOrder() {
       .getElementById("totalPriceDisplay")
       .textContent.replace("$", "");
 
-      console.log(data)
     const response = await fetch("/confirmOrder", {
       method: "POST",
       headers: {

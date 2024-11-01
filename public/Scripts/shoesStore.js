@@ -2,6 +2,22 @@ async function confirmScreen(res, req) {
   window.location.href = "/completeOrder";
 }
 
+     document.getElementById('filter').addEventListener('change', function() {
+  const selectedFilter = this.value;
+  const genderFilter = document.getElementById('genderFilter').value;
+  const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+  
+  window.location.href = `/store?page=${currentPage}&priceFilter=${selectedFilter}&genderFilter=${genderFilter}`;
+});
+
+document.getElementById('genderFilter').addEventListener('change', function() {
+  const selectedGender = this.value;
+  const priceFilter = document.getElementById('filter').value;
+  const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+  
+  window.location.href = `/store?page=${currentPage}&priceFilter=${priceFilter}&genderFilter=${selectedGender}`;
+});”
+
 const addCartBtn = document.querySelectorAll(".btn");
 const userId = document.querySelector(".user-id") || 1;
 addCartBtn.forEach((button) => {
@@ -150,20 +166,6 @@ const saveCartToLocalStorage = () => {
   localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
-const loadCartFromLocalStorage = () => {
-  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
-  cartItems.forEach((item) => {
-    addToCart(
-      item.id,
-      item.img,
-      item.name,
-      item.size,
-      item.quantity,
-      item.price / item.quantity
-    );
-  });
-};
-
 const carton = document.querySelector(".cart-box");
 carton.style.display = "block";
 
@@ -212,5 +214,19 @@ const convertPriceCurrency = async (code = 1) => {
         priceSymbol.textContent = "$";
       }
     }
+  });
+};
+
+const loadCartFromLocalStorage = () => {
+  const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+  cartItems.forEach((item) => {
+    addToCart(
+      item.id,
+      item.img,
+      item.name,
+      item.size,
+      item.quantity,
+      item.price / item.quantity
+    );
   });
 };
