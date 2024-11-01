@@ -12,7 +12,107 @@
     <link rel="stylesheet" href="/Styles/main.css" />
     <link rel="icon" href="/img/favicon.png" />
     <title>Orders</title>
-   
+    <style>
+      .search-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      .search-box {
+        position: relative;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        padding: 12px 24px;
+        transition: all 0.3s ease;
+      }
+
+      .search-box:focus-within {
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+        transform: translateY(-1px);
+      }
+
+      .search-icon {
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        padding-right: 16px;
+      }
+
+      .search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 8px 0;
+        font-size: 16px;
+        color: #1e293b;
+        background: transparent;
+        font-family: inherit;
+      }
+
+      #orderSearch {
+        margin-bottom: 0;
+      }
+      .search-input::placeholder {
+        color: #94a3b8;
+      }
+
+      .reset-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        padding: 4px;
+        margin-left: 8px;
+        color: #94a3b8;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+
+      .reset-button:hover {
+        color: #64748b;
+        background: #f1f5f9;
+      }
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .search-box {
+          background: #1e293b;
+        }
+
+        .search-input {
+          color: #f1f5f9;
+        }
+
+        .search-input::placeholder {
+          color: #64748b;
+        }
+
+        .reset-button:hover {
+          background: #334155;
+        }
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 640px) {
+        .search-container {
+          padding: 0 16px;
+        }
+
+        .search-box {
+          padding: 10px 16px;
+        }
+
+        .search-input {
+          font-size: 15px;
+        }
+      }
+    </style>
   </head>
 
   <body class="ordersBody">
@@ -23,6 +123,78 @@
         <div class="errMsg" style="text-align: center; font-size: 18px"></div>
       </div>
       <div class="ordersExist">
+        <div class="search-container">
+          <div class="search-box">
+            <button
+              style="
+                cursor: pointer;
+                border: none;
+                background-color: transparent;
+              "
+              onclick="findOrder()"
+            >
+              <span class="search-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M21 21L16.65 16.65"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </button>
+            <input
+              type="text"
+              id="orderSearch"
+              placeholder="Search Order ID..."
+              class="search-input"
+            />
+            <button class="reset-button" type="button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 6L6 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 6L18 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="errMsgSearch"
+            style="text-align: center; font-size: 18px;color:red;margin-top: 12px;"
+          ></div>
+        </div>
+
         <h1>Your Orders:</h1>
         <div class="orders-container"></div>
       </div>
@@ -30,4 +202,5 @@
     <%- include('partials/footer') %>
   </body>
   <script src="/Scripts/orders.js"></script>
+  <script></script>
 </html>

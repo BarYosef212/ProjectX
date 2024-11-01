@@ -1,3 +1,6 @@
+const id = document.querySelector(".user-id").getAttribute("data-id");
+
+
 function createMessage(message, isError = false) {
   console.log(message);
   const messageEl = document.querySelector(".errMsg");
@@ -22,6 +25,8 @@ async function getOrdersUser(userId) {
     document.querySelector(".ordersNotFound").style.display = "none";
     document.querySelector(".ordersExist").style.display = "block";
     displayOrders(result.orders);
+    document.querySelector(".errMsgSearch").textContent=""
+
   } else {
     createMessage(result.message, true);
     document.querySelector(".ordersNotFound").style.display = "block";
@@ -31,7 +36,59 @@ async function getOrdersUser(userId) {
   }
 }
 
-async function displayOrders(data,admin = false) {
+document.querySelector("#orderSearch").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    findOrder();
+  }
+});
+
+async function findOrder() {
+  const userId = id;
+  const orderId = document.querySelector("#orderSearch").value;
+  if (orderId === "") {
+    getOrdersUser(userId);
+    return;
+  }
+  const response = await fetch("/getOrders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: userId }),
+  });
+
+  const result = await response.json();
+
+  let orderFound;
+  if (response.ok) {
+    result.orders.forEach((order) => {
+      if (order._id === orderId) {
+        orderFound = order;
+      }
+    });
+    if(!orderFound){
+      document.querySelector(".errMsgSearch").textContent="No order found"
+      createMessage("No order found",true)
+      return;
+    }
+
+    document.querySelector(".errMsgSearch").textContent=""
+
+    displayOrders([orderFound]);
+  } else {
+    createMessage(result.message, true);
+  }
+}
+
+const resetButton = document.querySelector(".reset-button");
+if (resetButton) {
+  resetButton.addEventListener("click", () => {
+    document.querySelector("#orderSearch").value = "";
+  });
+}
+
+async function displayOrders(data, admin = false) {
+  console.log("data",data)
   const ordersContainer = document.querySelector(".orders-container");
   let count = 1;
 
@@ -72,8 +129,8 @@ async function displayOrders(data,admin = false) {
                           item.product._id
                         }</span>
                         <span class="item-size">Size: ${
-                              item.size || "N/A"
-                            }</span>
+                          item.size || "N/A"
+                        }</span>
                     </div>
                 </div>
                 <div class="item-price-info">
@@ -97,7 +154,7 @@ async function displayOrders(data,admin = false) {
                     <span class="order-total-preview">$${order.totalPrice.toFixed(
                       2
                     )}</span>
-                    ${admin? `<span>a</span>`:``}
+                    ${admin ? `<span>a</span>` : ``}
                 </div>
                 <span class="dropdown-arrow">▼</span>
             </div>
@@ -107,7 +164,9 @@ async function displayOrders(data,admin = false) {
                     <div class="customer-info">
                         <h3>Customer Details</h3>
                         <p>Name on the order: ${order.user.orderFullName}</p>
-                        <p>Customer name: ${order.user.userId.firstName} ${order.user.userId.lastName}</p>
+                        <p>Customer name: ${order.user.userId.firstName} ${
+      order.user.userId.lastName
+    }</p>
                         <p class="text-muted">Order ID: ${order._id}</p>
                     </div>
 
@@ -174,5 +233,4 @@ function toggleOrder(orderNum) {
   }
 }
 
-const id = document.querySelector(".user-id").getAttribute("data-id");
 window.onload = getOrdersUser(id);

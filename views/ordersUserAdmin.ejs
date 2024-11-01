@@ -11,18 +11,20 @@
     />
     <link rel="stylesheet" href="/Styles/main.css" />
     <link rel="icon" href="/img/favicon.png" />
-    
+
     <title>Orders:</title>
+   
   </head>
 
   <body class="ordersBody">
     <%- include('partials/header') %>
-    <h1 class="ordersOfTitle">Orders:</h1>
     <div class="errMsg" style="text-align: center; font-size: 18px"></div>
 
     <div class="modal" id="updateOrderModal" style="display: none">
       <div class="modal-content">
-        <span class="closeButtonOrdersAdmin" onclick="closeModal()">&times;</span>
+        <span class="closeButtonOrdersAdmin" onclick="closeModal()"
+          >&times;</span
+        >
         <h2>Update Order</h2>
         <form id="updateOrderForm">
           <div class="form-group">
@@ -52,7 +54,10 @@
             <h3>Items</h3>
             <div id="orderItems"></div>
           </div>
-          <div class="errMsgModal" style="color: red; margin-bottom:14px;"></div>
+          <div
+            class="errMsgModal"
+            style="color: red; margin-bottom: 14px"
+          ></div>
           <button type="button" class="btn btnUpdateOrder btnSaveChanges">
             Save Changes
           </button>
@@ -63,6 +68,83 @@
       <!-- Add this wrapper -->
       <div class="ordersNotFound" style="display: none"></div>
       <div class="ordersExist">
+        <div class="search-container">
+          <div class="search-box">
+            <button
+              style="
+                cursor: pointer;
+                border: none;
+                background-color: transparent;
+              "
+              onclick="findOrder()"
+            >
+              <span class="search-icon">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M21 21L16.65 16.65"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </button>
+            <input
+              type="text"
+              id="orderSearch"
+              placeholder="Search Order ID..."
+              class="search-input"
+            />
+            <button class="reset-button" type="button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M18 6L6 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6 6L18 18"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="errMsgSearch"
+            style="
+              text-align: center;
+              font-size: 18px;
+              color: red;
+              margin-top: 12px;
+            "
+          ></div>
+          <h1 class="ordersOfTitle">Orders:</h1>
+        </div>
         <div class="orders-container"></div>
       </div>
     </main>

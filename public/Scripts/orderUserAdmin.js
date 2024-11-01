@@ -1,4 +1,5 @@
 const errMsgModal = document.querySelector(".errMsgModal");
+const userIdStorage = localStorage.getItem("userId");
 
 function calculateTotalPrice() {
   const data = document.querySelectorAll(".update-item");
@@ -23,7 +24,6 @@ function calculateTotalPrice() {
 }
 
 const userName = localStorage.getItem("userFullName");
-const userIdStorage = localStorage.getItem("userId");
 document.querySelector("title").textContent = `Orders: ${userName}`;
 document.querySelector(".ordersOfTitle").textContent = `Orders: ${userName}`;
 
@@ -61,6 +61,58 @@ function createMessage(message, isError = false) {
   setTimeout(() => {
     messageEl.style.display = "none";
   }, 3000);
+}
+
+document
+  .querySelector("#orderSearch")
+  .addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      findOrder();
+    }
+  });
+
+async function findOrder() {
+  const userId = userIdStorage;
+  const orderId = document.querySelector("#orderSearch").value;
+  if (orderId === "") {
+    getOrdersUser(userId);
+    return;
+  }
+  const response = await fetch("/getOrders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: userId }),
+  });
+
+  const result = await response.json();
+
+  let orderFound;
+  if (response.ok) {
+    result.orders.forEach((order) => {
+      if (order._id === orderId) {
+        orderFound = order;
+      }
+    });
+    if (!orderFound) {
+      document.querySelector(".errMsgSearch").textContent = "No order found";
+      return;
+    }
+
+    document.querySelector(".errMsgSearch").textContent = "";
+
+    displayOrders([orderFound]);
+  } else {
+    createMessage(result.message, true);
+  }
+}
+
+const resetButton = document.querySelector(".reset-button");
+if (resetButton) {
+  resetButton.addEventListener("click", () => {
+    document.querySelector("#orderSearch").value = "";
+  });
 }
 
 async function displayOrders(data, admin = false) {

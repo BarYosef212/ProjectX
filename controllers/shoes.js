@@ -3,7 +3,6 @@ const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
 
-
 async function postToFacebook(id) {
   const pageAccessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const pageId = process.env.FACEBOOK_PAGE_ID;
