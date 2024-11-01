@@ -16,7 +16,7 @@ document.getElementById('genderFilter').addEventListener('change', function() {
   const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
   
   window.location.href = `/store?page=${currentPage}&priceFilter=${priceFilter}&genderFilter=${selectedGender}`;
-});”
+});
 
 const addCartBtn = document.querySelectorAll(".btn");
 const userId = document.querySelector(".user-id") || 1;
