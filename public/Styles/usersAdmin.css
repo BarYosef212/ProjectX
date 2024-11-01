@@ -1,5 +1,4 @@
 .usersAdminbody {
-  font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   margin: 0;
   padding: 0;
@@ -24,7 +23,7 @@ h1 {
 }
 
 label {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #555;
   margin-bottom: 8px;
   display: inline-block;
@@ -59,9 +58,6 @@ input[type="email"] {
   background-color: inherit;
 }
 
-p {
-  font-size: 1rem;
-}
 
 .name-box {
   text-align: center;

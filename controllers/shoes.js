@@ -2,6 +2,38 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
+async function postToFacebook(id) {
+  const pageAccessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  const shoe = await Shoe.findOne({ _id: id });
+  const message = `Check out our new shoe: ${shoe.name} for just $${shoe.price}!`;
+  const imageUrl = shoe.primaryImage;
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/${pageId}/photos`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: imageUrl,
+          caption: message,
+          access_token: pageAccessToken,
+        }),
+      }
+    );
+
+    if (response.ok) {
+      console.log("Post uploaded successfully to Facebook");
+    } else {
+      console.log("Error while posting to Facebook:", response.statusText);
+    }
+  } catch (error) {
+    console.log("Error with uploading post to Facebook:", error);
+  }
+}
 
 exports.sortShoes = async (req, res) => {
   const page = parseInt(req.query.page) || 1; // Get current page
@@ -51,8 +83,8 @@ exports.addShoe = async (req, res) => {
       shoePrice,
       shoeGender
     );
-    console.log(result);
     if (result) {
+      postToFacebook(result._id.toString());
       res.json({
         message: "Shoe added successfully",
         shoe: result,
@@ -180,9 +212,6 @@ exports.searchShoes = async (req, res) => {
     });
   }
 };
-
-
-
 
 // exports.renderShoePage = async (req, res, next) => {
 //   try {

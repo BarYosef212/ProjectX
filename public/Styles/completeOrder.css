@@ -1,0 +1,352 @@
+/* Container for all selected shoes */
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
+}
+
+body {
+  color: #333;
+  line-height: 1.5;
+}
+
+.box-products {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.box-products h2 {
+  font-size: 1.75rem;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.shoesConfirmContainer {
+  padding: 24px;
+  background-color: white;
+  border: 1px solid #e1e1e1;
+}
+
+.shoeConfirm {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.shoeConfirm:last-child {
+  border-bottom: none;
+}
+
+.shoeConfirm img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.shoeConfirm p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.shoeConfirm p:first-of-type {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.total-price {
+  margin-top: 24px;
+  padding: 16px 24px;
+  background-color: white;
+  border: 1px solid #e1e1e1;
+}
+
+.total-price h3 {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.order-form {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: white;
+  border: 1px solid #e1e1e1;
+}
+
+.order-form h2 {
+  font-size: 1.75rem;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.form-section-title {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 20px 0;
+  font-weight: 500;
+  grid-column: 1 / -1;
+}
+
+.order-form form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.order-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-form label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.order-form input {
+  padding: 10px;
+  border: 1px solid #e1e1e1;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.order-form input:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.order-form button {
+  grid-column: 1 / -1;
+  padding: 14px;
+  background-color: #333;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.order-form button:hover {
+  background-color: #444;
+}
+
+@media (max-width: 768px) {
+  .shoeConfirm {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .order-form {
+    padding: 20px;
+  }
+
+  .order-form form {
+    grid-template-columns: 1fr;
+  }
+}
+
+input[type="number"] {
+  width: 100%;
+}
+/* Container styling */
+/* Container styling */
+.successOrder {
+  max-width: 600px;
+  margin: 40px auto;
+  overflow: hidden;
+  position: relative;
+  animation: slideUpFade 0.5s ease-out;
+
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Success message styling */
+.successMsg {
+  text-align: center;
+  font-size: 20px;
+  color: #0f766e;
+  font-weight: 500;
+  margin: 0;
+  padding: 25px 30px;
+  background: linear-gradient(to right, #ecfdf5, #f0fdfa);
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Success icon */
+.successMsg::before {
+  content: "✓";
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 15px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  font-size: 32px;
+  line-height: 60px;
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+  animation: scaleIn 0.5s ease-out;
+}
+
+/* Shimmer effect */
+.successMsg::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+/* Hide/Show animations */
+.successOrder[style*="display: none"] {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+.successOrder:not([style*="display: none"]) {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Animations */
+@keyframes slideUpFade {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0) rotate(-180deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(45deg);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .successOrder {
+    margin: 20px;
+    border-radius: 12px;
+  }
+
+  .successMsg {
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .successMsg::before {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+    line-height: 50px;
+    margin-bottom: 12px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .successOrder {
+    background: linear-gradient(145deg, #1a2e35, #162024);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .successMsg {
+    color: #6ee7b7;
+    background: linear-gradient(to right, #064e3b80, #065f4680);
+    border-bottom-color: #1f2937;
+  }
+
+  .successMsg::before {
+    background: #059669;
+    box-shadow: 0 4px 6px rgba(5, 150, 105, 0.3);
+  }
+}
+
+/* Loading state */
+.successOrder.loading {
+  position: relative;
+}
+
+.successOrder.loading::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #10b981, transparent);
+  animation: loadingBar 1.5s infinite;
+}
+
+@keyframes loadingBar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

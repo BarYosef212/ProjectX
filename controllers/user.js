@@ -1,29 +1,6 @@
 const userService = require("../services/user");
 const User = require("../models/user");
 const errorMessage = "An error occured, please try again later";
-const mongoose = require('mongoose');
-
-
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(`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`);
-
-// function sendWelcomeEmail(toEmail, userName) {
-//     const msg = {
-//         to: toEmail,
-//         from: "BARTAYAR123456789@GMAIL.COM", // Your SendGrid verified sender
-//         subject: 'Welcome to Our Website!',
-//         text: `Hello ${userName},\n\nThank you for registering!\n\n `,
-//     };
-
-//     sgMail.send(msg).then(() => {
-//         console.log('Email sent');
-//     }).catch((error) => {
-//         console.error('Error sending email:', error);
-//     });
-// }
-
-
-
 
 exports.register = async (req, res) => {
   try {
@@ -178,17 +155,22 @@ exports.updateUser = async (req, res) => {
     }
   }
 
-  if(updatedData.admin === false){
+  if (updatedData.admin === false) {
     const adminsCount = await userService.countAdmins();
-    if(adminsCount===1){
+    if (adminsCount === 1) {
       return res.status(403).json({
-        message: "1 Admin left, cannot change role"
+        message: "1 Admin left, cannot change role",
       });
     }
   }
 
   const user = await userService.updateUser(email, updatedData);
+
   if (user) {
+    if (user._id == req.session.userId) {
+      req.session.fullName = `${user.firstName} ${user.lastName}`;
+      req.session.admin = user.admin;
+    }
     return res.json({
       message: "User updated successfully",
       user: user,

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirm Order</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/Styles/main.css" />
+    <link rel="icon" href="/img/favicon.png" />
+    <style>
+      .cart-box {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <div class="makeOrder">
+      <div class="box-products">
+        <h2>Your Products</h2>
+        <div class="shoesConfirmContainer"></div>
+        <div class="total-price">
+          <h3>Total Price: <span id="totalPriceDisplay">$0.00</span></h3>
+        </div>
+      </div>
+      <div class="order-form">
+        <h2>Complete Your Order</h2>
+        <form>
+          <p style="font-size: 18px; font-weight: bold">Billing address:</p>
+          <div>
+            <input type="hidden" id="userIdConfirm" name="userId" />
+          </div>
+          <div>
+            <label for="name">Full Name:</label>
+            <input type="text" id="nameConfirm" name="name" required />
+          </div>
+          <div>
+            <label for="street">Street:</label>
+            <input type="text" id="streetConfirm" name="street" required />
+          </div>
+          <div>
+            <label for="city">City:</label>
+            <input type="text" id="cityConfirm" name="city" required />
+          </div>
+          <div>
+            <label for="postalCode">Postal Code:</label>
+            <input
+              type="text"
+              id="postalCodeConfirm"
+              name="postalCode"
+              placeholder="Optional"
+            />
+          </div>
+          <div>
+            <label for="country">Country:</label>
+            <input type="text" id="countryConfirm" name="country" required />
+          </div>
+          <div>
+            <label for="phone">Phone:</label>
+            <input type="number" id="phoneConfirm" name="phone" required />
+          </div>
+          <p style="font-size: 18px; font-weight: bold; display: block">
+            Payment:
+          </p>
+          <div></div>
+          <div>
+            <label for="credit-card">Credit Card:</label>
+            <input type="number" id="credit-card" name="credit-card" required />
+          </div>
+          <div>
+            <label for="cvv">CVV:</label>
+            <input type="number" id="cvv" name="cvv" max="999" required />
+          </div>
+          <div>
+            <label for="expiration-date">Expiration Date:</label>
+            <input
+              type="date"
+              id="expiration-date"
+              name="expiration-date"
+              required
+            />
+          </div>
+          <div></div>
+          <div class="errMsg" style="grid-column: 1/-1"></div>
+
+          <button type="button" onclick="comfirmOrder()">Order now</button>
+        </form>
+      </div>
+    </div>
+    <div class="successOrder" style="display: none">
+      <p class="successMsg"></p>
+      <a class="btn" style="padding: 12px 24px" href="/store">
+        Go back to the store
+      </a>
+    </div>
+    <%- include('partials/footer') %>
+  </body>
+  <script>
+    document.getElementById("userIdConfirm").value = `<%=userId%>`;
+  </script>
+  <script src="/Scripts/completeOrder.js"></script>
+</html>

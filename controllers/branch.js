@@ -101,7 +101,6 @@ exports.updateBranch = async (req, res) => {
 exports.getAllBranches = async (req, res) => {
   try {
     const branches = await branchServices.getAllBranches();
-    console.log(branches)//
     if (branches.length > 0) {
       res.json({
         branches: branches,

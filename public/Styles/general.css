@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 999999;
 }
 
 .modal-content {
@@ -53,6 +53,7 @@
   color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
+  padding:6px 12px;
   font-size: 18px;
   transition: background-color 0.3s;
   cursor: pointer;
@@ -123,4 +124,20 @@
 .open {
   display: block;
   visibility: visible;
+}
+
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: stroke 0.3s;
+  cursor: pointer;
+}
+
+.icon:hover {
+  stroke: var(--main-color);
+}
+
+.container{
+  height:100vh;
 }

@@ -8,8 +8,6 @@ exports.register = async (firstName, lastName, email, password, marketing) => {
   marketing = marketing == "on" ? true : false;
   let admin = false;
   //middleware
-  if (email === "bartayar123456789@gmail.com") admin = true;
-
   const user = new User({
     firstName,
     lastName,
@@ -59,6 +57,7 @@ exports.deleteUser = async (email) => {
   const countAdmins = await exports.countAdmins();
   if (countAdmins == 1 && user.admin === true) return 0;
   else {
+    
     const result = await User.deleteOne({ email: email });
     if (result.deletedCount === 1) {
       return 1;

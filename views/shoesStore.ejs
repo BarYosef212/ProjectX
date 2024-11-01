@@ -1,71 +1,100 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="icon" href="/img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
     <title>Shoe Store</title>
     <link rel="stylesheet" href="Styles/main.css" />
-    <!-- Assuming you have some styles -->
-    </head>
-    <body>
+  </head>
+
+  <body>
     <%- include('partials/header') %>
+
     <main>
-      <div class="switchContainer"style="display: flex;">
-      <p class="coinSymbol">USD</p>
-      <label for="switch-1" class="switch">
-        <input type="checkbox" id="switch-1" onclick="convertPriceCurrency(this.checked ? 1 : 0)">
-        <span class="slider"></span>
-      </label>
-    </div>
-      
-      
+      <div class="switchContainer" style="display: flex">
+        <p class="coinSymbol">USD</p>
+        <label for="switch-1" class="switch">
+          <input
+            type="checkbox"
+            id="switch-1"
+            onclick="convertPriceCurrency(this.checked ? 1 : 0)"
+          />
+          <span class="slider"></span>
+        </label>
+      </div>
 
       <div class="filter-container">
-      <select id="filter" name="priceFilter">
-        <option value="Best Offer" <%= priceFilter === 'Best Offer' ? 'selected' : '' %>>Best Offer</option>
-        <option value="lowHigh" <%= priceFilter === 'lowHigh' ? 'selected' : '' %>>Price: low - High</option>
-        <option value="highLow" <%= priceFilter === 'highLow' ? 'selected' : '' %>>Price: High - Low</option>
-      </select>
-      <select id="genderFilter" name="genderFilter">
-        <option value="all" <%= genderFilter === 'all' ? 'selected' : '' %>>All</option>
-        <option value="men" <%= genderFilter === 'men' ? 'selected' : '' %>>Men</option>
-        <option value="women" <%= genderFilter === 'women' ? 'selected' : '' %>>Women</option>
-      </select>
-      </div>
-        <div class="ad" style="margin-left: 500px;">
-        <video autoplay loop muted style="width: 600px;
-        z-index: 1; margin: 0 auto;">
-          <source src="/img/Gen-3 Alpha 1188168779, Dynamic tracking sho, u2436219793_A_perfec, M 5.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
+        <select id="filter" name="priceFilter">
+          <option value="Best Offer" <%= priceFilter === 'Best Offer' ? 'selected' : '' %>>Best Offer</option>
+          <option value="lowHigh" <%= priceFilter === 'lowHigh' ? 'selected' : '' %>>Price: low - High</option>
+          <option value="highLow" <%= priceFilter === 'highLow' ? 'selected' : '' %>>Price: High - Low</option>
+        </select>
+        
+        <select id="genderFilter" name="genderFilter">
+          <option value="all" <%= genderFilter === 'all' ? 'selected' : '' %>>All</option>
+          <option value="men" <%= genderFilter === 'men' ? 'selected' : '' %>>Men</option>
+          <option value="women" <%= genderFilter === 'women' ? 'selected' : '' %>>Women</option>
+        </select>
+      </div> 
 
+      <div
+        class="errorMessage"
+        style="display: none; text-align: center; font-size: 18px"
+      ></div>
 
+     
       <div class="shoes-container">
         <% shoes.forEach(shoe => { %>
-        <div class="shoe">
+        <div class="shoe" data-id="<%= shoe.id %>" data-usdPrice="<%=shoe.price%>">
           <img src="<%= shoe.primaryImage %>" alt="<%= shoe.name %>" />
           <h3><%= shoe.name %></h3>
           <p><%= shoe.title %></p>
-          <p><b>Price: </b><span>$<%= shoe.price %></span></p>
-          <button class="btn">Add to Cart</button>
+          <p><b>Price: </b><span>$</span><span><%= shoe.price %></span></></p>
+
+          <label for="shoeSizeDropdown"><b>Size:</b></label>
+          <select id="shoeSizeDropdown<%= shoe.id %>" name="shoeSize">
+            <option value="" disabled selected>&nbsp;</option>
+            <% for (let size = 37; size <= 48; size++) { %>
+            <option value="<%= size %>"><%= size %></option>
+            <% } %>
+          </select>
+          
+
+          <button class="btn" onclick="addToCart('<%= shoe.id %>', '<%= shoe.primaryImage %>', '<%= shoe.name %>', document.getElementById('shoeSizeDropdown<%= shoe.id %>').value, 1, '<%= shoe.price %>')">
+            Add to Cart
+          </button>
+          
         </div>
         <% }); %>
       </div>
     </main>
 
     <div id="pagination">
-  <% if (currentPage > 1) { %>
-      <a href="/store?page=<%= currentPage - 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>">Previous</a>
-  <% } %>
+      <% if (currentPage > 1) { %>
+      <a
+        href="/store?page=<%= currentPage - 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+        >Previous</a
+      >
+      <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/store?page=<%= i %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+        class="<%= i === currentPage ? 'active' : '' %>"
+        ><%= i %></a
+      >
+      <% } %> <% if (currentPage < totalPages) { %>
+      <a
+        href="/store?page=<%= currentPage + 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+        >Next</a
+      >
+      <% } %>
+    </div>
 
-  <% for (let i = 1; i <= totalPages; i++) { %>
-      <a href="/store?page=<%= i %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>" class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
-  <% } %>
-
-  <% if (currentPage < totalPages) { %>
-      <a href="/store?page=<%= currentPage + 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>">Next</a>
-  <% } %>
-</div>
-    <%- include ('partials/footer') %>
+    <%- include('partials/footer') %>
 
     <script src="Scripts/shoesStore.js"></script>
   </body>

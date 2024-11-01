@@ -4,7 +4,7 @@ const branchController = require("../controllers/branch"); // Controller for bra
 const { isAdmin } = require("../middleware/auth");
 
 // Branch management
-router.get("/branchAdmin", (req, res) => {
+router.get("/branchAdmin",isAdmin, (req, res) => {
   res.render("branchAdmin");
 });
 router.get("/getAllBranches", branchController.getAllBranches);

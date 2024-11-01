@@ -55,7 +55,6 @@ async function login(event) {
 
     const result = await response.json();
 
-    console.log(result);
     if (response.ok) {
       message.style.display = "block";
       message.textContent = result.message;

@@ -122,8 +122,6 @@ function openModal(id) {
     document.querySelector("#shoePrice").required = true;
     document.querySelector("#shoeImage").required = true;
     document.querySelector("#shoeGender").required = true;
-    console.log("hihi")
-
 
     shoeId.value = "";
     modelTitleEl.textContent = "";
@@ -151,6 +149,7 @@ async function addShoe(shoeName, shoeTitle, shoePrice, shoeImage, shoeGender) {
       }),
     });
     const result = await response.json();
+
     if (response.ok) {
       createMessage(result.message, false);
       closeModal();
@@ -174,15 +173,6 @@ async function updateShoe() {
     const shoePrice = document.querySelector("#shoePrice").value;
     const shoeImage = document.querySelector("#shoeImage").value;
     const shoeGender = document.querySelector("#shoeGender").value;
-
-    const data = {
-      shoeId,
-      shoeName,
-      shoeTitle,
-      shoePrice,
-      shoeImage,
-      shoeGender,
-    };
 
     const updatedData = {};
 
@@ -358,13 +348,15 @@ function displayShoes(data) {
     // Finally, append the shoe div to the container
     container.appendChild(shoeDiv);
   });
-  
 }
 
 document.getElementById("shoes-form").addEventListener("submit", (event) => {
   event.preventDefault(); // Prevent default form submission
   findShoes(); // Call the findShoes function
 });
+
+
+
 
 window.onload = function () {
   getAllShoes();

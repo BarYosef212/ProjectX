@@ -1,128 +1,140 @@
-      .shoesAdminBody {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
-      }
+.shoesAdminBody {
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
 
-      h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-        font-size: 3rem;
-      }
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 3rem;
+}
 
-      /* Form Styles */
-      #shoes-form {
-        text-align: center;
-        width: 100%;
-        max-width: 600px;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-      }
+/* Form Styles */
+#shoes-form {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
 
-      input[type="number"] {
-        width: 40%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-      }
+input[type="number"] {
+  width: 40%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 
-      input[type="text"] {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-      }
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
 
+/* Shoe Container */
+.shoes-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+.btnShoesAdminBox {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
 
-      /* Shoe Container */
-      .shoes-container {
-        width: 100%;
-        max-width: 1200px;
-        margin: 40px auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-      }
-      .btnShoesAdminBox {
-        position: absolute;
-        bottom: 0px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        width: 100%;
-        justify-content: center;
-      }
+.btnShoesAdmin {
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  font-size: 16px;
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+}
 
-      .btnShoesAdmin {
-        background-color: var(--main-color);
-        color: white;
-        border: none;
-        border-radius: 0;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        white-space: nowrap;
-        font-size: 16px;
-        flex: 1;
-        padding: 15px;
-        text-align: center;
-      }
+.btnShoesAdminDelete {
+  background-color: #dc3545;
+  width: 100%;
+  padding: 20px;
+}
 
-      .btnShoesAdminDelete {
-        background-color: #dc3545;
-        width: 100%;
-        padding: 20px;
-      }
+.btnShoesAdminDelete:hover {
+  background-color: #c82333;
+}
 
-      .btnShoesAdminDelete:hover {
-        background-color: #c82333;
-      }
+.btnShoesAdminUpdate {
+  background-color: #fd7e14;
+  width: 100%;
+  padding: 20px;
+}
 
-      .btnShoesAdminUpdate {
-        background-color: #fd7e14;
-        width: 100%;
-        padding: 20px;
-      }
+.btnShoesAdminUpdate:hover {
+  background-color: #e06b12;
+}
 
-      .btnShoesAdminUpdate:hover {
-        background-color: #e06b12;
-      }
+/* Success/Error Message */
+.message {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
 
-      /* Success/Error Message */
-      .message {
-        text-align: center;
-        font-size: 1.2rem;
-        margin: 10px 0;
-      }
+.error-message {
+  color: red;
+}
 
-      .error-message {
-        color: red;
-      }
+.success-message {
+  color: green;
+}
 
-      .success-message {
-        color: green;
-      }
+.btnUpdateShoe {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
 
-      
+.btnAddShoe {
+  position: absolute;
+  top: 210px;
+  right: 380px;
+  padding: 12px 24px;
+}
 
-      .btnUpdateShoe {
-        display: block;
-        margin: 0 auto;
-        padding:12px 24px;
-      }
+.postFacebook {
+  display: none;
+  background-color: #fff;
+  border: none;
+}
 
-      .btnAddShoe {
-        position: absolute;
-        top: 210px;
-        right: 380px;
-        padding:12px 24px;
-      }
-    
+ion-icon[name="logo-facebook"] {
+  height: 28px;
+  width: 28px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+ion-icon[name="logo-facebook"]:hover {
+  color: #1877f2;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/Styles/main.css" />
+    <link rel="icon" href="/img/favicon.png" />
+    
+    <title>Orders:</title>
+  </head>
+
+  <body class="ordersBody">
+    <%- include('partials/header') %>
+    <h1 class="ordersOfTitle">Orders:</h1>
+    <div class="errMsg" style="text-align: center; font-size: 18px"></div>
+
+    <div class="modal" id="updateOrderModal" style="display: none">
+      <div class="modal-content">
+        <span class="closeButtonOrdersAdmin" onclick="closeModal()">&times;</span>
+        <h2>Update Order</h2>
+        <form id="updateOrderForm">
+          <div class="form-group">
+            <label for="orderFullName">Order Full Name:</label>
+            <input type="text" id="orderFullName" required />
+          </div>
+
+          <div class="form-group">
+            <h3>Shipping Address</h3>
+            <label for="street">Street:</label>
+            <input type="text" id="street" required />
+
+            <label for="city">City:</label>
+            <input type="text" id="city" required />
+
+            <label for="postalCode">Postal Code:</label>
+            <input type="text" id="postalCode" required />
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" required />
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" required />
+          </div>
+
+          <div class="form-group">
+            <h3>Items</h3>
+            <div id="orderItems"></div>
+          </div>
+          <div class="errMsgModal" style="color: red; margin-bottom:14px;"></div>
+          <button type="button" class="btn btnUpdateOrder btnSaveChanges">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+    <main class="ordersMain">
+      <!-- Add this wrapper -->
+      <div class="ordersNotFound" style="display: none"></div>
+      <div class="ordersExist">
+        <div class="orders-container"></div>
+      </div>
+    </main>
+    <%- include('partials/footer') %>
+  </body>
+  <script src="/Scripts/orderUserAdmin.js"></script>
+</html>
