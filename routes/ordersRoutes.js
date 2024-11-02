@@ -18,6 +18,12 @@ router.get("/ordersUserAdmin",isAdmin,(req,res)=>{
   res.render('ordersUserAdmin')
 })
 
+router.get("/graphAdmin",isAdmin,(req,res)=>{
+  res.render("graphAdmin")
+})
+
+router.get("/getMonthlyOrderData",isAdmin,ordersController.getMonthlyOrderData)
+
 router.post("/deleteOrder",isAdmin,ordersController.deleteOrder)
 router.post("/updateOrder",isAdmin,ordersController.updateOrder)
 

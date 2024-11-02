@@ -142,8 +142,10 @@ async function updateUser(req,res) {
     const result = await response.json();
 
     if (response.ok) {
-      const fullName = document.querySelector(".user-info").children[0];
-      fullName.textContent = `${result.user.firstName} ${result.user.lastName}`
+      if(result.fullName !==""){
+        const fullName = document.querySelector(".user-info").children[0];
+        fullName.textContent = result.fullName;
+      }
       createMessage(result.message, false);
       closeModal();
       getAllUsers(true);

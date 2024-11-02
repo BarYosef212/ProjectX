@@ -49,6 +49,9 @@ router.post("/updateUser",isAdmin,userController.updateUser);
 // Logout
 router.post("/logout", userController.logOut);
 
+//getting data for the graphs 
+router.get("/getMarketingData",userController.getMarketingData)
+
 //errorHandler
 router.get("/error",(req,res)=>{
   res.render("errorHandler")

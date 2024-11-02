@@ -25,43 +25,44 @@
       <%- include('partials/header') %>
 
       <!-- MAIN -->
+      <section>
+        <main class="main-page">
+          <video autoplay muted loop id="background-video">
+            <source
+              src="/img/Gen-3 Alpha 1271808576, u2436219793_A_white_, M 5.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+          <div class="text" style="margin-bottom: 190px">
+            <div class="main-text">
+              <h1 class="main-header">
+                Step into Style,<br />
+                Comfort, and Performance
+              </h1>
+              <h4 class="sub-header">
+                Discover our latest collection of shoes designed to elevate every
+                step you take
+              </h4>
+            </div>
 
-      <main class="main-page">
-        <video autoplay muted loop id="background-video">
-          <source
-            src="/img/Gen-3 Alpha 1271808576, u2436219793_A_white_, M 5.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
-        <div class="text" style="margin-bottom: 190px">
-          <div class="main-text">
-            <h1 class="main-header">
-              Step into Style,<br />
-              Comfort, and Performance
-            </h1>
-            <h4 class="sub-header">
-              Discover our latest collection of shoes designed to elevate every
-              step you take
-            </h4>
+            <!-- NEWSLETTER CTA -->
+            <div class="cta-section">
+              <form class="cta-form">
+                <input
+                  id="ctaInput"
+                  type="email"
+                  placeholder="Enter Email"
+                  required
+                />
+                <button class="btn btn--join" type="submit">
+                  Join our Newsletter
+                </button>
+              </form>
+            </div>
           </div>
-
-          <!-- NEWSLETTER CTA -->
-          <div class="cta-section">
-            <form class="cta-form">
-              <input
-                id="ctaInput"
-                type="email"
-                placeholder="Enter Email"
-                required
-              />
-              <button class="btn btn--join" type="submit">
-                Join our Newsletter
-              </button>
-            </form>
-          </div>
-        </div>
-      </main>
+        </main>
+      </section>
 
       <!-- CAROUSEL -->
       <div
