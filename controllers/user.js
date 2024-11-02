@@ -167,13 +167,16 @@ exports.updateUser = async (req, res) => {
   const user = await userService.updateUser(email, updatedData);
 
   if (user) {
-    if (user._id == req.session.userId) {
+    let fullName = "";
+    if ((user._id).toString() === req.session.userId) {
       req.session.fullName = `${user.firstName} ${user.lastName}`;
       req.session.admin = user.admin;
+      fullName = `${user.firstName} ${user.lastName}`;
     }
     return res.json({
       message: "User updated successfully",
       user: user,
+      fullName:fullName,
     });
   } else {
     return res.status(403).json({
@@ -181,3 +184,31 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
+
+exports.getMarketingData = async(req,res)=> {
+  const data = await User.aggregate([
+    {
+      $group: {
+        _id: "$marketing", 
+        count: { $sum: 1 }, 
+      },
+    },
+  ]);
+
+  const result = data.map((item) => ({
+    marketing: item._id,
+    count: item.count,
+  }));
+
+  if(result){
+    return res.json({
+      result:result,
+    })
+  }
+  else{
+    return res.status(500).json({
+      message:errorMessage,
+    })
+  }
+}
