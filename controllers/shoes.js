@@ -37,42 +37,95 @@ async function postToFacebook(id) {
 }
 
 exports.sortShoes = async (req, res) => {
-  const page = parseInt(req.query.page) || 1; // Get current page
-  const limit = 12; // Number of shoes per page
-  const skip = (page - 1) * limit; // Number of shoes to skip
-  const priceFilter = req.query.priceFilter || "Best Offer"; // Get the price filter from query
   const genderFilter = req.query.genderFilter || "all";
+  if (req.session?.lastGender && req.session.lastGender !== genderFilter) {
+    req.session.lastGender = genderFilter;
+    return res.redirect(`/store?page=1&genderFilter=${genderFilter}&priceFilter=${req.query.priceFilter || "Best Offer"}`);
+  }
+  req.session.lastGender = genderFilter;
 
-  // Get the total number of shoes based on the price filter
-  let totalShoes;
-  if (genderFilter === "men") {
-    totalShoes = await Shoe.countDocuments({ gender: "men" });
-  } else if (genderFilter === "women") {
-    totalShoes = await Shoe.countDocuments({ gender: "women" });
-  } else {
-    const sortOrder = priceFilter === "highLow" ? -1 : 1;
-    totalShoes = await Shoe.countDocuments().sort({ price: sortOrder });
+  const page = parseInt(req.query.page) || 1;
+  const limit = 12;
+  const skip = (page - 1) * limit;
+  const priceFilter = req.query.priceFilter || "Best Offer";
+  
+
+  
+  const pipeline = [];
+
+  // Match stage for gender filtering
+  if (genderFilter !== "all") {
+    pipeline.push({
+      $match: { gender: genderFilter }
+    });
   }
 
-  // Fetch the filtered and paginated shoes
-  let shoes = await exports.getShoes({
-    priceFilter,
-    genderFilter,
-    skip,
-    limit,
+  // Add sorting based on price filter
+  if (priceFilter === "highLow") {
+    pipeline.push({ $sort: { price: -1 } });
+  } else if (priceFilter === "lowHigh") {
+    pipeline.push({ $sort: { price: 1 } });
+  }
+
+  // Facet to get both total count and paginated results in one query
+  pipeline.push({
+    $facet: {
+      metadata: [{ $count: "total" }],
+      shoes: [
+        { $skip: skip },
+        { $limit: limit }
+      ]
+    }
   });
 
-  const totalPages = Math.ceil(totalShoes / limit); // Calculate total pages
+  try {
+    const result = await Shoe.aggregate(pipeline);
+    
+    // Extract the results
+    const shoes = result[0].shoes;
+    const totalShoes = result[0].metadata[0]?.total || 0;
+    const totalPages = Math.ceil(totalShoes / limit);
 
-  // Render the shoe store with the current filter and pagination
-  res.render("shoesStore", {
-    shoes,
-    currentPage: page,
-    totalPages,
-    priceFilter,
-    genderFilter,
-  });
+    res.render("shoesStore", {
+      shoes,
+      currentPage: page,
+      totalPages,
+      priceFilter,
+      genderFilter,
+    });
+  } catch (error) {
+    console.error('Error in sortShoes:', error);
+    res.status(500).send('Error processing request');
+  }
 };
+
+exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
+  const pipeline = [];
+
+  // Match stage for gender filtering
+  if (genderFilter !== "all") {
+    pipeline.push({
+      $match: { gender: genderFilter }
+    });
+  }
+
+  // Add sorting based on price filter
+  if (priceFilter === "highLow") {
+    pipeline.push({ $sort: { price: -1 } });
+  } else if (priceFilter === "lowHigh") {
+    pipeline.push({ $sort: { price: 1 } });
+  }
+
+  // Add pagination
+  pipeline.push(
+    { $skip: skip },
+    { $limit: limit }
+  );
+
+  return await Shoe.aggregate(pipeline);
+};
+
+
 
 exports.addShoe = async (req, res) => {
   try {
@@ -125,31 +178,7 @@ exports.updateShoe = async (req, res) => {
   }
 };
 
-exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
-  try {
-    let query = {};
-    // Gender filtering
-    if (genderFilter && genderFilter !== "all") {
-      query.gender = genderFilter;
-    }
 
-    let shoes;
-    if (priceFilter === "Best Offer") {
-      shoes = await Shoe.find(query).skip(skip).limit(limit).sort({ _id: -1 });
-    } else {
-      const sortOrder = priceFilter === "highLow" ? -1 : 1;
-      shoes = await Shoe.find(query)
-        .sort({ price: sortOrder })
-        .skip(skip)
-        .limit(limit)
-        .sort({ _id: -1 });
-    }
-    return shoes;
-  } catch (error) {
-    console.log("Error in getShoes:", error);
-    throw new Error("Error fetching shoes");
-  }
-};
 
 exports.getAllShoes = async (req, res) => {
   try {

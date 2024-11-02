@@ -88,7 +88,6 @@ if (resetButton) {
 }
 
 async function displayOrders(data, admin = false) {
-  console.log("data",data)
   const ordersContainer = document.querySelector(".orders-container");
   let count = 1;
 
@@ -234,3 +233,4 @@ function toggleOrder(orderNum) {
 }
 
 window.onload = getOrdersUser(id);
+

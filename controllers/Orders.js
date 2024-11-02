@@ -15,6 +15,8 @@ exports.confirmOrder = async (req, res) => {
 };
 
 exports.getOrders = async (req, res) => {
+  const x =await  getMonthlyOrderData();
+  console.log(x);
   const { userId } = req.body;
   try {
     const orders = await orderServices.getOrders(userId);
@@ -64,3 +66,21 @@ exports.updateOrder = async(req,res)=>{
   }
 }
 
+async function getMonthlyOrderData() {
+  const data = await Order.aggregate([
+    {
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        orderCount: { $sum: 1 },
+      },
+    },
+    { $sort: { "_id.year": 1, "_id.month": 1 } }, // Sort by year and month
+  ]);
+
+  // Transform the data to a format suitable for D3.js
+  return data.map((item) => ({
+    year: item._id.year,
+    month: item._id.month,
+    count: item.orderCount,
+  }));
+}
