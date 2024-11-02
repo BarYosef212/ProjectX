@@ -11,10 +11,8 @@
     <title>Shoe Store</title>
     <link rel="stylesheet" href="Styles/main.css" />
   </head>
-
   <body>
     <%- include('partials/header') %>
-
     <main>
       <div class="switchContainer" style="display: flex">
         <p class="coinSymbol">USD</p>
@@ -78,27 +76,28 @@
         </div>
         <% }); %>
       </div>
+      <div id="pagination">
+        <% if (currentPage > 1) { %>
+        <a
+          href="/store?page=<%= currentPage - 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+          >Previous</a
+        >
+        <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+        <a
+          href="/store?page=<%= i %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+          class="<%= i === currentPage ? 'active' : '' %>"
+          ><%= i %></a
+        >
+        <% } %> <% if (currentPage < totalPages) { %>
+        <a
+          href="/store?page=<%= currentPage + 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
+          >Next</a
+        >
+        <% } %>
+      </div>
     </main>
 
-    <div id="pagination">
-      <% if (currentPage > 1) { %>
-      <a
-        href="/store?page=<%= currentPage - 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
-        >Previous</a
-      >
-      <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
-      <a
-        href="/store?page=<%= i %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
-        class="<%= i === currentPage ? 'active' : '' %>"
-        ><%= i %></a
-      >
-      <% } %> <% if (currentPage < totalPages) { %>
-      <a
-        href="/store?page=<%= currentPage + 1 %>&priceFilter=<%= priceFilter %>&genderFilter=<%= genderFilter %>"
-        >Next</a
-      >
-      <% } %>
-    </div>
+    
 
     <%- include('partials/footer') %>
 

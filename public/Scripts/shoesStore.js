@@ -68,7 +68,7 @@ const addToCart = async (id, img, name, size, quantity, shoePrice) => {
     createMessage("Pick a shoe size", true);
   } else {
     cartWindow.classList.add("show");
-    cartWindow.style.right = "70px";
+    cartWindow.style.right = "125px";
     emptyMsg.style.display = "none";
     cartWindow.style.width = "550px";
     errMsg.style.display = "none";
@@ -127,7 +127,7 @@ const addToCart = async (id, img, name, size, quantity, shoePrice) => {
       if (cart.children.length === 1) {
         emptyMsg.style.display = "block";
         cartWindow.style.width = "200px";
-        cartWindow.style.right = "240px";
+        cartWindow.style.right = "310px";
 
         checkOutBtn.style.display = "none";
         totalPriceBox.style.display = "none";

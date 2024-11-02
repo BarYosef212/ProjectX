@@ -1,177 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <header class="header-home">
-      <!-- Logo -->
-      <a class="logo-box" href="/">
-        <img src="/img/logo-removebg-preview.png" alt="Logo" class="logo-img" />
+<!-- HEADER -->
+<header class="header-home">
+  <!-- Logo -->
+  <a class="logo-box" href="/">
+    <img src="/img/logo-removebg-preview.png" alt="Logo" class="logo-img" />
+  </a>
+
+  <!-- Navigation -->
+  <nav class="nav-home">
+    <ul class="nav-left">
+      <li>
+        <a
+          href="/store?page=1&priceFilter=Best%20Offer&genderFilter=men"
+          class="nav-link-home"
+          >Men</a
+        >
+      </li>
+      <li>
+        <a
+          href="/store?page=1&priceFilter=Best%20Offer&genderFilter=women"
+          class="nav-link-home"
+          >Women</a
+        >
+      </li>
+      <li><a href="/store" class="btn btn-store">Store</a></li>
+    </ul>
+  </nav>
+
+  <!-- Right Section (Login, Cart, User Info) -->
+  <div class="nav-right">
+    <!-- Login Button (If user not logged in) -->
+    <% if (!fullName) { %>
+    <a href="login" class="nav-link-home login">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="icon login-icon"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+        />
+      </svg>
+    </a>
+    <% } %>
+
+    <!-- User Info and Admin Access (If logged in) -->
+    <% if (fullName) { %>
+
+    <!-- Cart -->
+    <div class="cart-box" style="display: none">
+      <a href="#" class="nav-link-home cart">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="icon cart-icon"
+          style="vertical-align: middle"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+          />
+        </svg>
       </a>
+      <div class="cart-container">
+        <div class="cart-window">
+          <h3>Your Cart</h3>
+          <div id="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+          </div>
+          <p style="display: none" id="totalPrice">
+            <span><b>Total: </b>$</span><span>0</span>
+          </p>
+          <button
+            class="btn checkOutBtn"
+            style="padding: 12px 24px; display: none"
+            onclick="confirmScreen()"
+          >
+            Proceed To Checkout
+          </button>
+        </div>
+      </div>
+    </div>
 
-      <!-- Navigation -->
-      <nav class="nav-home">
-        <ul class="nav-left">
-          <li>
-            <a
-              href="/store?page=1&priceFilter=Best%20Offer&genderFilter=men"
-              class="nav-link-home"
-              >Men</a
-            >
-          </li>
-          <li>
-            <a
-              href="/store?page=1&priceFilter=Best%20Offer&genderFilter=women"
-              class="nav-link-home"
-              >Women</a
-            >
-          </li>
-          <li><a href="/store" class="btn btn-store">Store</a></li>
-        </ul>
-      </nav>
+    <div class="orders-box">
+      <a href="/ordersUser" class="nav-link-home orders">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+          />
+        </svg>
+      </a>
+    </div>
 
-      <!-- Right Section (Login, Cart, User Info) -->
-      <div class="nav-right">
-        <!-- Login Button (If user not logged in) -->
-        <% if (!fullName) { %>
-        <a href="login" class="nav-link-home login">
+    <div class="user-section">
+      <div class="user-id" data-id="<%= userId %>"></div>
+      <div class="login-line"></div>
+      <div class="user-info">
+        <a href="#" class="nav-link-home login"><%= fullName %></a>
+        <p style="margin: 3px">Connected <span class="connected-dot"></span></p>
+      </div>
+
+      <!-- Admin Access -->
+      <% if (admin) { %>
+      <a href="/admin" class="nav-link-home" style="margin-left: 18px">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="icon"
+          style="vertical-align: middle"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
+          />
+        </svg>
+      </a>
+      <% } %>
+
+      <!-- Logout Form -->
+      <form action="/logout" method="POST" class="logout-form">
+        <button class="logout-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            stroke="currentColor"
-            class="icon login-icon"
+            class="logout-icon"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
             />
           </svg>
-        </a>
-        <% } %>
-
-        <!-- User Info and Admin Access (If logged in) -->
-        <% if (fullName) { %>
-        
-        <!-- Cart -->
-        <div class="cart-box" style="display: none">
-          <a href="#" class="nav-link-home cart">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="icon cart-icon"
-              style="vertical-align: middle"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-              />
-            </svg>
-          </a>
-          <div class="cart-container">
-            <div class="cart-window">
-              <h3>Your Cart</h3>
-              <div id="cart-items">
-                <p class="empty-cart">Your cart is empty</p>
-              </div>
-              <p style="display: none" id="totalPrice">
-                <span><b>Total: </b>$</span><span>0</span>
-              </p>
-              <button
-                class="btn checkOutBtn"
-                style="padding: 12px 24px; display: none"
-                onclick="confirmScreen()"
-              >
-                Proceed To Checkout
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="orders-box">
-          <a href="/ordersUser" class="nav-link-home orders">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="icon"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-              />
-            </svg>
-          </a>
-        </div>
-
-        <div class="user-section">
-          <div class="user-id" data-id="<%= userId %>"></div>
-          <div class="login-line"></div>
-          <div class="user-info">
-            <a href="#" class="nav-link-home login"><%= fullName %></a>
-            <p style="margin: 3px">
-              Connected <span class="connected-dot"></span>
-            </p>
-          </div>
-
-          <!-- Admin Access -->
-          <% if (admin) { %>
-          <a href="/admin" class="nav-link-home" style="margin-left: 18px">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="icon"
-              style="vertical-align: middle"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"
-              />
-            </svg>
-          </a>
-          <% } %>
-
-          <!-- Logout Form -->
-          <form action="/logout" method="POST" class="logout-form">
-            <button class="logout-btn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                class="logout-icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
-                />
-              </svg>
-            </button>
-          </form>
-        </div>
-        <% } %>
-      </div>
-    </header>
-
-    <!-- External JavaScript -->
-    <script src="/Scripts/log-in.js"></script>
-  </body>
-</html>
+        </button>
+      </form>
+    </div>
+    <% } %>
+  </div>
+  <script src="/Scripts/log-in.js"></script>
+</header>

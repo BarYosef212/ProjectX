@@ -456,6 +456,7 @@ async function updateOrder(id) {
   }
   if (updatedOrder.items.length === 0) {
     deleteOrder(id);
+    closeModal();
     return;
   }
   const confirmaton = confirm("Are you sure you want to update this order?");
