@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { isLoggedIn, isAdmin,isLoggedOut } = require("../middleware/auth");
 const userController = require('../controllers/user');
-const { google } = require('googleapis');
 
 // Home page
 router.get("/", (req, res) => {
@@ -52,7 +51,8 @@ router.post("/logout", userController.logOut);
 
 //getting data for the graphs 
 router.get("/getMarketingData",userController.getMarketingData)
-router.get("/auth/google/callback",userController.loginViaGoogle)
+
+//google routes
 router.get('/auth/google', userController.initiateGoogleLogin); // Redirect to Google login URL
 router.get('/auth/google/callback', userController.loginViaGoogle); // Handle Google login callback
 

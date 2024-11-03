@@ -7,7 +7,7 @@ const { google } = require("googleapis");
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  "http://localhost:3035/auth/google/callback" // Make sure this matches Google Cloud Console
+  `http://localhost:${process.env.PORT}/auth/google/callback` // Make sure this matches Google Cloud Console
 );
 
 const googleLoginUrl = oauth2Client.generateAuthUrl({
@@ -23,9 +23,8 @@ exports.initiateGoogleLogin = (req, res) => {
 
 exports.loginViaGoogle = async (req, res) => {
   try {
-
-    if(req.query.error){
-      res.redirect("/login")
+    if (req.query.error) {
+      res.redirect("/login");
       return;
     }
     const { tokens } = await oauth2Client.getToken(req.query.code);
@@ -49,13 +48,10 @@ exports.loginViaGoogle = async (req, res) => {
         id
       );
     }
-    const userGoogle = await User.findOne({email:email})
-    if (userGoogle) {
-      req.session.userId = userGoogle._id;
-      req.session.fullName = `${userGoogle.firstName} ${userGoogle.lastName}`;
-      req.session.admin = userGoogle.admin;
-      res.redirect("/")
-    } 
+    req.session.userId = user._id;
+    req.session.fullName = `${user.firstName} ${user.lastName}`;
+    req.session.admin = user.admin;
+    res.redirect("/");
   } catch (error) {
     console.error("Error during Google login:", error);
     res.redirect("/error"); // Redirect to an error page if there’s an issue
