@@ -1,30 +1,28 @@
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
 
-// Session configuration middleware
+
+//save in session
 const sessionMiddleware = session({
-  secret: process.env.SESSION_SECRET,  // Use a secure key from your .env file
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000,   // Remove maxAge to make it a session cookie
-    expires: false, // Make sure it doesn't set an explicit expiration time
+    maxAge: 24 * 60 * 60 * 1000,
+    expires: false,
   },
 });
 
-
-// Middleware to check if user is logged in
 function isLoggedIn(req, res, next) {
   if (req.session.userId) {
-    next();  // User is logged in, proceed to the next middleware
+    next();
   } else {
-    res.render('errorHandler');
+    res.render('errorHandler',{message: "You need to login first to the website"});
   }
 }
 
 function isLoggedOut(req, res, next) {
   if (!req.session.userId) {
-    next();  // User is logged in, proceed to the next middleware
+    next();
   } else {
     res.render('errorHandler');
   }
@@ -39,7 +37,7 @@ function isAdmin(req, res, next) {
   }
 }
 
-// Middleware to make fullName available in all views
+//Save in the local storage
 function setUserInView(req, res, next) {
   res.locals.fullName = req.session.fullName || null;
   res.locals.admin = req.session.admin || null;
@@ -47,7 +45,6 @@ function setUserInView(req, res, next) {
   next();
 }
 
-// Export the middlewares
 module.exports = {
   sessionMiddleware,
   isLoggedIn,
@@ -55,5 +52,3 @@ module.exports = {
   isAdmin,
   isLoggedOut
 };
-
-

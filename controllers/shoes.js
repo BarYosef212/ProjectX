@@ -36,10 +36,10 @@ async function postToFacebook(id) {
 }
 
 exports.sortShoes = async (req, res) => {
-  const page = parseInt(req.query.page) || 1; // Get current page
-  const limit = 12; // Number of shoes per page
-  const skip = (page - 1) * limit; // Number of shoes to skip
-  const priceFilter = req.query.priceFilter || "Best Offer"; // Get the price filter from query
+  const page = parseInt(req.query.page) || 1; 
+  const limit = 12; 
+  const skip = (page - 1) * limit;
+  const priceFilter = req.query.priceFilter || "Best Offer"; 
   const genderFilter = req.query.genderFilter || "all";
 
   // Get the total number of shoes based on the price filter
@@ -53,7 +53,7 @@ exports.sortShoes = async (req, res) => {
     totalShoes = await Shoe.countDocuments().sort({ price: sortOrder });
   }
 
-  // Fetch the filtered and paginated shoes
+  
   let shoes = await exports.getShoes({
     priceFilter,
     genderFilter,
@@ -63,7 +63,6 @@ exports.sortShoes = async (req, res) => {
 
   const totalPages = Math.ceil(totalShoes / limit); // Calculate total pages
 
-  // Render the shoe store with the current filter and pagination
   res.render("shoesStore", {
     shoes,
     currentPage: page,
@@ -76,7 +75,6 @@ exports.sortShoes = async (req, res) => {
 exports.getShoes = async ({ priceFilter, genderFilter, skip, limit }) => {
   try {
     let query = {};
-    // Gender filtering
     if (genderFilter && genderFilter !== "all") {
       query.gender = genderFilter;
     }
@@ -212,18 +210,3 @@ exports.searchShoes = async (req, res) => {
     });
   }
 };
-
-// exports.renderShoePage = async (req, res, next) => {
-//   try {
-//     const shoeName = req.params.shoeName;
-//     const shoe = await Shoe.findOne({ name: shoeName });
-//     if (!shoe) {
-//       const err = new Error("Shoe not found");
-//       err.status = 404;
-//       return next(err);
-//     }
-//     res.render("shoePage", shoe);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };

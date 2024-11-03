@@ -229,6 +229,5 @@ const loadCartFromLocalStorage = () => {
     );
   });
 };
-
 const carton = document.querySelector(".cart-box");
 carton.style.display = "block";

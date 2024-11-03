@@ -18,6 +18,9 @@
   width: 90%;
   max-width: 500px;
   margin: 10% auto;
+  max-height: 400px; /* Set a fixed height */
+  overflow-y: auto; /* Enables vertical scrolling */
+  overflow-x: hidden; /* Optional: Hides horizontal scroll */
 }
 
 .close-button {
