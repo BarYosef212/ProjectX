@@ -56,11 +56,7 @@ function createMessage(message, isError = false) {
   messageEl.innerHTML = message;
   messageEl.style.color = isError ? "red" : "green";
   messageEl.style.display = "block";
-
-  // Auto-hide message after 3 seconds
-  setTimeout(() => {
-    messageEl.style.display = "none";
-  }, 3000);
+  messageEl.style.margin="300px 0px"
 }
 
 document

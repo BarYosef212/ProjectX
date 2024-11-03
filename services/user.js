@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-exports.register = async (firstName, lastName, email, password, marketing) => {
+exports.register = async (firstName, lastName, email, password, marketing,googleId) => {
   const saltRounds = 6;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -13,12 +13,14 @@ exports.register = async (firstName, lastName, email, password, marketing) => {
     lastName,
     email,
     password: hashedPassword,
+    googleId,
     marketing,
     admin,
   });
   if (user) {
     await user.save();
-    console.log("User registerd");
+    if(googleId!=="0") console.log("Google user registerd")
+    else console.log("User registered")
     return user;
   } else {
     return null;

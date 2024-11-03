@@ -7,13 +7,14 @@ const user = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
     match: [/.+\@.+\..+/],
   },
   password: {
     type: String,
     required: true,
   },
+  googleId: { type: String, unique: true },
   marketing: {
     type: Boolean,
     required: true,
