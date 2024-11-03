@@ -166,8 +166,7 @@ const saveCartToLocalStorage = () => {
   localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
-const carton = document.querySelector(".cart-box");
-carton.style.display = "block";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromLocalStorage();
@@ -230,3 +229,5 @@ const loadCartFromLocalStorage = () => {
     );
   });
 };
+const carton = document.querySelector(".cart-box");
+carton.style.display = "block";

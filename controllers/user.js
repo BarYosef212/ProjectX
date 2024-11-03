@@ -54,7 +54,7 @@ exports.loginViaGoogle = async (req, res) => {
     res.redirect("/");
   } catch (error) {
     console.error("Error during Google login:", error);
-    res.redirect("/error"); // Redirect to an error page if there’s an issue
+    res.render('errorHandler',{message: "Error during Google login"});
   }
 };
 
