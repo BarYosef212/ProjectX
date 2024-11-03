@@ -5,7 +5,7 @@ async function confirmScreen(res, req) {
      document.getElementById('filter').addEventListener('change', function() {
   const selectedFilter = this.value;
   const genderFilter = document.getElementById('genderFilter').value;
-  const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+  const currentPage =  1;
   
   window.location.href = `/store?page=${currentPage}&priceFilter=${selectedFilter}&genderFilter=${genderFilter}`;
 });
@@ -166,8 +166,7 @@ const saveCartToLocalStorage = () => {
   localStorage.setItem("cart", JSON.stringify(cartItems));
 };
 
-const carton = document.querySelector(".cart-box");
-carton.style.display = "block";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromLocalStorage();
@@ -230,3 +229,6 @@ const loadCartFromLocalStorage = () => {
     );
   });
 };
+
+const carton = document.querySelector(".cart-box");
+carton.style.display = "block";
