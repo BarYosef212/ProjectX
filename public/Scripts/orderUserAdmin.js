@@ -11,7 +11,7 @@ function calculateTotalPrice() {
     );
     const quantity = parseInt(item.querySelector(".quantity-input").value);
     if (quantity < 1) {
-      errMsgModal.textContent = "Quantity cannot be less then 1";
+      errMsgModal.textContent = "Quantity cannot be less than 1";
       found = true;
       return totalPrice;
     }
