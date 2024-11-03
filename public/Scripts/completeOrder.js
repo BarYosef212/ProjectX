@@ -7,6 +7,7 @@ function createMessage(message, isError = false) {
 
 async function comfirmOrder() {
   const userId = document.querySelector("#userIdConfirm").value;
+  const userName = document.querySelector(".user-info").children[0].textContent;
   const fullName = document.querySelector("#nameConfirm").value;
   const street = document.querySelector("#streetConfirm").value;
   const city = document.querySelector("#cityConfirm").value;
@@ -49,6 +50,7 @@ async function comfirmOrder() {
     data.user = {};
     data.user.userId = userId;
     data.user.orderFullName = fullName;
+    data.user.userName = userName;
     data.items = [];
     document.querySelectorAll(".shoeConfirm").forEach((shoe) => {
       const item = {

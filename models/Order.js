@@ -12,6 +12,10 @@ const orderSchema = new Schema({
       type: String,
       required: true,
     },
+    userName:{
+      type:String,
+      required:true,
+    }
   },
 
   items: [

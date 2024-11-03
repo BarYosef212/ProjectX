@@ -310,6 +310,10 @@ body {
     gap: 40px;
   }
 
+  .socialFooterSection{
+    justify-self: center;
+  }
+
   .footer-section h4 {
     color: #0ea5e9;
     font-size: 1.25rem;
@@ -318,15 +322,6 @@ body {
     position: relative;
   }
 
-  .footer-section h4::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    height: 2px;
-    width: 40px;
-    background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-  }
 
   .footer-section p {
     line-height: 1.6;

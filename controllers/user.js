@@ -1,6 +1,66 @@
 const userService = require("../services/user");
 const User = require("../models/user");
 const errorMessage = "An error occured, please try again later";
+const { google } = require("googleapis");
+
+// Initialize OAuth2 client
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "http://localhost:3035/auth/google/callback" // Make sure this matches Google Cloud Console
+);
+
+const googleLoginUrl = oauth2Client.generateAuthUrl({
+  access_type: "offline",
+  scope: ["profile", "email"],
+  prompt: "select_account",
+});
+
+// Function to handle Google login initiation
+exports.initiateGoogleLogin = (req, res) => {
+  res.redirect(googleLoginUrl);
+};
+
+exports.loginViaGoogle = async (req, res) => {
+  try {
+
+    if(req.query.error){
+      res.redirect("/login")
+      return;
+    }
+    const { tokens } = await oauth2Client.getToken(req.query.code);
+    oauth2Client.setCredentials(tokens);
+
+    const oauth2 = google.oauth2({ version: "v2", auth: oauth2Client });
+    const userInfo = await oauth2.userinfo.get();
+
+    const { email, given_name, family_name, id } = userInfo.data;
+
+    //check if the user already exist
+    const user = await User.findOne({ email: email });
+
+    if (!user) {
+      await userService.register(
+        given_name,
+        family_name,
+        email,
+        "0",
+        false,
+        id
+      );
+    }
+    const userGoogle = await User.findOne({email:email})
+    if (userGoogle) {
+      req.session.userId = userGoogle._id;
+      req.session.fullName = `${userGoogle.firstName} ${userGoogle.lastName}`;
+      req.session.admin = userGoogle.admin;
+      res.redirect("/")
+    } 
+  } catch (error) {
+    console.error("Error during Google login:", error);
+    res.redirect("/error"); // Redirect to an error page if there’s an issue
+  }
+};
 
 exports.register = async (req, res) => {
   try {
@@ -12,13 +72,14 @@ exports.register = async (req, res) => {
         message: "User with this email already registered",
       });
     } else {
+      const googleId = "0";
       await userService.register(
         firstName,
         lastName,
         email,
         password,
-        passwordCompare,
-        marketing
+        marketing,
+        googleId
       );
       const user = await userService.login(email, password);
       req.session.userId = user._id;
@@ -54,7 +115,9 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     console.log("errorLogin", error);
-    res.render("login", { errorCode: error.code, error: error.message });
+    res.status(500).json({
+      message: errorMessage,
+    });
   }
 };
 
@@ -168,7 +231,7 @@ exports.updateUser = async (req, res) => {
 
   if (user) {
     let fullName = "";
-    if ((user._id).toString() === req.session.userId) {
+    if (user._id.toString() === req.session.userId) {
       req.session.fullName = `${user.firstName} ${user.lastName}`;
       req.session.admin = user.admin;
       fullName = `${user.firstName} ${user.lastName}`;
@@ -176,7 +239,7 @@ exports.updateUser = async (req, res) => {
     return res.json({
       message: "User updated successfully",
       user: user,
-      fullName:fullName,
+      fullName: fullName,
     });
   } else {
     return res.status(403).json({
@@ -185,13 +248,12 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-
-exports.getMarketingData = async(req,res)=> {
+exports.getMarketingData = async (req, res) => {
   const data = await User.aggregate([
     {
       $group: {
-        _id: "$marketing", 
-        count: { $sum: 1 }, 
+        _id: "$marketing",
+        count: { $sum: 1 },
       },
     },
   ]);
@@ -201,14 +263,13 @@ exports.getMarketingData = async(req,res)=> {
     count: item.count,
   }));
 
-  if(result){
+  if (result) {
     return res.json({
-      result:result,
-    })
-  }
-  else{
+      result: result,
+    });
+  } else {
     return res.status(500).json({
-      message:errorMessage,
-    })
+      message: errorMessage,
+    });
   }
-}
+};

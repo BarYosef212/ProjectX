@@ -59,7 +59,6 @@ function closeModal() {
 }
 
 async function checkModalUpdateUser() {
-
   const userName = document.querySelector("#userName");
   const userLastName = document.querySelector("#userLastName");
   const userEmail = document.querySelector("#userEmail");
@@ -82,13 +81,18 @@ async function checkModalUpdateUser() {
     message.style.color = "orange";
     closeModal();
     return;
-  } else if (userPassword.value !== "" && (userPassword.value.length < 6 || !regex.test(userPassword.value))) {
+  } else if (
+    userPassword.value !== "" &&
+    (userPassword.value.length < 6 || !regex.test(userPassword.value))
+  ) {
     console.log("2");
     errorMessageEl.textContent =
       "Password must be at least 6 characters long and contain one special character.";
     errorMessageEl.style.color = "red";
     errorMessageEl.style.display = "block";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value) && userEmail.value !== ""
+  } else if (
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value) &&
+    userEmail.value !== ""
   ) {
     errorMessageEl.textContent = "Please enter a valid email address.";
     errorMessageEl.style.color = "red";
@@ -100,7 +104,7 @@ async function checkModalUpdateUser() {
     updateUser();
   }
 }
-async function updateUser(req,res) {
+async function updateUser(req, res) {
   try {
     const userUpdateEmail = document.querySelector("#emailModal").value;
     const userName = document.querySelector("#userName").value;
@@ -109,12 +113,14 @@ async function updateUser(req,res) {
 
     const userPassword = document.querySelector("#userPassword").value;
     let userAdmin = document.querySelector("#userAdmin").value;
-    if(userAdmin === "admin" || userAdmin=== "notAdmin"){
-      userAdmin = (document.querySelector("#userAdmin").value === "admin")? true:false;
+    if (userAdmin === "admin" || userAdmin === "notAdmin") {
+      userAdmin =
+        document.querySelector("#userAdmin").value === "admin" ? true : false;
     }
     let marketing = document.querySelector("#marketing").value;
-    if(marketing === "Yes" || marketing=== "No"){
-      marketing = (document.querySelector("#marketing").value === "Yes")? true:false;
+    if (marketing === "Yes" || marketing === "No") {
+      marketing =
+        document.querySelector("#marketing").value === "Yes" ? true : false;
     }
     const message = document.querySelector(".errorModal");
     const submitButton = document.querySelector(".btnUpdateUser");
@@ -125,8 +131,8 @@ async function updateUser(req,res) {
     if (userLastName) updatedData.lastName = userLastName;
     if (userEmail) updatedData.email = userEmail;
     if (userPassword) updatedData.password = userPassword;
-    if (userAdmin!=="") updatedData.admin = userAdmin;
-    if (marketing!=="") updatedData.marketing = marketing;
+    if (userAdmin !== "") updatedData.admin = userAdmin;
+    if (marketing !== "") updatedData.marketing = marketing;
 
     const response = await fetch("/updateUser", {
       method: "POST",
@@ -142,15 +148,13 @@ async function updateUser(req,res) {
     const result = await response.json();
 
     if (response.ok) {
-      if(result.fullName !==""){
+      if (result.fullName !== "") {
         const fullName = document.querySelector(".user-info").children[0];
         fullName.textContent = result.fullName;
       }
       createMessage(result.message, false);
       closeModal();
       getAllUsers(true);
-     
-      
     } else {
       message.textContent = result.message;
       message.style.color = "red";
@@ -283,15 +287,18 @@ function displayUsers(users) {
       const ordersLink = document.createElement("a");
       ordersLink.classList.add("user-orders-link");
       ordersLink.textContent = "Orders";
-      ordersLink.addEventListener("click", function(event) {
+      ordersLink.addEventListener("click", function (event) {
         event.preventDefault();
-        localStorage.setItem("userFullName",`${user.firstName} ${user.lastName}`)
-        localStorage.setItem("userId",user._id)
+        localStorage.setItem(
+          "userFullName",
+          `${user.firstName} ${user.lastName}`
+        );
+        localStorage.setItem("userId", user._id);
         window.location.href = `/ordersUserAdmin`;
       });
       ordersLink.style.display = "block";
-      ordersLink.style.fontWeight = "bold"
-      ordersLink.style.color = "#000"
+      ordersLink.style.fontWeight = "bold";
+      ordersLink.style.color = "#000";
 
       // Append all elements to userBox
       userBox.appendChild(nameBox);
@@ -299,9 +306,24 @@ function displayUsers(users) {
       userBox.appendChild(adminField);
       userBox.appendChild(marketingField);
       userBox.appendChild(ordersLink);
-      
+
       userBox.appendChild(btnBox);
 
+      console.log(user)
+      if (user.googleId !== "0") {
+        const googleIcon = document.createElement("img");
+        googleIcon.src =
+          "https://cdn.iconscout.com/icon/free/png-256/google-160-189824.png";
+        googleIcon.alt = "Google Icon";
+        googleIcon.style.width = "20px";
+        googleIcon.style.height = "20px";
+        googleIcon.style.marginLeft = "10px";
+        googleIcon.style.position = "absolute"
+        googleIcon.style.top = "25px"
+
+        userBox.appendChild(googleIcon);
+      }
+      userBox.style.position = "relative"
       // Append userBox to the main container
       userContainer.appendChild(userBox);
     });
