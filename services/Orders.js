@@ -1,5 +1,4 @@
 const Order = require("../models/Order");
-const Shoe = require("../models/Shoe"); // ודא שהנתיב נכון
 
 exports.getOrders = async (userId) => {
   let orders;
@@ -8,10 +7,6 @@ exports.getOrders = async (userId) => {
       .populate({
         path: "user.userId",
         select: "firstName lastName", // שדות להחזרה ממודל המשתמש
-      })
-      .populate({
-        path: "items.product",
-        select: "name primaryImage price", // שדות להחזרה ממודל המוצרים
       });
   } else {
     orders = await Order.find({}).populate({

@@ -54,12 +54,17 @@ async function comfirmOrder() {
     data.items = [];
     document.querySelectorAll(".shoeConfirm").forEach((shoe) => {
       const item = {
-        product: shoe.getAttribute("data-id"),
-        size: shoe.querySelector("p:nth-of-type(2) span").textContent,
-        quantity: shoe.querySelector("p:nth-of-type(3) span").textContent,
+        productId: shoe.getAttribute("data-id"),
+        name: shoe.querySelector("p:nth-of-type(1)").textContent,
+        price: parseFloat(shoe.querySelector("p:nth-of-type(4) span:nth-of-type(2)").textContent),
+        primaryImage: shoe.querySelector("img").src,
+        size: parseInt(shoe.querySelector("p:nth-of-type(2) span").textContent),
+        quantity: parseInt(shoe.querySelector("p:nth-of-type(3) span").textContent),
       };
       data.items.push(item);
     });
+
+    
     data.shippingAddress = {};
     data.shippingAddress.street = street;
     data.shippingAddress.city = city;

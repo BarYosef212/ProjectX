@@ -43,7 +43,7 @@ async function getOrdersUser(userId) {
     document.querySelector(".ordersExist").style.display = "block";
     displayOrders(result.orders, true);
   } else {
-    createMessage("The user has no orders", true);
+    createMessage(result.messageAdmin, true);
     document.querySelector(".ordersNotFound").style.display = "block";
     document.querySelector(".ordersNotFound").style.height = "50vh";
     document.querySelector(".ordersNotFound").style.padding = "180px";
@@ -111,7 +111,7 @@ if (resetButton) {
   });
 }
 
-async function displayOrders(data, admin = false) {
+async function displayOrders(data) {
   const ordersContainer = document.querySelector(".orders-container");
   let count = 1;
 
@@ -138,15 +138,15 @@ async function displayOrders(data, admin = false) {
                 <div class="order-item">
                     <div class="item-image-and-name">
                         <div class="item-image">
-                            <img src="${item.product.primaryImage}" alt="${
-          item.product.name
+                            <img src="${item.primaryImage}" alt="${
+          item.name
         }"
                                  onerror="this.src='/api/placeholder/150/150'">
                         </div>
                         <div class="item-details">
-                            <span class="item-name">${item.product.name}</span>
+                            <span class="item-name">${item.name}</span>
                             <span class="item-id">Product ID: ${
-                              item.product._id
+                              item._id
                             }</span>
                             <span class="item-size">Size: ${
                               item.size || "N/A"
@@ -157,7 +157,7 @@ async function displayOrders(data, admin = false) {
                         <span class="item-quantity">Quantity: ${
                           item.quantity
                         }</span>
-                        <span class="item-price">$${item.product.price.toFixed(
+                        <span class="item-price">$${item.price.toFixed(
                           2
                         )}</span>
                     </div>

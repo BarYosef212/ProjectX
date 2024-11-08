@@ -1,10 +1,7 @@
 const id = document.querySelector(".user-id").getAttribute("data-id");
 
-
 function createMessage(message, isError = false) {
-  console.log(message);
   const messageEl = document.querySelector(".errMsg");
-  console.log(messageEl);
   messageEl.innerHTML = message;
   messageEl.style.color = isError ? "red" : "green";
   messageEl.style.display = "block";
@@ -25,8 +22,7 @@ async function getOrdersUser(userId) {
     document.querySelector(".ordersNotFound").style.display = "none";
     document.querySelector(".ordersExist").style.display = "block";
     displayOrders(result.orders);
-    document.querySelector(".errMsgSearch").textContent=""
-
+    document.querySelector(".errMsgSearch").textContent = "";
   } else {
     createMessage(result.message, true);
     document.querySelector(".ordersNotFound").style.display = "block";
@@ -36,11 +32,13 @@ async function getOrdersUser(userId) {
   }
 }
 
-document.querySelector("#orderSearch").addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    findOrder();
-  }
-});
+document
+  .querySelector("#orderSearch")
+  .addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      findOrder();
+    }
+  });
 
 async function findOrder() {
   const userId = id;
@@ -66,13 +64,13 @@ async function findOrder() {
         orderFound = order;
       }
     });
-    if(!orderFound){
-      document.querySelector(".errMsgSearch").textContent="No order found"
-      createMessage("No order found",true)
+    if (!orderFound) {
+      document.querySelector(".errMsgSearch").textContent = "No order found";
+      createMessage("No order found", true);
       return;
     }
 
-    document.querySelector(".errMsgSearch").textContent=""
+    document.querySelector(".errMsgSearch").textContent = "";
 
     displayOrders([orderFound]);
   } else {
@@ -87,7 +85,7 @@ if (resetButton) {
   });
 }
 
-async function displayOrders(data, admin = false) {
+async function displayOrders(data) {
   const ordersContainer = document.querySelector(".orders-container");
   let count = 1;
 
@@ -113,19 +111,20 @@ async function displayOrders(data, admin = false) {
     // Create items HTML with images
     const itemsHtml = order.items
       .map(
-        (item) => `
+        (item) =>
+          `
             <div class="order-item">
                 <div class="item-image-and-name">
                     <div class="item-image">
-                        <img src="${item.product.primaryImage}" alt="${
-          item.product.name
-        }" 
+                        <img src="${item.primaryImage}" alt="${
+            item.name
+          }" 
                              onerror="this.src='/api/placeholder/150/150'">
                     </div>
                     <div class="item-details">
-                        <span class="item-name">${item.product.name}</span>
+                        <span class="item-name">${item.name}</span>
                         <span class="item-id">Product ID: ${
-                          item.product._id
+                          item._id
                         }</span>
                         <span class="item-size">Size: ${
                           item.size || "N/A"
@@ -136,7 +135,7 @@ async function displayOrders(data, admin = false) {
                     <span class="item-quantity">Quantity: ${
                       item.quantity
                     }</span>
-                    <span class="item-price">$${item.product.price.toFixed(
+                    <span class="item-price">$${item.price.toFixed(
                       2
                     )}</span>
                 </div>
@@ -153,7 +152,6 @@ async function displayOrders(data, admin = false) {
                     <span class="order-total-preview">$${order.totalPrice.toFixed(
                       2
                     )}</span>
-                    ${admin ? `<span>a</span>` : ``}
                 </div>
                 <span class="dropdown-arrow">▼</span>
             </div>
@@ -233,4 +231,3 @@ function toggleOrder(orderNum) {
 }
 
 window.onload = getOrdersUser(id);
-

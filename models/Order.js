@@ -20,9 +20,21 @@ const orderSchema = new Schema({
 
   items: [
     {
-      product: {
+      productId: {
         type: Schema.Types.ObjectId,
         ref: "shoes", // Reference to the Shoe model
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      primaryImage: {
+        type: String,
         required: true,
       },
       size: {

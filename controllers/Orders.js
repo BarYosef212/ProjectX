@@ -1,4 +1,6 @@
 const Order = require("../models/Order");
+const User = require("../models/user");
+
 const orderServices = require("../services/Orders");
 const errorMessage = "An error occured, please try again later";
 
@@ -23,8 +25,10 @@ exports.getOrders = async (req, res) => {
         orders: orders,
       });
     } else {
+      const user = await User.findById(userId);
       res.status(404).json({
         message: `No orders found,<br><a href="/store" style="text-decoration:underline">Visit our store </a>and place your first order today!`,
+        messageAdmin: `${user.firstName} ${user.lastName} has no orders`,
       });
     }
   } catch (error) {
@@ -33,38 +37,38 @@ exports.getOrders = async (req, res) => {
   }
 };
 
-exports.deleteOrder = async(req,res)=>{
-  const {orderId} = req.body;
+exports.deleteOrder = async (req, res) => {
+  const { orderId } = req.body;
   const deleted = await orderServices.deleteOrder(orderId);
-  if(deleted){
+  if (deleted) {
     res.json({
-      message:"Order deleted successfully"
-    })
-  }
-  else{
+      message: "Order deleted successfully",
+    });
+  } else {
     res.status(403).json({
-      message:errorMessage,
-    })
+      message: errorMessage,
+    });
   }
-}
+};
 
-exports.updateOrder = async(req,res)=>{
-  const {orderId,updatedOrder}=req.body;
-  console.log(orderId,updatedOrder)
-  const result = await Order.findByIdAndUpdate(orderId, updatedOrder, { new: true });
-  if (result){
+exports.updateOrder = async (req, res) => {
+  const { orderId, updatedOrder } = req.body;
+  console.log(orderId, updatedOrder);
+  const result = await Order.findByIdAndUpdate(orderId, updatedOrder, {
+    new: true,
+  });
+  if (result) {
     res.json({
-      message:"Order updated successfully",
-    })
-  }
-  else{
+      message: "Order updated successfully",
+    });
+  } else {
     res.status(403).json({
-      message:errorMessage
-    })
+      message: errorMessage,
+    });
   }
-}
+};
 
-exports.getMonthlyOrderData = async(req,res)=> {
+exports.getMonthlyOrderData = async (req, res) => {
   const data = await Order.aggregate([
     {
       $group: {
@@ -72,7 +76,7 @@ exports.getMonthlyOrderData = async(req,res)=> {
         orderCount: { $sum: 1 },
       },
     },
-    { $sort: { "_id.year": 1, "_id.month": 1 } }, 
+    { $sort: { "_id.year": 1, "_id.month": 1 } },
   ]);
 
   const result = data.map((item) => ({
@@ -81,15 +85,13 @@ exports.getMonthlyOrderData = async(req,res)=> {
     count: item.orderCount,
   }));
 
-  if(result){
+  if (result) {
     return res.json({
-      result:result
-    })
-  }
-  else{
+      result: result,
+    });
+  } else {
     return res.status(500).json({
-      message:errorMessage,
-    })
+      message: errorMessage,
+    });
   }
-}
-
+};
