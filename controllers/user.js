@@ -34,7 +34,7 @@ exports.loginViaGoogle = async (req, res) => {
     const userInfo = await oauth2.userinfo.get();
 
     const { email, given_name, family_name, id } = userInfo.data;
-
+console.log(id)
     //check if the user already exist
     const user = await User.findOne({ email: email });
 
