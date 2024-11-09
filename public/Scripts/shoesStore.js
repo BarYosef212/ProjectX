@@ -2,19 +2,20 @@ async function confirmScreen(res, req) {
   window.location.href = "/completeOrder";
 }
 
-     document.getElementById('filter').addEventListener('change', function() {
+document.getElementById("filter").addEventListener("change", function () {
   const selectedFilter = this.value;
-  const genderFilter = document.getElementById('genderFilter').value;
-  const currentPage = new URLSearchParams(window.location.search).get('page') || 1;
-  
+  const genderFilter = document.getElementById("genderFilter").value;
+  const currentPage =
+    new URLSearchParams(window.location.search).get("page") || 1;
+
   window.location.href = `/store?page=${currentPage}&priceFilter=${selectedFilter}&genderFilter=${genderFilter}`;
 });
 
-document.getElementById('genderFilter').addEventListener('change', function() {
+document.getElementById("genderFilter").addEventListener("change", function () {
   const selectedGender = this.value;
-  const priceFilter = document.getElementById('filter').value;
+  const priceFilter = document.getElementById("filter").value;
   const currentPage = 1;
-  
+
   window.location.href = `/store?page=${currentPage}&priceFilter=${priceFilter}&genderFilter=${selectedGender}`;
 });
 
@@ -23,7 +24,10 @@ const userId = document.querySelector(".user-id") || 1;
 addCartBtn.forEach((button) => {
   button.addEventListener("click", function () {
     if (userId === 1)
-      createMessage(`Please log in to add items to your cart,<br> <a href="/login" style="text-decoration:underline;">Click here</a> to log in`, true);
+      createMessage(
+        `Please log in to add items to your cart,<br> <a href="/login" style="text-decoration:underline;">Click here</a> to log in`,
+        true
+      );
   });
 });
 
@@ -165,8 +169,6 @@ const saveCartToLocalStorage = () => {
   });
   localStorage.setItem("cart", JSON.stringify(cartItems));
 };
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromLocalStorage();

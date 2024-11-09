@@ -2,6 +2,18 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
+exports.saveCartToServer = async (req, res) => {
+  const { cart } = req.body;
+  req.session.cart = cart;
+  req.session.save()
+};
+
+exports.getCartFromServer = async (req, res) => {
+  return res.json({
+    cart: req.session.cart,
+  });
+};
+
 async function postToFacebook(id) {
   const pageAccessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const pageId = process.env.FACEBOOK_PAGE_ID;
@@ -36,10 +48,10 @@ async function postToFacebook(id) {
 }
 
 exports.sortShoes = async (req, res) => {
-  const page = parseInt(req.query.page) || 1; 
-  const limit = 12; 
+  const page = parseInt(req.query.page) || 1;
+  const limit = 12;
   const skip = (page - 1) * limit;
-  const priceFilter = req.query.priceFilter || "Best Offer"; 
+  const priceFilter = req.query.priceFilter || "Best Offer";
   const genderFilter = req.query.genderFilter || "all";
 
   // Get the total number of shoes based on the price filter
@@ -53,7 +65,6 @@ exports.sortShoes = async (req, res) => {
     totalShoes = await Shoe.countDocuments().sort({ price: sortOrder });
   }
 
-  
   let shoes = await exports.getShoes({
     priceFilter,
     genderFilter,
