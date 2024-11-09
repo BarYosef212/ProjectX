@@ -50,10 +50,10 @@ router.post("/updateUser",isAdmin,userController.updateUser);
 router.post("/logout", userController.logOut);
 
 //getting data for the graphs 
-router.get("/getMarketingData",userController.getMarketingData)
+router.get("/getMarketingData",isAdmin,userController.getMarketingData)
 
 //google routes
-router.get('/auth/google', userController.initiateGoogleLogin); // Redirect to Google login URL
+router.get('/auth/google',userController.initiateGoogleLogin); // Redirect to Google login URL
 router.get('/auth/google/callback', userController.loginViaGoogle); // Handle Google login callback
 
 

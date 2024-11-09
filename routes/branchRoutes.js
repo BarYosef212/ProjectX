@@ -7,7 +7,7 @@ const { isAdmin } = require("../middleware/auth");
 router.get("/branchAdmin",isAdmin, (req, res) => {
   res.render("branchAdmin");
 });
-router.get("/getAllBranches", branchController.getAllBranches);
+router.get("/getAllBranches",isAdmin,branchController.getAllBranches);
 router.post("/addBranch",isAdmin, branchController.addBranch);
 router.post("/deleteBranch",isAdmin, branchController.deleteBranch);
 router.post("/DeleteBranch",isAdmin, branchController.deleteBranch);
