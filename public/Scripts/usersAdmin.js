@@ -85,7 +85,6 @@ async function checkModalUpdateUser() {
     userPassword.value !== "" &&
     (userPassword.value.length < 6 || !regex.test(userPassword.value))
   ) {
-    console.log("2");
     errorMessageEl.textContent =
       "Password must be at least 6 characters long and contain one special character.";
     errorMessageEl.style.color = "red";
@@ -309,7 +308,6 @@ function displayUsers(users) {
 
       userBox.appendChild(btnBox);
 
-      console.log(user)
       if (user.googleId !== "0") {
         const googleIcon = document.createElement("img");
         googleIcon.src =

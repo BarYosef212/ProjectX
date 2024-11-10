@@ -12,7 +12,7 @@ exports.addBranch = async (req, res) => {
       coordinate_x,
       coordinate_y,
     } = req.body;
-    
+
     // Check if branch with the same name exists
     let branchValid = await Branch.findOne({ branchName: branchName });
     if (branchValid) {
@@ -26,7 +26,7 @@ exports.addBranch = async (req, res) => {
       "location.coordinate_x": coordinate_x,
       "location.coordinate_y": coordinate_y,
     });
-    if (branchValid) {
+    if (branchValid) {x
       return res
         .status(403)
         .json({ message: "Branch with these coordinates already exists" });
@@ -39,7 +39,7 @@ exports.addBranch = async (req, res) => {
       branchPhone,
       brachAddress,
       coordinate_x,
-      coordinate_y,
+      coordinate_y
     );
 
     if (branch) {
@@ -77,24 +77,22 @@ exports.deleteBranch = async (req, res) => {
 
 exports.updateBranch = async (req, res) => {
   try {
-    const {updatedData, branchId} = req.body;
-    const result = await branchServices.updateBranch(updatedData, branchId)
-    if(result){
+    const { updatedData, branchId } = req.body;
+    const result = await branchServices.updateBranch(updatedData, branchId);
+    if (result) {
       res.json({
-        message:"Branch updated successfully",
-        branch:result,
-      })
-    }
-    else{
+        message: "Branch updated successfully",
+        branch: result,
+      });
+    } else {
       res.status(403).json({
-        message:errorMessage
-      })
+        message: errorMessage,
+      });
     }
-  }
-  catch(error){
+  } catch (error) {
     res.status(403).json({
-      message:errorMessage
-    })
+      message: errorMessage,
+    });
   }
 };
 
@@ -139,4 +137,3 @@ exports.findBranches = async (req, res) => {
     });
   }
 };
-

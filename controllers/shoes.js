@@ -2,18 +2,6 @@ const shoesService = require("../services/shoe");
 const Shoe = require("../models/Shoe");
 const errorMessage = "An error occured, please try again later";
 
-exports.saveCartToServer = async (req, res) => {
-  const { cart } = req.body;
-  req.session.cart = cart;
-  req.session.save()
-};
-
-exports.getCartFromServer = async (req, res) => {
-  return res.json({
-    cart: req.session.cart,
-  });
-};
-
 async function postToFacebook(id) {
   const pageAccessToken = process.env.FACEBOOK_ACCESS_TOKEN;
   const pageId = process.env.FACEBOOK_PAGE_ID;

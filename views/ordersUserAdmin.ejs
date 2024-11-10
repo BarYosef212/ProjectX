@@ -13,12 +13,10 @@
     <link rel="icon" href="/img/favicon.png" />
 
     <title>Orders:</title>
-   
   </head>
 
   <body class="ordersBody">
     <%- include('partials/header') %>
-    <div class="errMsg" style="text-align: center; font-size: 18px"></div>
 
     <div class="modal" id="updateOrderModal" style="display: none">
       <div class="modal-content">
@@ -134,17 +132,19 @@
               </svg>
             </button>
           </div>
-          <div
-            class="errMsgSearch"
-            style="
-              text-align: center;
-              font-size: 18px;
-              color: red;
-              margin-top: 12px;
-            "
-          ></div>
+
           <h1 class="ordersOfTitle">Orders:</h1>
         </div>
+        <div class="errMsg" style="text-align: center; font-size: 18px"></div>
+        <div
+          class="errMsgSearch"
+          style="
+            text-align: center;
+            font-size: 18px;
+            color: red;
+            margin-top: 12px;
+          "
+        ></div>
         <div class="orders-container"></div>
       </div>
     </main>

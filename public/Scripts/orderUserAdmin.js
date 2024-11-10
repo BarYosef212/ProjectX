@@ -56,7 +56,6 @@ function createMessage(message, isError = false) {
   messageEl.innerHTML = message;
   messageEl.style.color = isError ? "red" : "green";
   messageEl.style.display = "block";
-  messageEl.style.margin="300px 0px"
 }
 
 document
@@ -157,9 +156,7 @@ async function displayOrders(data) {
                         <span class="item-quantity">Quantity: ${
                           item.quantity
                         }</span>
-                        <span class="item-price">$${item.price.toFixed(
-                          2
-                        )}</span>
+                        <span class="item-price">$${item.price}</span>
                     </div>
                 </div>
             `
@@ -171,9 +168,7 @@ async function displayOrders(data) {
                     <div class="order-summary">
                         <h2 class="order-title">Order #${count}</h2>
                         <span class="order-date">${orderDate}</span>
-                        <span class="order-total-preview">$${order.totalPrice.toFixed(
-                          2
-                        )}</span>
+                        <span class="order-total-preview">$${order.totalPrice}</span>
                     </div>
                     <div style="display:flex; gap:12px;">
                         <button class="btn btnUpdateOrder" onclick="openModal('${
@@ -221,7 +216,7 @@ async function displayOrders(data) {
                     </div>
 
                     <div class="order-total">
-                        <h3>Total Amount: $${order.totalPrice.toFixed(2)}</h3>
+                        <h3>Total Amount: $${order.totalPrice}</h3>
                     </div>
                 </div>
             `;
@@ -440,7 +435,11 @@ async function updateOrder(id) {
     },
     items: Array.from(document.querySelectorAll(".update-item")).map(
       (item) => ({
-        product: item.dataset.productId,
+        _id: item.dataset.productId,
+        name: item.querySelector(".item-info div").textContent,
+        price: parseFloat(item.querySelector(".item-info div:nth-child(2)").textContent.slice(1)),
+        primaryImage: item.querySelector("img").src,
+        productId: item.dataset.productId,
         quantity: parseInt(item.querySelector(".quantity-input").value),
         size: item.querySelector(".size-select").value,
       })
@@ -466,10 +465,13 @@ async function updateOrder(id) {
       body: JSON.stringify({ orderId: id, updatedOrder: updatedOrder }),
     });
 
+   
     const result = await response.json();
-
+   
     if (response.ok) {
-      createMessage(result.message, false);
+      const msg = document.querySelector(".errMsgSearch");
+      msg.textContent = result.message;
+      msg.style.color = "green";
       closeModal();
       getOrdersUser(userIdStorage);
     } else {

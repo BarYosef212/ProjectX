@@ -173,6 +173,7 @@ const saveCartToLocalStorage = () => {
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromLocalStorage();
 });
+
 const getExchangeRateILS = async (req, res) => {
   const response = await fetch(
     `https://v6.exchangerate-api.com/v6/9f9809c90629cbd5096bc36d/latest/USD`,

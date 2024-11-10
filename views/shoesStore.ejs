@@ -69,7 +69,7 @@
           </select>
           
 
-          <button class="btn" onclick="addToCart('<%= shoe.id %>', '<%= shoe.primaryImage %>', '<%= shoe.name %>', document.getElementById('shoeSizeDropdown<%= shoe.id %>').value, 1, '<%= shoe.price %>')">
+          <button class="btn" onclick="addToCart(`<%= shoe.id %>`, `<%= shoe.primaryImage %>`, `<%= shoe.name %>`, document.getElementById(`shoeSizeDropdown<%= shoe.id %>`).value, 1, `<%= shoe.price %>`)">
             Add to Cart
           </button>
           

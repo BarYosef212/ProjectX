@@ -53,10 +53,11 @@ exports.deleteOrder = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
   const { orderId, updatedOrder } = req.body;
-  console.log(orderId, updatedOrder);
+ 
   const result = await Order.findByIdAndUpdate(orderId, updatedOrder, {
     new: true,
   });
+  
   if (result) {
     res.json({
       message: "Order updated successfully",

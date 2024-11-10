@@ -51,7 +51,7 @@
       console.log(error);
       createMessage(result.message, true);
     }
-  }
+  } //fix delete
 
   async function checkModalUpdateBranch() {
     const branchName = document.querySelector("#branchName");
