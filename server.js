@@ -44,11 +44,7 @@ app.use(branchRoutes);
 app.use(ordersRoutes);
 
 // Catch 404 errors and render the error page
-app.use((req, res) => {
-  res
-    .status(404)
-    .render("errorHandler", { message: "Page not found", errorCode: 404 });
-});
+app.use((req, res) => {res.status(404).render("errorHandler", { message: "Page not found", errorCode: 404 });});
 
 // Start server
 app.listen(PORT, () => {
